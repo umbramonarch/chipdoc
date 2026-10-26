@@ -10,7 +10,7 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 authors = ["anas.alshaer"]
-repository = "https://github.com/anas11alshaer/chipdoc"
+repository = "https://github.com/umbramonarch/chipdoc"
 description = "Convert technical and embedded PDFs (datasheets, TRMs) into grep-ready Agent Documentation Bundles"
 
 [workspace.dependencies]

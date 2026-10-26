@@ -1,0 +1,19 @@
+[package]
+name = "chipdoc-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "CLI tool to convert technical and embedded PDFs into grep-ready Agent Documentation Bundles"
+
+[[bin]]
+name = "chipdoc"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+chipdoc-core = { path = "../chipdoc-core" }
+clap.workspace = true
+regex.workspace = true
+serde_json.workspace = true
