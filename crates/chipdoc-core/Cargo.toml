@@ -1,0 +1,17 @@
+[package]
+name = "chipdoc-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Core PDF-to-Agent extraction, table reconstruction, register indexing, and bundle emission library"
+
+[dependencies]
+image.workspace = true
+pdfium-render.workspace = true
+rayon.workspace = true
+regex.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
