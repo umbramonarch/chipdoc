@@ -1,7 +1,7 @@
 use crate::cleaner::{assemble_text_lines, is_boilerplate_line, slugify};
 use crate::model::{ExtractedTable, FigureRegion, PageBlock, RawPageData, TextLine, TocEntry};
 use crate::registers::{
-    build_bitmap_summary_from_table, infer_peripheral_name, parse_register_heading,
+    build_bitmap_summary_from_table, infer_peripheral_name, parse_register_heading_with_lookahead,
 };
 use regex::Regex;
 use std::sync::OnceLock;
@@ -36,14 +36,15 @@ pub fn assemble_page_blocks(
         }
     };
 
-    for line in &lines {
+    for (line_idx, line) in lines.iter().enumerate() {
         let trimmed = line.text.trim();
         if trimmed.is_empty() || is_boilerplate_line(trimmed) {
             continue;
         }
 
-        // Check if this line is a Register Definition Heading ("10.3.1 FSUB_0 (Offset = 400h) [Reset = 00000000h]")
-        if let Some(reg_head) = parse_register_heading(line) {
+        // Check if this line is a Register Definition Heading ("10.3.1 FSUB_0 (Offset = 400h)"
+        // or "6.4.1 GPIO port mode register (GPIOx_MODER)" followed by "Address offset: 0x00")
+        if let Some(reg_head) = parse_register_heading_with_lookahead(&lines, line_idx) {
             flush_para(&mut para_buf, para_y0, &mut blocks);
             blocks.push(PageBlock::RegisterHeading {
                 section_num: reg_head.section_num,
@@ -57,6 +58,13 @@ pub fn assemble_page_blocks(
             });
             prev_y1 = line.bbox.y1;
             continue;
+        }
+
+        // Check if this line starts a prose bitfield definition ("Bits 31:0 ..." or "Bit 16 ...")
+        // so each bitfield description forms its own clean paragraph block
+        let is_bitfield_line = trimmed.starts_with("Bits ") || trimmed.starts_with("Bit ");
+        if is_bitfield_line && !para_buf.is_empty() {
+            flush_para(&mut para_buf, para_y0, &mut blocks);
         }
 
         // Check if this line is a numbered section heading or prominent bold heading

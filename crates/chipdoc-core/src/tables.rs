@@ -207,18 +207,29 @@ fn detect_grid_table_regions(
 
         let v_rules = dedup_coords(v_coords, 4.0);
 
-        // Find any "Table X-Y." caption immediately above `bbox.y0` (within 40 pt)
+        // Find any "Table X-Y." caption immediately above `bbox.y0` (within 45 pt)
         let mut caption = None;
         let mut caption_bbox = None;
+        let mut preceded_by_figure_caption = false;
         for line in lines.iter().rev() {
-            if line.bbox.y1 <= bbox.y0 + 4.0
-                && (bbox.y0 - line.bbox.y0) <= 45.0
-                && is_table_caption(&line.text)
-            {
-                caption = Some(line.text.clone());
-                caption_bbox = Some(line.bbox);
-                break;
+            if line.bbox.y1 <= bbox.y0 + 8.0 && (bbox.y0 - line.bbox.y0) <= 45.0 {
+                let lt = line.text.trim();
+                if is_table_caption(lt) {
+                    caption = Some(line.text.clone());
+                    caption_bbox = Some(line.bbox);
+                    break;
+                }
+                if lt.starts_with("Figure ") || lt.starts_with("Fig.") {
+                    preceded_by_figure_caption = true;
+                    break;
+                }
             }
+        }
+
+        // If the grid cluster sits directly below a `Figure X` caption (and has no `Table X` caption),
+        // it is a vector block diagram or schematic figure, not a table.
+        if caption.is_none() && preceded_by_figure_caption {
+            continue;
         }
 
         regions.push(CandidateTableRegion {

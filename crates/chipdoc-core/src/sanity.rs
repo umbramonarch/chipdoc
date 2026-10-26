@@ -63,6 +63,8 @@ pub fn compute_sanity_report(indexes: &BundleIndexes, inputs: SanityInputs) -> S
         figures_rendered: inputs.figures_rendered,
         figure_text_spans_suppressed: inputs.figure_text_spans_suppressed,
         header_footer_spans_stripped: inputs.header_footer_spans_stripped,
+        xrefs_indexed: indexes.xrefs.len(),
+        cache_hit: false,
         replacement_char_count,
         estimated_tokens,
         sanity_score: score.clamp(0, 100) as u8,

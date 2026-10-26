@@ -9,6 +9,7 @@ description = "Core PDF-to-Agent extraction, table reconstruction, register inde
 
 [dependencies]
 image.workspace = true
+memchr.workspace = true
 pdfium-render.workspace = true
 rayon.workspace = true
 regex.workspace = true

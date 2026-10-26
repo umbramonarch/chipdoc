@@ -77,7 +77,7 @@ pub fn detect_page_figures(
             }
         }
 
-        // Gather all art boxes inside `[y_limit_top, line.bbox.y0 + 4.0]`
+        // Gather all art boxes inside `[y_limit_top, line.bbox.y0 + 4.0]` (caption BELOW figure)
         let mut art_region: Option<BBox> = None;
         for b in &candidate_art_boxes {
             if b.y0 >= y_limit_top - 6.0 && b.y1 <= line.bbox.y0 + 8.0 {
@@ -88,7 +88,7 @@ pub fn detect_page_figures(
             }
         }
 
-        // Also include short diagram labels inside `[y_limit_top, line.bbox.y0]` if art exists
+        // Include short diagram labels inside `[y_limit_top, line.bbox.y0]` if art exists above
         if let Some(mut region) = art_region {
             for prev in &lines[..line_idx] {
                 if prev.bbox.y0 >= y_limit_top
@@ -98,7 +98,58 @@ pub fn detect_page_figures(
                     region = region.union(&prev.bbox);
                 }
             }
+            if region.height() < 20.0 || region.width() < 35.0 {
+                art_region = None;
+            } else {
+                art_region = Some(region);
+            }
+        }
 
+        // Fallback: if no art region exists above the caption, search BELOW the caption
+        // (handles manuals where `Figure X.` captions are placed at the top of the diagram).
+        if art_region.is_none() {
+            let mut y_limit_bottom = page.height * 0.915;
+            for next in lines.iter().skip(line_idx + 1) {
+                let next_t = next.text.trim();
+                if re_fig.is_match(next_t)
+                    || next_t.starts_with("Table ")
+                    || is_prose_or_heading(next_t, next.is_bold, next.font_size)
+                {
+                    y_limit_bottom = y_limit_bottom.min(next.bbox.y0 - 2.0);
+                    break;
+                }
+            }
+            for tb in tables {
+                if tb.bbox.y0 >= line.bbox.y1 - 4.0 {
+                    y_limit_bottom = y_limit_bottom.min(tb.bbox.y0 - 4.0);
+                }
+            }
+
+            let mut below_region: Option<BBox> = None;
+            for b in &candidate_art_boxes {
+                if b.y0 >= line.bbox.y0 - 6.0 && b.y1 <= y_limit_bottom + 6.0 {
+                    below_region = Some(match below_region {
+                        Some(acc) => acc.union(b),
+                        None => *b,
+                    });
+                }
+            }
+            if let Some(mut region) = below_region {
+                for next in lines.iter().skip(line_idx + 1) {
+                    if next.bbox.y0 >= line.bbox.y1
+                        && next.bbox.y1 <= y_limit_bottom
+                        && next.text.len() <= 55
+                    {
+                        region = region.union(&next.bbox);
+                    }
+                }
+                if region.height() >= 20.0 && region.width() >= 35.0 {
+                    art_region = Some(region);
+                }
+            }
+        }
+
+        if let Some(region) = art_region {
             if region.height() >= 20.0 && region.width() >= 35.0 {
                 let full_bbox = region
                     .union(&line.bbox)

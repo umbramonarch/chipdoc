@@ -1,4 +1,5 @@
 use crate::model::{RawPageData, TextLine, TextSpan};
+use rayon::prelude::*;
 use regex::Regex;
 use std::collections::HashMap;
 use std::sync::OnceLock;
@@ -88,9 +89,10 @@ pub fn is_boilerplate_line(text: &str) -> bool {
     }
 
     // Standalone document revision footer/header line like "SLASFJ6B – JULY 2025 – REVISED JANUARY 2026"
+    // or "176/989 RM0454 Rev 5" / "DS12991 Rev 6 9/100"
     static RE_DOC_REV: OnceLock<Regex> = OnceLock::new();
     let re_rev = RE_DOC_REV.get_or_init(|| {
-        Regex::new(r"(?i)^[A-Z]{4,8}[0-9A-Z]{2,5}\s*[–\-—]\s*(?:JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER)\s+\d{4}").expect("valid regex")
+        Regex::new(r"(?i)^(?:[A-Z]{4,8}[0-9A-Z]{2,5}\s*[–\-—]\s*(?:JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER)\s+\d{4}|(?:\d+\s*/\s*\d+\s+)?[A-Z]{2,8}\d{3,6}\s+Rev\s+\d+(?:\s+\d+\s*/\s*\d+)?$)").expect("valid regex")
     });
     if re_rev.is_match(t) {
         return true;
@@ -128,38 +130,44 @@ pub fn clean_pages(pages: &mut [RawPageData]) -> CleanStats {
         }
     }
 
-    // 2. Filter and normalize spans on each page
-    for page in pages.iter_mut() {
-        let top_limit = page.height * 0.088;
-        let bottom_limit = page.height * 0.912;
+    // 2. Filter and normalize spans on each page in parallel across Rayon worker threads
+    let stripped: usize = pages
+        .par_iter_mut()
+        .map(|page| {
+            let top_limit = page.height * 0.088;
+            let bottom_limit = page.height * 0.912;
+            let mut page_stripped = 0usize;
 
-        for span in &mut page.spans {
-            span.text = normalize_technical_text(&span.text);
-            if span.text.is_empty() {
-                span.consumed = true;
-                continue;
-            }
-
-            let in_margin = span.bbox.y1 <= top_limit || span.bbox.y0 >= bottom_limit;
-            if in_margin {
-                let key = normalize_header_footer_key(&span.text);
-                let is_repeated = num_pages >= 3
-                    && margin_freq.get(&key).copied().unwrap_or(0) >= min_repeat_pages;
-                let is_page_num = span.text.chars().all(|c| c.is_ascii_digit());
-                if is_repeated || is_page_num || is_boilerplate_line(&span.text) {
+            for span in &mut page.spans {
+                span.text = normalize_technical_text(&span.text);
+                if span.text.is_empty() {
                     span.consumed = true;
-                    stats.header_footer_spans_stripped += 1;
                     continue;
                 }
-            }
 
-            if is_boilerplate_line(&span.text) {
-                span.consumed = true;
-                stats.header_footer_spans_stripped += 1;
-            }
-        }
-    }
+                let in_margin = span.bbox.y1 <= top_limit || span.bbox.y0 >= bottom_limit;
+                if in_margin {
+                    let key = normalize_header_footer_key(&span.text);
+                    let is_repeated = num_pages >= 3
+                        && margin_freq.get(&key).copied().unwrap_or(0) >= min_repeat_pages;
+                    let is_page_num = span.text.chars().all(|c| c.is_ascii_digit());
+                    if is_repeated || is_page_num || is_boilerplate_line(&span.text) {
+                        span.consumed = true;
+                        page_stripped += 1;
+                        continue;
+                    }
+                }
 
+                if is_boilerplate_line(&span.text) {
+                    span.consumed = true;
+                    page_stripped += 1;
+                }
+            }
+            page_stripped
+        })
+        .sum();
+
+    stats.header_footer_spans_stripped = stripped;
     stats
 }
 
@@ -247,11 +255,12 @@ pub fn assemble_text_lines(spans: &[TextSpan], y_tolerance: f32) -> Vec<TextLine
             if idx > 0 {
                 let prev = &line_spans[idx - 1];
                 let gap = sp.bbox.x0 - prev.bbox.x1;
-                let space_thresh = (sp.font_size.min(prev.font_size) * 0.12).max(0.8);
-                let phrase_boundary = (prev.text.contains(' ')
-                    || sp.text.contains(' ')
-                    || prev.is_bold != sp.is_bold)
-                    && gap > -2.5
+                let min_font = sp.font_size.min(prev.font_size);
+                let space_thresh = (min_font * 0.16).max(1.1);
+                let style_changed =
+                    prev.is_bold != sp.is_bold || (prev.font_size - sp.font_size).abs() >= 0.8;
+                let phrase_boundary = style_changed
+                    && gap > -1.5
                     && prev
                         .text
                         .chars()

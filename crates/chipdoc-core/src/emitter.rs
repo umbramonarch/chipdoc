@@ -1,10 +1,13 @@
 use crate::error::{ChipdocError, Result};
 use crate::model::{
     ConversionBundle, ConvertConfig, DocMetadata, ExtractedTable, FigureRegion, PageBlock,
-    RegisterBitfield, SanityReport, SectionFile, TocEntry,
+    RegisterBitfield, SanityReport, SectionFile, TocEntry, XrefEntry,
 };
-use crate::registers::{extract_bitfields_from_table, infer_peripheral_name};
+use crate::registers::{
+    extract_bitfield_from_paragraph, extract_bitfields_from_table, infer_peripheral_name,
+};
 use crate::tables::render_table_markdown;
+use crate::xref::build_xref_graph;
 use std::fs;
 use std::path::Path;
 
@@ -15,6 +18,7 @@ pub struct BundleIndexes {
     pub tables: Vec<ExtractedTable>,
     pub registers: Vec<RegisterBitfield>,
     pub figures: Vec<FigureRegion>,
+    pub xrefs: Vec<XrefEntry>,
     pub unique_registers_count: usize,
 }
 
@@ -123,7 +127,20 @@ pub fn build_section_files(
                     md_lines.push(summary.clone());
                     md_lines.push(String::new());
                 }
-                PageBlock::Paragraph { text, .. } => {
+                PageBlock::Paragraph { text, page, .. } => {
+                    let para_line = md_lines.len() + 1;
+                    if let Some(bf) = extract_bitfield_from_paragraph(
+                        text,
+                        &active_peripheral,
+                        &active_register,
+                        &active_offset,
+                        &active_reset,
+                        &file_rel_path,
+                        para_line,
+                        *page,
+                    ) {
+                        indexes.registers.push(bf);
+                    }
                     md_lines.push(text.clone());
                     md_lines.push(String::new());
                 }
@@ -205,6 +222,7 @@ pub fn build_section_files(
     }
 
     indexes.unique_registers_count = seen_registers.len();
+    indexes.xrefs = build_xref_graph(&indexes);
     indexes
 }
 
@@ -301,26 +319,50 @@ pub fn write_agent_bundle(
     write_file(&index_dir.join("registers.tsv"), &reg_tsv)?;
 
     // 5. Write `index/figures.tsv`
-    let mut fig_tsv = String::from("figure_id\tcaption\timage_path\tlocation\tpage\n");
+    let mut fig_tsv = String::from("figure_id\tcaption\timage_path\tlocation\tpage\tbbox\n");
     for f in &indexes.figures {
         fig_tsv.push_str(&format!(
-            "{}\t{}\t{}\t{}:{}\t{}\n",
+            "{}\t{}\t{}\t{}:{}\t{}\t{:.1},{:.1},{:.1},{:.1}\n",
             f.id,
             sanitize_tsv(&f.caption),
             f.image_rel_path.as_deref().unwrap_or(""),
             f.section_file,
             f.line_number,
-            f.page_number
+            f.page_number,
+            f.bbox.x0,
+            f.bbox.y0,
+            f.bbox.x1,
+            f.bbox.y1,
         ));
     }
     write_file(&index_dir.join("figures.tsv"), &fig_tsv)?;
 
-    // 6. Write `INDEX.md`
+    // 6. Write `index/xref.tsv` (Hardware Cross-Reference Graph)
+    let mut xref_tsv = String::from("symbol\tkind\tperipheral\tsummary\tlocation\tpage\n");
+    for x in &indexes.xrefs {
+        xref_tsv.push_str(&format!(
+            "{}\t{}\t{}\t{}\t{}\t{}\n",
+            sanitize_tsv(&x.symbol),
+            sanitize_tsv(&x.kind),
+            sanitize_tsv(&x.peripheral),
+            sanitize_tsv(&x.summary),
+            x.location,
+            x.page_number,
+        ));
+    }
+    write_file(&index_dir.join("xref.tsv"), &xref_tsv)?;
+
+    // 7. Ensure `.claudeignore` protects prompt cache if requested
+    if config.update_claudeignore {
+        let _ = ensure_claudeignore_entry(&config.output_root);
+    }
+
+    // 8. Write `INDEX.md`
     let index_md = build_master_index_markdown(doc_meta, toc, indexes, sanity);
     let index_md_path = bundle_dir.join("INDEX.md");
     write_file(&index_md_path, &index_md)?;
 
-    // 7. Write `meta.json`
+    // 9. Write `meta.json`
     let meta_json = serde_json::to_string_pretty(&serde_json::json!({
         "metadata": doc_meta,
         "sanity": sanity,
@@ -364,7 +406,15 @@ fn build_master_index_markdown(
     lines.push(String::new());
     lines.push("> **Agent Navigation Guide**:".to_string());
     lines.push(
+        "> - Prefer 1-turn CLI queries: `chipdoc reg <name|hex>`, `chipdoc table <query> --show`, `chipdoc xref <symbol>`, `chipdoc page <N>`."
+            .to_string(),
+    );
+    lines.push(
         "> - For fast 1-line-per-bitfield register lookups, grep `index/registers.tsv`."
+            .to_string(),
+    );
+    lines.push(
+        "> - For cross-chapter hardware relationships (pins, interrupts, memory map, registers), grep `index/xref.tsv`."
             .to_string(),
     );
     lines.push(
@@ -404,6 +454,10 @@ fn build_master_index_markdown(
     lines.push(format!(
         "- **Figures Detected**: {} ({} rendered to `assets/figures/`) -> `index/figures.tsv`",
         sanity.figures_detected, sanity.figures_rendered
+    ));
+    lines.push(format!(
+        "- **Cross-References Indexed**: {} symbols -> `index/xref.tsv`",
+        sanity.xrefs_indexed
     ));
     lines.push(format!(
         "- **Sanity Score**: {}/100 (~{} tokens)",
@@ -462,6 +516,39 @@ fn sanitize_tsv(s: &str) -> String {
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ")
+}
+
+/// Ensures `.claudeignore` in the workspace contains the bundle output directory so
+/// generating or refreshing bundles never invalidates Claude Code's prompt cache.
+pub fn ensure_claudeignore_entry(output_root: &Path) -> Result<bool> {
+    let dir_name = output_root
+        .file_name()
+        .and_then(|s| s.to_str())
+        .unwrap_or("output");
+    let entry = format!("{dir_name}/");
+    let claudeignore_path = output_root
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .map(|p| p.join(".claudeignore"))
+        .unwrap_or_else(|| Path::new(".claudeignore").to_path_buf());
+
+    let existing = fs::read_to_string(&claudeignore_path).unwrap_or_default();
+    if existing
+        .lines()
+        .any(|l| l.trim() == entry || l.trim() == dir_name)
+    {
+        return Ok(false);
+    }
+
+    let mut updated = existing;
+    if !updated.is_empty() && !updated.ends_with('\n') {
+        updated.push('\n');
+    }
+    updated.push_str("# chipdoc generated bundles (prevents prompt cache invalidation)\n");
+    updated.push_str(&entry);
+    updated.push('\n');
+    write_file(&claudeignore_path, &updated)?;
+    Ok(true)
 }
 
 fn create_dir(path: &Path) -> Result<()> {

@@ -1,6 +1,8 @@
-# `chipdoc` — PDF-to-Agent Technical Document Converter
+# `chipdoc` — Agent Document Intelligence CLI & Plugin for Technical PDFs
 
-`chipdoc` is a fast, vendor-neutral **Rust CLI and library** that converts microcontroller datasheets, Technical Reference Manuals (TRMs), errata, and engineering PDFs into a **Hierarchical Agent Documentation Bundle** designed specifically for AI coding agents (`Grep` / `ripgrep` + `Read`).
+`chipdoc` is a fast, vendor-neutral **Rust CLI, library, and Claude Code plugin** that turns microcontroller datasheets, Technical Reference Manuals (TRMs), errata, and engineering PDFs into a queryable **Hierarchical Agent Documentation Bundle** and **Hardware Cross-Reference Graph** (`INDEX.md` + `index/*.tsv` + `sections/*.md` + cropped `assets/figures/*.png`).
+
+Instead of burning 30,000+ vision tokens reading raw PDF pages or running 5 sequential `Grep` + `Read` turns, an AI coding agent uses `chipdoc` to resolve registers, bitfields, hex offsets, memory maps, pinouts, and cross-chapter hardware dependencies in **a single deterministic CLI call (~150 tokens)**.
 
 ---
 
@@ -8,32 +10,33 @@
 
 General-purpose PDF-to-Markdown tools (`markitdown`, `docling`, `pymupdf4llm`) struggle with embedded-systems documentation for six concrete reasons:
 
-1. **Vector Diagrams Become Scrambled Text**: Pinout diagrams, block diagrams, and timing charts in datasheets are drawn using **PDF vector paths + floating text labels**, not bitmap images. Naive extractors dump hundreds of floating pin labels (`PA0`, `VDD`, `36`, `PB17`) into the middle of Markdown prose in arbitrary Y-coordinate order. `chipdoc` detects figure bounding boxes, **suppresses floating diagram text from polluting Markdown**, and **renders cropped figure PNGs** to `assets/figures/`.
+1. **Vector Diagrams Become Scrambled Text**: Pinout diagrams, block diagrams, and timing charts in datasheets are drawn using **PDF vector paths + floating text labels**, not bitmap images. Naive extractors dump hundreds of floating pin labels (`PA0`, `VDD`, `36`, `PB17`) into the middle of Markdown prose in arbitrary Y-coordinate order. `chipdoc` detects figure bounding boxes, **suppresses floating diagram text from polluting Markdown**, and **renders cropped figure PNGs** to `assets/figures/` (either upfront or lazily on demand).
 2. **Redundant Visual Register Bit-Boxes**: Every register in a TRM includes a 16- or 32-bit visual bit-grid figure immediately above a `Field Descriptions` table with the exact same information. `chipdoc` condenses the noisy visual bit-grid into a 1-line bit-map summary and preserves the clean Markdown table, cutting register-page token usage by **30–40%**.
 3. **Complex Multi-Header & Multi-Page Tables**: Electrical characteristic tables use 2-level merged headers (`-40°C / 25°C / 85°C` $\times$ `TYP / MAX`) and mode divider rows (`RUN Mode`, `SLEEP Mode`), while pinout and register tables span many pages with `(continued)` headers and mid-identifier line wraps (`GEN_EVENT\n0`). `chipdoc` reconstructs cell grids from PDF vector geometry, flattens multi-row headers, repairs wrapped identifiers, drops hyperlink filler columns (`Section: Go`), and stitches `(continued)` tables across page breaks.
 4. **Unicode & Subscript Kerning Traps**: Datasheets frequently use Unicode en-dashes for negative numbers (`–0.3 V`), single-glyph Celsius symbols (`℃`), and tight subscript kerning that fuses symbols into adjacent words (`VIInput voltage`), causing exact `grep` queries to miss. `chipdoc` normalizes these deterministically (`-0.3 V`, `°C`, `VI Input voltage`).
-5. **Running Header/Footer Noise**: Stripping repeating headers, footers, copyright notices, and `Return to the Summary Table` links removes thousands of lines of grep pollution across 1,000+ page manuals.
-6. **Grep-First Sharded Output + 1-Line-Per-Fact TSV Indexes**: Converting a 1,300-page TRM into one giant `.md` file floods agent searches with uncontextualized line numbers. `chipdoc` shards documents by their bookmark hierarchy (`sections/10-general-purpose-input-output-gpio.md`) and emits flat `.tsv` sidecar indexes (`index/registers.tsv`, `index/tables.tsv`, `index/sections.tsv`) where **every line is self-contained**.
+5. **Hardware Syntax Normalization**: Firmware engineers and agents write `0x41C00004` or `GPIO_FSUB_0`, while datasheets write `41C00004h` or split `GPIO` and `FSUB_0` across columns. `chipdoc reg` and `chipdoc xref` normalize C hex (`0x400` $\leftrightarrow$ `400h`) and peripheral prefixes (`GPIO.FSUB_0` / `GPIO_FSUB_0` / `GPIO->FSUB_0`) automatically.
+6. **Hardware Cross-Reference Graph (`index/xref.tsv`)**: Like Graphify for codebases, `chipdoc` precomputes a cross-reference graph linking peripherals, registers, bitfields, pins, memory map rows, and figures across all chapters with zero LLM API calls.
 
 ---
 
 ## Output Format: The Agent Documentation Bundle
 
-Running `chipdoc convert samples/mspm0c1105_trm.pdf -o output/` produces:
+Running `chipdoc convert samples/mspm0c1105_trm.pdf -o output/` (or `chipdoc ensure samples/mspm0c1105_trm.pdf`) produces:
 
 ```text
 output/mspm0c1105_trm/
 ├── INDEX.md                        # Master entry point: metadata, stats, full TOC -> section file & page map
-├── meta.json                       # Conversion provenance, timing, counts, and sanity score
+├── meta.json                       # Conversion provenance, FNV-1a source fingerprint, timing, and sanity score
 ├── index/
-│   ├── sections.tsv                # section_id | level | title | file_path | start_line | page_range
-│   ├── tables.tsv                  # table_id | caption | columns | rows | file_path:line | page_range
-│   ├── registers.tsv               # peripheral | register | offset | reset | bits | field | access | reset | desc | file:line | page
-│   └── figures.tsv                 # figure_id | caption | image_path | file_path:line | page
+│   ├── sections.tsv                # section_id | title | file_path | lines | pages | tables | registers | figures
+│   ├── tables.tsv                  # table_id | caption | columns | rows | location | pages
+│   ├── registers.tsv               # peripheral | register | offset | reset | bits | field | access | field_reset | description | location | page
+│   ├── figures.tsv                 # figure_id | caption | image_path | location | page | bbox
+│   └── xref.tsv                    # symbol | kind | peripheral | summary | location | page
 ├── sections/                       # Bookmark-sharded Markdown files with YAML frontmatter
 │   ├── 01-architecture.md
 │   ├── 02-pmcu.md
-│   ├── 10-general-purpose-input-output-gpio.md
+│   ├── 12-10-general-purpose-input-output-gpio.md
 │   └── ...
 └── assets/
     └── figures/                    # Cropped vector/raster diagrams rendered at 200 DPI
@@ -41,16 +44,7 @@ output/mspm0c1105_trm/
         └── ...
 ```
 
-### How an AI Agent Uses the Bundle
-
-1. **Instant Orientation (`Read` `INDEX.md`)**: Reads the full document map, chapter list, and summary statistics in a single lightweight tool call.
-2. **One-Shot Register / Bitfield / Spec Lookup (`Grep` `index/registers.tsv` or `sections/`)**:
-   ```text
-   GPIO	FSUB_0	400h	00000000h	3-0	CHANID	R/W	0h	0 = disconnected; 1-15 = connected to channelID = CHANID	sections/10-general-purpose-input-output-gpio.md:148	564
-   ```
-   A single grep for `FSUB_0` or `CHANID` returns the peripheral, register, hex offset, reset value, bit range, access type, description, and exact `file:line` pointer in one line.
-3. **Targeted Deep Read (`Read` `sections/<chapter>.md` with `offset`/`limit`)**: Reads only the exact section or table lines needed.
-4. **Visual Diagram Inspection (`Read` `assets/figures/<fig>.png`)**: Views cropped pinout or block diagram PNGs on demand without wasting tokens on pages of prose.
+`chipdoc` also adds `output/` to `.claudeignore` automatically so generating or updating bundles never invalidates Claude Code's prompt cache.
 
 ---
 
@@ -71,23 +65,54 @@ pwsh scripts/fetch_pdfium.ps1
 cargo build --release
 ```
 
-### CLI Usage
+### 1-Turn Agent CLI Usage
 
 ```powershell
-# Convert one or more PDFs into Agent Documentation Bundles
-cargo run --release -- convert samples/mspm0c1105_datasheet.pdf samples/mspm0c1105_trm.pdf -o output/
+# 1. Check workspace status (ready bundles + unconverted PDFs)
+chipdoc status
 
-# Also emit a single merged Markdown file alongside the sharded bundle
-cargo run --release -- convert samples/mspm0c1105_datasheet.pdf -o output/ --single-file
+# 2. Ensure PDFs are converted (returns in ~1ms on cache hit; --lazy-figures defers PNG rendering)
+chipdoc ensure samples/mspm0c1105_datasheet.pdf samples/mspm0c1105_trm.pdf --lazy-figures
 
-# Convert only a specific page range (1-based, e.g. GPIO chapter)
-cargo run --release -- convert samples/mspm0c1105_trm.pdf -o output/ --pages 557-580
+# 3. Look up registers & bitfields by name, peripheral.reg, or C/vendor hex offset
+chipdoc reg GPIO_FSUB_0
+chipdoc reg 0x41C00004 --compact
 
-# Inspect PDF metadata, bookmark hierarchy, and page object statistics
-cargo run --release -- inspect samples/mspm0c1105_datasheet.pdf
+# 4. Search tables and print the reconstructed Markdown table inline
+chipdoc table "Top Level Memory Map" --show
 
-# Search across a generated Agent Bundle (registers, tables, and sections)
-cargo run --release -- search output/mspm0c1105_trm "FSUB_0"
+# 5. Traverse the Hardware Cross-Reference Graph across chapters, registers, pins, and tables
+chipdoc xref PA27
+chipdoc xref ADC0
+
+# 6. Extract Markdown for an exact PDF page or chapter section
+chipdoc page output/mspm0c1105_trm 564
+chipdoc section output/mspm0c1105_trm "gpio" --max-lines 100
+
+# 7. List figures and render a cropped PNG on demand
+chipdoc figure "Pin Diagram" --render samples/mspm0c1105_datasheet.pdf
+
+# 8. Parallel SIMD + Regex search across all bundles in output/
+chipdoc search "SWDP_MODE" --compact
+```
+
+---
+
+## Hybrid Claude Code Plugin (`CLI + Hooks + Thin Skill`)
+
+`chipdoc` ships as a complete Claude Code plugin:
+
+- **`.claude-plugin/plugin.json` & `marketplace.json`**: Self-hosted plugin and marketplace manifests.
+- **`hooks/hooks.json`**:
+  - **`SessionStart` hook (`scripts/session_start_hook.py`)**: Scans the workspace in <10 ms and injects a compact summary of ready `chipdoc` bundles and unconverted PDFs into session context.
+  - **`PreToolUse` hook (`scripts/pre_read_pdf_hook.py`)**: Intercepts direct `Read` calls on raw `.pdf` files and redirects the agent to `chipdoc ensure` + `chipdoc reg / table / xref / page`.
+- **`skills/chipdoc/SKILL.md`**: Concise skill teaching the agent the 1-turn `chipdoc` CLI commands.
+
+### Install in Claude Code
+
+```bash
+claude plugin marketplace add umbramonarch/chipdoc
+claude plugin install chipdoc@chipdoc
 ```
 
 ---

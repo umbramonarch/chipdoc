@@ -2,20 +2,23 @@
 
 ## Project Structure & Module Organization
 
-`chipdoc` converts technical and embedded-systems PDFs (microcontroller datasheets, Technical Reference Manuals, errata, and application notes) into **Hierarchical Agent Documentation Bundles** (`INDEX.md` + chapter `.md` files + flat `.tsv` grep indexes + cropped figure `.png` assets).
+`chipdoc` converts technical and embedded-systems PDFs (microcontroller datasheets, Technical Reference Manuals, errata, and application notes) into **Hierarchical Agent Documentation Bundles** (`INDEX.md` + chapter `.md` files + flat `.tsv` grep/xref indexes + cropped figure `.png` assets) and provides a 1-turn **Agent Document Intelligence CLI** and **Hybrid Claude Code Plugin**.
 
 - `Cargo.toml`: Workspace manifest defining shared dependencies, lints, and release profiles.
-- `crates/chipdoc-core/`: Core extraction, geometry, table reconstruction, register indexing, and bundle emission library.
-  - `src/model.rs`: Canonical domain structures (`BBox`, `TextSpan`, `PathSegment`, `TocEntry`, `ExtractedTable`, `RegisterBitfield`, `FigureRegion`, `DocBundle`).
-  - `src/pdf_loader.rs`: PDFium runtime binding, metadata & outline (`TOC`) extraction, and page text/path/image extraction.
-  - `src/cleaner.rs`: Running header/footer removal, boilerplate stripping, Unicode normalization (`U+2013` -> `-`, `℃` -> `°C`), and subscript kerning spacing (`VIInput` -> `VI Input`).
-  - `src/figures.rs`: Figure caption detection, vector/raster bounding-box clustering, diagram text-span suppression, and cropped PNG rendering.
+- `crates/chipdoc-core/`: Core extraction, geometry, table reconstruction, register indexing, cross-reference graph, query engine, and bundle emission library.
+  - `src/model.rs`: Canonical domain structures (`BBox`, `TextSpan`, `TocEntry`, `ExtractedTable`, `RegisterBitfield`, `FigureRegion`, `XrefEntry`, `ConvertConfig`).
+  - `src/pdf_loader.rs`: PDFium runtime binding, fast FNV-1a file fingerprinting, metadata & outline (`TOC`) extraction, page text/path/image extraction, and parallel/on-demand figure rendering.
+  - `src/cleaner.rs`: Parallel running header/footer removal, boilerplate stripping, Unicode normalization (`U+2013` -> `-`, `℃` -> `°C`), and subscript kerning spacing (`VIInput` -> `VI Input`).
+  - `src/figures.rs`: Figure caption detection, vector/raster bounding-box clustering, diagram text-span suppression, and cropped PNG region calculation.
   - `src/tables.rs`: Geometric vector-grid and coordinate-aligned table reconstruction, multi-row header flattening, mid-identifier wrap joining, and navigation column filtering.
   - `src/registers.rs`: Visual 16-/32-bit register bit-box deduplication, grep-anchored register header formatting, and `registers.tsv` extraction.
   - `src/stitcher.rs`: Cross-page `(continued)` table stitching and bookmark-driven section sharding.
-  - `src/emitter.rs`: Output writer for `INDEX.md`, `sections/*.md`, `index/*.tsv`, `meta.json`, and `--single-file`.
+  - `src/xref.rs`: Hardware Cross-Reference Graph builder (`index/xref.tsv`) linking peripherals, registers, bitfields, table rows/pins, figures, and chapters.
+  - `src/query.rs`: Multi-bundle discovery, hardware hex/symbol normalizer (`0x400` <-> `400h`, `GPIO_FSUB_0` <-> `GPIO.FSUB_0`), 1-turn domain queries (`reg`, `table`, `section`, `page`, `xref`, `figure`), and parallel SIMD (`memchr` + `rayon`) search.
+  - `src/emitter.rs`: Output writer for `INDEX.md`, `sections/*.md`, `index/*.tsv`, `meta.json`, `.claudeignore`, and `--single-file`.
   - `src/sanity.rs`: Conversion sanity scoring and token-efficiency diagnostics.
-- `crates/chipdoc-cli/`: Command-line interface binary (`chipdoc`) implementing `convert`, `inspect`, and `search`.
+- `crates/chipdoc-cli/`: Command-line interface binary (`chipdoc`) implementing `convert`, `ensure`, `status`, `inspect`, `reg`, `table`, `section`, `page`, `xref`, `figure`, and `search`.
+- `.claude-plugin/`, `hooks/`, `scripts/`, `skills/chipdoc/`: Hybrid Claude Code plugin (`SessionStart` bundle discovery hook, `PreToolUse` raw PDF read guard, and `SKILL.md`).
 - `samples/`: Local PDF test corpus (`samples/*.pdf` is gitignored; `samples/README.md` is tracked).
 - `bin/`: Local runtime location for `pdfium.dll` / `libpdfium.so` / `libpdfium.dylib` (gitignored).
 - `scripts/fetch_pdfium.ps1`: PowerShell helper to download or copy the platform PDFium dynamic library into `bin/`.
@@ -27,9 +30,11 @@
 - `cargo test --workspace`: Run all unit and integration tests across the workspace.
 - `cargo fmt --all -- --check`: Check Rust formatting.
 - `cargo clippy --workspace --all-targets -- -D warnings`: Run strict static analysis with zero warnings permitted.
-- `cargo run --release -p chipdoc-cli -- convert samples/mspm0c1105_datasheet.pdf -o output/`: Convert a PDF into an Agent Documentation Bundle.
-- `cargo run --release -p chipdoc-cli -- inspect samples/mspm0c1105_trm.pdf`: Inspect PDF metadata, outline tree, and page geometry statistics.
-- `cargo run --release -p chipdoc-cli -- search output/mspm0c1105_trm "FSUB_0"`: Search across generated `.tsv` indexes and `.md` sections.
+- `cargo run --release -p chipdoc-cli -- ensure samples/mspm0c1105_datasheet.pdf samples/mspm0c1105_trm.pdf -o output/`: Ensure PDFs are converted and cached.
+- `cargo run --release -p chipdoc-cli -- status`: Show ready bundles and unconverted PDFs in the workspace.
+- `cargo run --release -p chipdoc-cli -- reg 0x41C00004`: Query register by C hex offset, vendor hex offset, or peripheral/register name.
+- `cargo run --release -p chipdoc-cli -- table "Memory Map" --show`: Search tables and render inline Markdown.
+- `cargo run --release -p chipdoc-cli -- xref PA27`: Query the Hardware Cross-Reference Graph across all bundles.
 
 ## Coding Style & Naming Conventions
 

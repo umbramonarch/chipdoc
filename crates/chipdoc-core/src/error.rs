@@ -6,6 +6,9 @@ pub enum ChipdocError {
     #[error("PDF file not found: {0}")]
     PdfNotFound(PathBuf),
 
+    #[error("No converted chipdoc bundle found at '{0}'. Run `chipdoc ensure <pdf>` or `chipdoc convert <pdf>` first.")]
+    BundleNotFound(PathBuf),
+
     #[error("Failed to bind PDFium library: {0}. Run `pwsh scripts/fetch_pdfium.ps1` to stage bin/pdfium.dll.")]
     PdfiumBind(String),
 
