@@ -1,0 +1,27 @@
+# Rust / Cargo build artifacts
+/target/
+**/*.rs.bk
+
+# Runtime PDFium shared libraries
+/bin/*.dll
+/bin/*.so
+/bin/*.dylib
+/pdfium.dll
+/libpdfium.so
+/libpdfium.dylib
+
+# Local PDF test corpus (keep README.md tracked)
+/samples/*.pdf
+
+# Generated Agent Documentation Bundles
+/output/
+/out/
+
+# Environment & IDE
+.env
+.vscode/
+.idea/
+*.swp
+*.log
+.DS_Store
+Thumbs.db
