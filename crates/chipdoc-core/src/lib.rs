@@ -4,18 +4,26 @@ pub mod error;
 pub mod figures;
 pub mod model;
 pub mod pdf_loader;
+pub mod query;
 pub mod registers;
 pub mod sanity;
 pub mod stitcher;
 pub mod tables;
+pub mod xref;
 
 use crate::cleaner::{assemble_text_lines, clean_pages};
-use crate::emitter::{build_section_files, write_agent_bundle};
+use crate::emitter::{build_section_files, ensure_claudeignore_entry, write_agent_bundle};
 use crate::error::Result;
 use crate::figures::detect_page_figures;
 use crate::model::{ConversionBundle, ConvertConfig, DocMetadata, PageBlock, TocEntry};
-use crate::pdf_loader::{bind_pdfium, load_pdf_document, render_detected_figures};
-use crate::registers::suppress_visual_register_bitboxes;
+use crate::pdf_loader::{
+    bind_pdfium, compute_pdf_fingerprint, load_pdf_document, render_detected_figures,
+};
+use crate::query::load_bundle_status;
+use crate::registers::{
+    infer_peripheral_from_registers_heading, infer_peripheral_name,
+    suppress_visual_register_bitboxes,
+};
 use crate::sanity::{compute_sanity_report, SanityInputs};
 use crate::stitcher::{assemble_page_blocks, compute_section_shards, stitch_multipage_tables};
 use crate::tables::extract_page_tables;
@@ -59,8 +67,46 @@ pub fn inspect_pdf(
 }
 
 /// Executes the full `chipdoc` conversion pipeline on a PDF and writes an Agent Documentation Bundle.
+/// When `!config.force` and `config.page_filter.is_none()`, returns an existing up-to-date bundle
+/// in <2ms if the source PDF fingerprint matches `meta.json`.
 pub fn convert_pdf(config: &ConvertConfig) -> Result<ConversionBundle> {
     let start_ts = Instant::now();
+
+    if !config.force && config.page_filter.is_none() {
+        if let Some(stem) = config.input_pdf.file_stem().and_then(|s| s.to_str()) {
+            let candidate_dir = config.output_root.join(stem);
+            let index_md_path = candidate_dir.join("INDEX.md");
+            let xref_tsv_path = candidate_dir.join("index").join("xref.tsv");
+            if index_md_path.exists() && xref_tsv_path.exists() {
+                if let (Ok((hash, _)), Some(mut status)) = (
+                    compute_pdf_fingerprint(&config.input_pdf),
+                    load_bundle_status(&candidate_dir),
+                ) {
+                    if !status.metadata.source_hash.is_empty()
+                        && status.metadata.source_hash == hash
+                    {
+                        if config.update_claudeignore {
+                            let _ = ensure_claudeignore_entry(&config.output_root);
+                        }
+                        status.sanity.cache_hit = true;
+                        status.sanity.elapsed_ms = start_ts.elapsed().as_millis();
+                        let single_md_path = config
+                            .single_file
+                            .then(|| candidate_dir.join(format!("{stem}.md")))
+                            .filter(|p| p.exists());
+                        return Ok(ConversionBundle {
+                            bundle_dir: candidate_dir,
+                            index_md_path,
+                            single_md_path,
+                            metadata: status.metadata,
+                            sanity: status.sanity,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     let pdfium = bind_pdfium(config.pdfium_lib_dir.as_deref())?;
 
     // 1. Load PDF metadata, outline tree, and raw page primitives
@@ -99,6 +145,19 @@ pub fn convert_pdf(config: &ConvertConfig) -> Result<ConversionBundle> {
         figures_detected += fig_stats.figures_detected;
         figure_text_spans_suppressed += fig_stats.spans_suppressed;
         all_figures.extend(figures.clone());
+
+        for entry in toc.iter().filter(|e| e.start_page == page.page_number) {
+            if entry.level <= 1 {
+                let inferred = infer_peripheral_name(&entry.title);
+                if inferred != "SYS" {
+                    current_peripheral = inferred;
+                }
+            } else if entry.level == 2 {
+                if let Some(inferred) = infer_peripheral_from_registers_heading(&entry.title) {
+                    current_peripheral = inferred;
+                }
+            }
+        }
 
         let page_blocks = assemble_page_blocks(page, tables, figures, &mut current_peripheral);
         all_blocks.extend(page_blocks);

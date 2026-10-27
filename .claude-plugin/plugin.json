@@ -1,0 +1,24 @@
+{
+  "name": "chipdoc",
+  "version": "1.1.0",
+  "description": "Agent Document Intelligence CLI and plugin for microcontroller datasheets, Technical Reference Manuals (TRMs), errata, and engineering PDFs: zero-LLM geometric PDF-to-Bundle conversion, 1-turn register/table/pin cross-reference queries, and automatic PDF token-saving hooks.",
+  "license": "MIT",
+  "author": {
+    "name": "umbramonarch",
+    "url": "https://github.com/umbramonarch"
+  },
+  "homepage": "https://github.com/umbramonarch/chipdoc",
+  "repository": "https://github.com/umbramonarch/chipdoc",
+  "keywords": [
+    "chipdoc",
+    "datasheet",
+    "embedded",
+    "firmware",
+    "knowledge-graph",
+    "microcontroller",
+    "pdf",
+    "registers",
+    "skill",
+    "trm"
+  ]
+}

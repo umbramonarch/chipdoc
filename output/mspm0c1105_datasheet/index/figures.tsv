@@ -1,0 +1,22 @@
+figure_id	caption	image_path	location	page	bbox
+fig-4-1	Figure 4-1. MSPM0C1105/6 Functional Block Diagram	assets/figures/p004-figure-4-1-mspm0c1105-6-functional-block-diagram.png	sections/03-4-functional-block-diagram.md:14	4	41.1,109.0,531.7,547.5
+fig-6-1	Figure 6-1. 48-pin RGZ (VQFN) Package	assets/figures/p007-figure-6-1-48-pin-rgz-vqfn-package.png	sections/06-6-pin-configuration-and-functions.md:20	7	30.0,240.8,473.9,618.9
+fig-6-2	Figure 6-2. 48-pin PT (A) 48-pin PT (LQFP) Package	assets/figures/p008-figure-6-2-48-pin-pt-a-48-pin-pt-lqfp-package.png	sections/06-6-pin-configuration-and-functions.md:23	8	177.6,400.6,612.0,697.0
+fig-6-3	Figure 6-3. 48-pin PT (B) (LQFP) Package	assets/figures/p009-figure-6-3-48-pin-pt-b-lqfp-package.png	sections/06-6-pin-configuration-and-functions.md:26	9	23.3,427.2,410.9,708.9
+fig-6-4	Figure 6-4. 32-pin RHB (VQFN) Package	assets/figures/p010-figure-6-4-32-pin-rhb-vqfn-package.png	sections/06-6-pin-configuration-and-functions.md:29	10	160.9,74.5,437.4,380.1
+fig-6-5	Figure 6-5. 32-pin VFC (LQFP)	assets/figures/p010-figure-6-5-32-pin-vfc-lqfp.png	sections/06-6-pin-configuration-and-functions.md:32	10	22.0,384.5,402.2,692.6
+fig-6-6	Figure 6-6. 28-pin DGS28 (VSSOP)	assets/figures/p011-figure-6-6-28-pin-dgs28-vssop.png	sections/06-6-pin-configuration-and-functions.md:35	11	202.4,66.5,409.7,323.1
+fig-6-7	Figure 6-7. 24-pin RGE (VQFN) Package	assets/figures/p011-figure-6-7-24-pin-rge-vqfn-package.png	sections/06-6-pin-configuration-and-functions.md:38	11	14.4,330.6,419.3,600.2
+fig-6-8	Figure 6-8. 20-pin DGS20 (VSSOP)	assets/figures/p012-figure-6-8-20-pin-dgs20-vssop.png	sections/06-6-pin-configuration-and-functions.md:41	12	194.0,66.5,417.6,264.1
+fig-6-9	Figure 6-9. 20-pin RUK (WQFN)	assets/figures/p012-figure-6-9-20-pin-ruk-wqfn.png	sections/06-6-pin-configuration-and-functions.md:44	12	65.0,295.6,416.6,561.6
+fig-6-10	Figure 6-10. 48-pin ZCM (NFBGA) Package (Top view)	assets/figures/p013-figure-6-10-48-pin-zcm-nfbga-package-top-view.png	sections/06-6-pin-configuration-and-functions.md:47	13	35.9,66.6,512.6,477.1
+fig-7-1	Figure 7-1. Power Cycle POR/BOR Conditions - VDD	assets/figures/p045-figure-7-1-power-cycle-por-bor-conditions-vdd.png	sections/07-7-specifications.md:171	45	74.8,66.9,536.8,273.1
+fig-7-2	Figure 7-2. ADC Input Network	assets/figures/p052-figure-7-2-adc-input-network.png	sections/07-7-specifications.md:490	52	169.4,88.0,443.6,233.1
+fig-7-3	Figure 7-3. I2C Timing Diagram	assets/figures/p055-figure-7-3-i2c-timing-diagram.png	sections/07-7-specifications.md:610	55	48.3,201.3,563.3,351.0
+fig-7-4	Figure 7-4. SPI Timing Diagram - Controller Mode	assets/figures/p056-figure-7-4-spi-timing-diagram-controller-mode.png	sections/07-7-specifications.md:658	56	0.0,374.1,612.0,608.1
+fig-7-5	Figure 7-5. SPI Timing Diagram - Peripheral Mode	assets/figures/p057-figure-7-5-spi-timing-diagram-peripheral-mode.png	sections/07-7-specifications.md:661	57	48.4,66.7,563.2,300.9
+fig-8-1	Figure 8-1. VREF module	assets/figures/p069-figure-8-1-vref-module.png	sections/08-8-detailed-description.md:466	69	71.0,67.0,541.4,324.1
+fig-8-2	Figure 8-2. Device Analog Connection	assets/figures/p075-figure-8-2-device-analog-connection.png	sections/08-8-detailed-description.md:772	75	40.5,101.3,714.1,426.3
+fig-8-3	Figure 8-3. Superset Input/Output Diagram	assets/figures/p076-figure-8-3-superset-input-output-diagram.png	sections/08-8-detailed-description.md:781	76	0.0,161.2,562.7,678.9
+fig-9-1	Figure 9-1. Typical Application Schematic	assets/figures/p079-figure-9-1-typical-application-schematic.png	sections/09-9-applications-implementation-and-layout.md:28	79	0.0,347.9,457.6,624.9
+fig-10-1	Figure 10-1. Device Nomenclature	assets/figures/p080-figure-10-1-device-nomenclature.png	sections/10-10-device-and-documentation-support.md:32	80	177.7,405.6,434.2,501.9

@@ -6,7 +6,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "1.1.0"
 edition = "2021"
 license = "MIT"
 authors = ["anas.alshaer"]
@@ -17,6 +17,7 @@ description = "Convert technical and embedded PDFs (datasheets, TRMs) into grep-
 anyhow = "1.0"
 clap = { version = "4.5", features = ["derive"] }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+memchr = "2.7"
 pdfium-render = { version = "0.8", features = ["thread_safe", "image_025"] }
 rayon = "1.10"
 regex = "1.11"

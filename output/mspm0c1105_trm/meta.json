@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "author": "Texas Instruments, Incorporated [SLAU893,C]",
+    "converted_pages": 1313,
+    "creator": "Antenna House XSL Formatter V7.4 R1 Windows : 7.4.1.63121 (2023-12-20T11:05+09)",
+    "doc_stem": "mspm0c1105_trm",
+    "file_name": "mspm0c1105_trm.pdf",
+    "keywords": "SLAU893C",
+    "producer": "iText 2.1.7 by 1T3XT",
+    "source_hash": "86f0026c4eff6724",
+    "source_size_bytes": 13290342,
+    "subject": "Technical Reference",
+    "title": "MSPM0 C-Series 24-MHz Microcontrollers Technical Reference Manual (Rev. C)",
+    "total_pages": 1313
+  },
+  "sanity": {
+    "bitfields_indexed": 5139,
+    "cache_hit": false,
+    "chipdoc_version": "1.1.0",
+    "converted_pages": 1313,
+    "elapsed_ms": 14619,
+    "estimated_tokens": 547540,
+    "figure_text_spans_suppressed": 285,
+    "figures_detected": 129,
+    "figures_rendered": 129,
+    "header_footer_spans_stripped": 10046,
+    "multi_page_tables_stitched": 232,
+    "registers_indexed": 644,
+    "replacement_char_count": 0,
+    "sanity_score": 100,
+    "section_files_count": 26,
+    "tables_extracted": 957,
+    "total_pages": 1313,
+    "visual_bitboxes_deduplicated": 688,
+    "warnings": [],
+    "xrefs_indexed": 8993
+  }
+}

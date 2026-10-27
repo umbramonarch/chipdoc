@@ -1,0 +1,15 @@
+{
+  "name": "chipdoc",
+  "owner": {
+    "name": "umbramonarch",
+    "url": "https://github.com/umbramonarch"
+  },
+  "description": "Agent Document Intelligence CLI, hooks, and skill for querying microcontroller datasheets, TRMs, and technical PDFs with minimal token usage.",
+  "plugins": [
+    {
+      "name": "chipdoc",
+      "source": "./",
+      "description": "Hybrid CLI + Hooks + Skill plugin that converts technical PDFs into Hierarchical Agent Documentation Bundles and gives coding agents 1-turn register, table, page, and cross-reference graph queries."
+    }
+  ]
+}

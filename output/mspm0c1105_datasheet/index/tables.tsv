@@ -1,0 +1,85 @@
+table_id	caption	columns	rows	location	pages
+table-3-1	Table 3-1. Package Information	PART NUMBER (1) (2) | PACKAGE | PACKAGE SIZE (3) (4)	21	sections/02-3-description.md:22	2-3
+table-5-1	Table 5-1. Device Comparison Table	DEVICE NAME (1) | FLASH / SRAM (KB) | ADC CHANNEL | UART / I2C / SPI | TIMG | TIMA | GPIO | COMP | PACKAGE (2)	22	sections/05-5-device-comparison.md:12	6
+table-6-1	Table 6-1. Digital IO Features by IO Type	BUFFER TYPE | INVERSION CONTROL | DRIVE STRENGTH CONTROL | HYSTERESISCONTROL | PULLUP RESISTOR | PULLDOWN RESISTOR | WAKEUP LOGIC	3	sections/06-6-pin-configuration-and-functions.md:58	14
+table-6-2	Table 6-2. Pin Attributes (PT (A), ZCM, VFC, PT (B), RGZ, RHB, DGS28, RGE, DGS20, RUK Packages)	PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN | PIN NAME/ IOMUX REG/ IOMUX ADDR | SIGNAL NAME | IOMUX PF | SIGNAL TYPE | BUFFER TYPE	540	sections/06-6-pin-configuration-and-functions.md:74	14-28
+table-6-3	Table 6-3. Analog to Digital Converter (ADC) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | RGE PIN | DGS2 0 PIN | RUK PIN	29	sections/06-6-pin-configuration-and-functions.md:623	28-29
+table-6-4	Table 6-4. Flash Bootstrap Loader (BSL) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS28 PIN | RGE PIN | DGS20 PIN | RUK PIN	1	sections/06-6-pin-configuration-and-functions.md:657	29
+table-6-5	Table 6-5. Clock Module (CKM) Signal Descriptions (continued)	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	7	sections/06-6-pin-configuration-and-functions.md:669	30
+table-6-6	Table 6-6. Comparator (COMP) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	9	sections/06-6-pin-configuration-and-functions.md:681	30
+table-6-7	Table 6-7. General Purpose Input Output Module Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	45	sections/06-6-pin-configuration-and-functions.md:695	30-31
+table-6-8	Table 6-8. I2C Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	4	sections/06-6-pin-configuration-and-functions.md:745	32
+table-6-9	Table 6-9. Real-time Clock (RTC) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	8	sections/06-6-pin-configuration-and-functions.md:754	32
+table-6-10	Table 6-10. Serial Peripheral Interface (SPI) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	7	sections/06-6-pin-configuration-and-functions.md:767	33-34
+table-6-11	Table 6-11. Serial Wire Debug (SWD) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	2	sections/06-6-pin-configuration-and-functions.md:779	34
+table-6-12	Table 6-12. System Controller (SYSCTL) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	4	sections/06-6-pin-configuration-and-functions.md:786	34
+table-6-13	Table 6-13. Timer (TIMx) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	68	sections/06-6-pin-configuration-and-functions.md:795	34-38
+table-6-14	Table 6-14. Universal Asynchronous Receiver Transmitter (UART) Signal Descriptions	SIGNAL NAME | PIN TYPE | DESCRIPTION | PT (A) PIN | ZCM PIN | VFC PIN | PT (B) PIN | RGZ PIN | RHB PIN | DGS2 8 PIN | RGE PIN | DGS2 0 PIN | RUK PIN	23	sections/06-6-pin-configuration-and-functions.md:868	38-40
+table-6-15	Table 6-15. Connection of Unused Pins	PIN (1) | POTENTIAL | COMMENT	2	sections/06-6-pin-configuration-and-functions.md:900	40
+p041-table-1	p041-table-1	Col 1 | Col 2 | Col 3 | MIN | MAX | UNIT	12	sections/07-7-specifications.md:16	41
+p041-table-2	p041-table-2	Col 1 | Col 2 | Col 3 | VALUE | UNIT	2	sections/07-7-specifications.md:39	41
+p041-table-3	p041-table-3	Col 1 | Col 2 | MIN | NOM | MAX | UNIT	6	sections/07-7-specifications.md:52	41
+p042-table-1	p042-table-1	Col 1 | THERMAL METRIC (1) | PACKAGE | VALUE | UNIT	48	sections/07-7-specifications.md:71	42-43
+p044-table-1	p044-table-1	Col 1 | PARAMETER PARAMETER | MCLK MCLK | -40°C TYP | -40°C MAX | 25°C TYP | 25°C MAX | 85°C TYP | 85°C MAX | 105°C TYP | 105°C MAX | 125°C TYP | 125°C MAX | UNIT UNIT	7	sections/07-7-specifications.md:130	44
+p044-table-2	p044-table-2	Col 1 | PARAMETER PARAMETER | ULPCLK ULPCLK | -40°C TYP | -40°C MAX | 25°C TYP | 25°C MAX | 85°C TYP | 85°C MAX | 105°C TYP | 105°C MAX | 125°C TYP | 125°C MAX | UNIT UNIT	10	sections/07-7-specifications.md:144	44
+p044-table-3	p044-table-3	Col 1 | PARAMETER PARAMETER | -40°C TYP | -40°C MAX | 25°C TYP | 25°C MAX | 85°C TYP | 85°C MAX | 105°C TYP | 105°C MAX | 125°C TYP | 125°C MAX | UNIT UNIT	1	sections/07-7-specifications.md:161	44
+p045-table-1	p045-table-1	Col 2 | Col 4 | PARAMETER | Col 6 | TEST CONDITIONS | MIN | TYP | MAX | UNIT	25	sections/07-7-specifications.md:178	45
+p046-table-1	p046-table-1	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	19	sections/07-7-specifications.md:210	46
+p046-table-2	p046-table-2	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	4	sections/07-7-specifications.md:248	46
+p047-table-1	p047-table-1	VDD=3.3V, T | a =25 °C (unless otherwise noted) PARAMETER | a =25 °C (unless otherwise noted) TEST CONDITIONS | a =25 °C (unless otherwise noted) MIN | a =25 °C (unless otherwise noted) TYP | a =25 °C (unless otherwise noted) MAX | a =25 °C (unless otherwise noted) UNIT	15	sections/07-7-specifications.md:255	47
+p047-table-2	p047-table-2	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	5	sections/07-7-specifications.md:283	47
+p048-table-1	p048-table-1	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	5	sections/07-7-specifications.md:301	48
+p048-table-2	p048-table-2	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	12	sections/07-7-specifications.md:313	48
+p048-table-3	p048-table-3	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	15	sections/07-7-specifications.md:338	48-49
+p049-table-2	p049-table-2	Col 1 | PARAMETER | Col 3 | TEST CONDITIONS | MIN | TYP | MAX | UNIT	16	sections/07-7-specifications.md:368	49
+p050-table-1	p050-table-1	Col 1 | PARAMETER | Col 3 | TEST CONDITIONS | MIN | TYP | MAX | UNIT	6	sections/07-7-specifications.md:399	50
+p050-table-2	p050-table-2	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	3	sections/07-7-specifications.md:414	50
+p050-table-3	p050-table-3	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	18	sections/07-7-specifications.md:426	50
+p051-table-1	p051-table-1	measured at 25 | °C PARAMETER | over recommended ranges of supply voltage and operating free-air temperature (unless otherwise noted), all TYP values are and all accuracy parameters are measured using 12-bit resolution mode (unless otherwise noted) TEST CONDITIONS | over recommended ranges of supply voltage and operating free-air temperature (unless otherwise noted), all TYP values are and all accuracy parameters are measured using 12-bit resolution mode (unless otherwise noted) MIN | over recommended ranges of supply voltage and operating free-air temperature (unless otherwise noted), all TYP values are and all accuracy parameters are measured using 12-bit resolution mode (unless otherwise noted) TYP | over recommended ranges of supply voltage and operating free-air temperature (unless otherwise noted), all TYP values are and all accuracy parameters are measured using 12-bit resolution mode (unless otherwise noted) MAX | over recommended ranges of supply voltage and operating free-air temperature (unless otherwise noted), all TYP values are and all accuracy parameters are measured using 12-bit resolution mode (unless otherwise noted) UNIT	7	sections/07-7-specifications.md:447	51
+p051-table-2	p051-table-2	Col 1 | PARAMETER | Col 3 | TEST CONDITIONS | MIN | TYP | MAX | UNIT	5	sections/07-7-specifications.md:467	51
+p051-table-3	p051-table-3	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	4	sections/07-7-specifications.md:479	51
+p052-table-1	p052-table-1	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	3	sections/07-7-specifications.md:501	52
+p053-table-1	p053-table-1	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	9	sections/07-7-specifications.md:517	53
+p053-table-2	p053-table-2	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	4	sections/07-7-specifications.md:535	53
+p053-table-3	p053-table-3	Col 1 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	25	sections/07-7-specifications.md:548	53-54
+p054-table-2	p054-table-2	Col 1 | PARAMETERS PARAMETERS | TEST CONDITIONS TEST CONDITIONS | Standard mode MIN | Standard mode MAX | Fast mode MIN | Fast mode MAX | Fast mode plus MIN | Fast mode plus MAX | UNIT UNIT	12	sections/07-7-specifications.md:582	54
+p055-table-1	p055-table-1	Col 1 | PARAMETERS | TEST CONDITIONS | MIN | TYP | MAX | UNIT	4	sections/07-7-specifications.md:601	55
+p055-table-2	p055-table-2	Col 1 | Col 3 | PARAMETERS | Col 5 | Col 6 | Col 7 | Col 8 | Col 9 | MIN | TYP | MAX | UNIT	12	sections/07-7-specifications.md:619	55
+p056-table-1	p056-table-1	Col 1 | PARAMETERS | TEST CONDITIONS | MIN | TYP | MAX | UNIT	13	sections/07-7-specifications.md:634	56
+p057-table-1	p057-table-1	Col 1 | PARAMETERS | TEST CONDITIONS | MIN | TYP | MAX | UNIT	6	sections/07-7-specifications.md:668	57
+p057-table-2	p057-table-2	Col 1 | PARAMETERS | Col 5 | TEST CONDITIONS | MIN | TYP | MAX | UNIT	7	sections/07-7-specifications.md:681	57
+p057-table-3	p057-table-3	Col 1 | Col 3 | PARAMETER | TEST CONDITIONS | MIN | TYP | MAX | UNIT	1	sections/07-7-specifications.md:697	57
+table-8-1	Table 8-1. Supported Functionality by Operating Mode	Col 1 | Col 2 | Col 3 | RUN | Col 5 | Col 6 | SLEEP | Col 8 | STOP | STOP | STANDBY | STANDBY | SHUTD	39	sections/08-8-detailed-description.md:64	60-61
+table-8-2	Table 8-2. DMA_B Channel Features	DMA Feature | DMA_B | DMA_B	10	sections/08-8-detailed-description.md:194	62
+table-8-3	Table 8-3. DMA Trigger Mapping	DMACTL.DMATSEL | TRIGGER SOURCE	14	sections/08-8-detailed-description.md:211	62-63
+p063-table-2	p063-table-2	CHANID | Generic Route Channel Selection | Channel Type	8	sections/08-8-detailed-description.md:248	63
+table-8-5	Table 8-5. Memory Organization	Memory Region | Subregion | MSPM0C1105 | MSPM0C1106	8	sections/08-8-detailed-description.md:265	64
+table-8-6	Table 8-6. Peripherals Summary	PERIPHERAL NAME | BASE ADDRESS | SIZE	29	sections/08-8-detailed-description.md:284	64-65
+table-8-7	Table 8-7. Interrupt Vector Number	PERIPHERAL NAME | NVIC IRQ	23	sections/08-8-detailed-description.md:322	66
+table-8-8	Table 8-8. ADC0 Channel Mapping	CHANNEL[0:7] | SIGNAL NAME | CHANNEL[8:15] | SIGNAL NAME	15	sections/08-8-detailed-description.md:412	67-68
+table-8-9	Table 8-9. COMP0 Input Channel Selection	IPSEL / IMSEL BITS | POSITIVE TERMINAL INPUT | NEGATIVE TERMINAL INPUT	5	sections/08-8-detailed-description.md:493	69
+table-8-10	Table 8-10. COMP0 Blanking Source Table	CTL2.BLANKSRC | Blanking Source Selected	5	sections/08-8-detailed-description.md:503	69-70
+table-8-11	Table 8-11. UART Features	UART Features | UART0(Extend) | UART1, UART2(Main)	9	sections/08-8-detailed-description.md:561	70-71
+table-8-12	Table 8-12. RTC_B Key Features	RTC Features | RTC_B	16	sections/08-8-detailed-description.md:685	72-73
+table-8-13	Table 8-13. TIMx Configurations	TIMER NAME | POWER DOMAIN | RESOLUTION | PRESCALER | REPEAT COUNTER | CAPTURE / COMPARE CHANNELS | PHASE LOAD | SHADOW LOAD | SHADOW CC | DEAD-BAND | FAULT | QEI	5	sections/08-8-detailed-description.md:758	74
+table-8-14	Table 8-14. Serial Wire Debug Pin Requirements and Functions	DEVICE SIGNAL | DIRECTION | SWD FUNCTION	2	sections/08-8-detailed-description.md:788	77
+table-8-15	Table 8-15. DEVICEID	Device | PARTNUM | MANUFACTURER	2	sections/08-8-detailed-description.md:821	77
+table-8-16	Table 8-16. USERID	Device | Part | Variant	2	sections/08-8-detailed-description.md:830	77
+table-8-16	Table 8-16. USERID (continued)	Device | Part | Variant	18	sections/08-8-detailed-description.md:839	78
+table-10-1	Table 10-1. Device Nomenclature	Processor Family | MSP = Mixed-signal processor X= Experimental silicon	7	sections/10-10-device-and-documentation-support.md:35	80
+p082-table-1	p082-table-1	• | Removed the ZCM table footnotes | 2	5	sections/11-11-revision-history.md:16	82
+p106-table-1	p106-table-1	Col 1 | Col 2 | TAPE AND REEL INFORMATION | TAPE AND REEL INFORMATION | Col 5 | Col 7 | Col 8 | Col 9 | Col 10 | Col 11 | Col 12 | Col 13 | Col 14 | P1 | Col 16 | Col 17 | Col 18 | Col 19 | Col 20 | Col 21	27	sections/12-12-mechanical-packaging-and-orderable-information.md:54	106
+p107-table-1	p107-table-1	Device | Package Type | Package Drawing | Pins | SPQ | Reel Diameter (mm) | Reel Width W1 (mm) | A0 (mm) | B0 (mm) | K0 (mm) | P1 (mm) | W (mm) | Pin1 Quadrant	3	sections/12-12-mechanical-packaging-and-orderable-information.md:86	107
+p108-table-1	p108-table-1	Device | Package Type | Package Drawing | Pins | SPQ | Length (mm) | Width (mm) | Height (mm)	18	sections/12-12-mechanical-packaging-and-orderable-information.md:102	108
+p109-table-1	p109-table-1	Device | Package Type | Package Drawing | Pins | SPQ | Length (mm) | Width (mm) | Height (mm)	1	sections/12-12-mechanical-packaging-and-orderable-information.md:125	109
+p111-table-1	p111-table-1	Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 | PLASTIC BALL GRID ARRAY	2	sections/12-12-mechanical-packaging-and-orderable-information.md:163	111
+p112-table-1	p112-table-1	Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | PLASTIC BALL GRID ARRAY	2	sections/12-12-mechanical-packaging-and-orderable-information.md:174	112
+p115-table-1	p115-table-1	Col 1 | Col 2 | Col 3 | Col 5 | Col 6 | Col 7 | Col 8 | Col 10 | Col 11 | Col 13 | Col 14 | Col 15 | Col 16 | Col 17 | PLASTIC QUAD FLATPACK - NO LEAD	5	sections/12-12-mechanical-packaging-and-orderable-information.md:221	115
+p116-table-1	p116-table-1	Col 1 | Col 2 | Col 3 | Col 4 | Col 6 | Col 7 | Col 8 | Col 9 | Col 12 | Col 13 | Col 14 | Col 17 | Col 18 | Col 19 | PLASTIC QUAD FLATPACK - NO LEAD	4	sections/12-12-mechanical-packaging-and-orderable-information.md:235	116
+p118-table-1	p118-table-1	Col 1 | Col 2 | Col 3 | Col 5 | Col 6 | Col 7 | Col 8 | Col 11 | Col 12 | Col 14 | Col 15 | Col 18 | Col 19 | Col 20 | Col 21 | LOW PROFILE QUAD FLATPACK	4	sections/12-12-mechanical-packaging-and-orderable-information.md:278	118
+p121-table-1	p121-table-1	Col 1 | Col 2 | Col 3 | Col 6 | Col 7 | Col 9 | Col 10 | Col 11 | SMALL OUTLINE PACKAGE	2	sections/12-12-mechanical-packaging-and-orderable-information.md:349	121
+p122-table-1	p122-table-1	Col 1 | Col 2 | Col 5 | Col 6 | Col 9 | SMALL OUTLINE PACKAGE	2	sections/12-12-mechanical-packaging-and-orderable-information.md:360	122
+p125-table-1	p125-table-1	Col 1 | Col 2 | Col 3 | Col 5 | Col 6 | Col 7 | Col 8 | Col 9 | Col 10 | Col 12 | Col 13 | Col 14 | Col 15 | Col 16 | Col 17 | PLASTIC QUAD FLATPACK - NO LEAD	4	sections/12-12-mechanical-packaging-and-orderable-information.md:407	125
+p132-table-1	p132-table-1	Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 | Col 9 | Col 10 | SMALL OUTLINE PACKAGE	2	sections/12-12-mechanical-packaging-and-orderable-information.md:588	132
+p133-table-1	p133-table-1	Col 1 | Col 2 | Col 5 | Col 6 | Col 9 | SMALL OUTLINE PACKAGE	2	sections/12-12-mechanical-packaging-and-orderable-information.md:599	133
+p136-table-1	p136-table-1	Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 7 | Col 8 | Col 9 | Col 10 | PLASTIC QUAD FLATPACK - NO LEAD	6	sections/12-12-mechanical-packaging-and-orderable-information.md:642	136

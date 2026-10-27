@@ -1,0 +1,130 @@
+figure_id	caption	image_path	location	page	bbox
+fig-1-1	Figure 1-1. MSPM0Cxx Bus Organization	assets/figures/p012-figure-1-1-mspm0cxx-bus-organization.png	sections/03-1-architecture.md:58	12	64.0,67.8,452.7,454.1
+fig-2-1	Figure 2-1. PMCU Top-Level Diagram	assets/figures/p060-figure-2-1-pmcu-top-level-diagram.png	sections/04-2-pmcu.md:40	60	85.1,298.7,526.5,594.3
+fig-2-2	Figure 2-2. MSPM0Cxx Operating Modes	assets/figures/p061-figure-2-2-mspm0cxx-operating-modes.png	sections/04-2-pmcu.md:69	61	48.4,358.5,416.4,558.8
+fig-2-3	Figure 2-3. MSPM0Cxx PMU Block Diagram	assets/figures/p064-figure-2-3-mspm0cxx-pmu-block-diagram.png	sections/04-2-pmcu.md:202	64	18.5,397.6,560.5,676.0
+fig-2-4	Figure 2-4. POR/BOR vs. Supply Voltage (VDD)	assets/figures/p066-figure-2-4-por-bor-vs-supply-voltage-vdd.png	sections/04-2-pmcu.md:257	66	23.2,465.9,533.2,671.1
+fig-2-5	Figure 2-5. VBOOST Request Logic	assets/figures/p068-figure-2-5-vboost-request-logic.png	sections/04-2-pmcu.md:320	68	131.2,254.9,481.4,462.5
+fig-2-6	Figure 2-6. MSPM0Cxx Top Level Clock Tree	assets/figures/p083-figure-2-6-mspm0cxx-top-level-clock-tree.png	sections/04-2-pmcu.md:793	83	59.7,64.3,612.0,704.5
+fig-2-7	Figure 2-7. Peripheral Clock Selection Mux and Divider	assets/figures/p084-figure-2-7-peripheral-clock-selection-mux-and-di.png	sections/04-2-pmcu.md:802	84	169.0,306.4,443.9,423.9
+fig-2-8	Figure 2-8. Device Reset Levels	assets/figures/p091-figure-2-8-device-reset-levels.png	sections/04-2-pmcu.md:1000	91	34.3,67.1,555.7,567.8
+fig-2-9	Figure 2-9. Asynchronous Fast Clock Request Logic	assets/figures/p101-figure-2-9-asynchronous-fast-clock-request-logic.png	sections/04-2-pmcu.md:1395	101	34.0,207.8,528.2,564.1
+fig-3-1	Figure 3-1. MSPM0Cxx MCPUSS Top Level Diagram	assets/figures/p205-figure-3-1-mspm0cxx-mcpuss-top-level-diagram.png	sections/05-3-cpu.md:42	205	18.5,210.2,562.3,605.6
+fig-3-2	Figure 3-2. CPU Registers	assets/figures/p206-figure-3-2-cpu-registers.png	sections/05-3-cpu.md:75	206	44.7,277.0,407.0,702.1
+fig-3-3	Figure 3-3. Peripheral Interrupt Hierarchy	assets/figures/p210-figure-3-3-peripheral-interrupt-hierarchy.png	sections/05-3-cpu.md:232	210	0.0,492.5,465.9,669.1
+fig-4-1	Figure 4-1. Secure Boot and Start Sequence	assets/figures/p231-figure-4-1-secure-boot-and-start-sequence.png	sections/06-4-security.md:100	231	48.7,103.5,563.7,496.8
+fig-5-1	Figure 5-1. DMA Block Diagram	assets/figures/p248-figure-5-1-dma-block-diagram.png	sections/07-5-direct-memory-access-dma.md:42	248	0.0,66.6,547.4,598.1
+fig-5-2	Figure 5-2. Basic DMA Addressing Modes	assets/figures/p250-figure-5-2-basic-dma-addressing-modes.png	sections/07-5-direct-memory-access-dma.md:65	250	0.0,66.5,524.0,503.1
+fig-5-3	Figure 5-3. DMA Extended Modes Diagram	assets/figures/p254-figure-5-3-dma-extended-modes-diagram.png	sections/07-5-direct-memory-access-dma.md:164	254	0.0,118.0,519.5,600.6
+fig-5-4	Figure 5-4. DMA Cascading Channels	assets/figures/p256-figure-5-4-dma-cascading-channels.png	sections/07-5-direct-memory-access-dma.md:215	256	73.0,66.5,538.8,222.1
+fig-6-1	Figure 6-1. Non-volatile Memory System Components	assets/figures/p309-figure-6-1-non-volatile-memory-system-components.png	sections/08-6-nvm-flash.md:66	309	108.6,418.4,503.9,586.0
+fig-6-2	Figure 6-2. Memory Organization Example - Single Bank Configuration	assets/figures/p311-figure-6-2-memory-organization-example-single-ba.png	sections/08-6-nvm-flash.md:138	311	131.8,431.8,480.3,551.9
+fig-6-3	Figure 6-3. Memory Organization Example - Multiple Bank Configuration	assets/figures/p312-figure-6-3-memory-organization-example-multiple-.png	sections/08-6-nvm-flash.md:143	312	127.9,67.0,484.2,268.1
+fig-7-1	Figure 7-1. CPU Interrupt (Fixed Event Route)	assets/figures/p412-figure-7-1-cpu-interrupt-fixed-event-route.png	sections/09-7-events.md:46	412	0.0,585.5,468.0,713.1
+fig-7-2	Figure 7-2. DMA Route	assets/figures/p413-figure-7-2-dma-route.png	sections/09-7-events.md:57	413	126.0,203.3,486.0,330.9
+fig-7-3	Figure 7-3. DMA Route without Event Management Registers	assets/figures/p413-figure-7-3-dma-route-without-event-management-re.png	sections/09-7-events.md:70	413	0.0,585.4,486.0,713.0
+fig-7-4	Figure 7-4. Generic Route	assets/figures/p414-figure-7-4-generic-route.png	sections/09-7-events.md:77	414	83.0,140.3,528.5,312.9
+fig-7-5	Figure 7-5. Event Map	assets/figures/p414-figure-7-5-event-map.png	sections/09-7-events.md:90	414	0.0,643.5,436.0,720.5
+fig-7-6	Figure 7-6. Event Management Register Relationship	assets/figures/p418-figure-7-6-event-management-register-relationshi.png	sections/09-7-events.md:187	418	136.0,342.2,475.1,463.5
+fig-8-1	Figure 8-1. LFSS Low-Frequency Clock System	assets/figures/p422-figure-8-1-lfss-low-frequency-clock-system.png	sections/10-8-low-frequency-subsystem-lfss-b.md:46	422	55.2,320.4,612.0,695.0
+fig-9-1	Figure 9-1. Superset IO Slice	assets/figures/p549-figure-9-1-superset-io-slice.png	sections/11-9-iomux.md:66	549	0.0,67.0,562.7,584.7
+fig-9-2	Figure 9-2. Input Logic Levels - 5V Tolerant Open Drain Digital IO	assets/figures/p553-figure-9-2-input-logic-levels-5v-tolerant-open-d.png	sections/11-9-iomux.md:181	553	145.2,67.8,467.2,307.1
+fig-10-1	Figure 10-1. GPIO Block Diagram	assets/figures/p558-figure-10-1-gpio-block-diagram.png	sections/12-10-general-purpose-input-output-gpio.md:44	558	86.9,268.7,484.8,566.3
+fig-10-2	Figure 10-2. GPIO Input Synchronizer	assets/figures/p559-figure-10-2-gpio-input-synchronizer.png	sections/12-10-general-purpose-input-output-gpio.md:75	559	157.8,345.4,455.0,468.0
+fig-10-3	Figure 10-3. GPIO Input Synchronizer and Glitch Filtering Scenarios	assets/figures/p560-figure-10-3-gpio-input-synchronizer-and-glitch-f.png	sections/12-10-general-purpose-input-output-gpio.md:92	560	49.0,67.0,562.9,263.1
+fig-11-2	Figure 11-2. AUTO Sampling Mode ADC Sample and Conversion Timing Diagram	assets/figures/p677-figure-11-2-auto-sampling-mode-adc-sample-and-co.png	sections/13-11-adc.md:243	677	49.4,67.0,563.3,343.9
+fig-11-3	Figure 11-3. MANUAL Sampling Mode ADC Sample and Conversion Timing Diagram	assets/figures/p678-figure-11-3-manual-sampling-mode-adc-sample-and-.png	sections/13-11-adc.md:256	678	49.0,67.0,562.9,336.2
+fig-11-4	Figure 11-4. Internal ADC-DMA Interface	assets/figures/p681-figure-11-4-internal-adc-dma-interface.png	sections/13-11-adc.md:383	681	117.0,245.3,495.0,426.9
+fig-12-1	Figure 12-1. Comparator Block Diagram	assets/figures/p734-figure-12-1-comparator-block-diagram.png	sections/14-12-comp.md:46	734	38.8,257.7,562.8,720.8
+fig-12-2	Figure 12-2. Analog Filter Response at the Output of the Comparator	assets/figures/p736-figure-12-2-analog-filter-response-at-the-output.png	sections/14-12-comp.md:112	736	0.0,547.7,476.7,696.2
+fig-12-3	Figure 12-3. Reference Voltage Generator Block Diagram	assets/figures/p738-figure-12-3-reference-voltage-generator-block-di.png	sections/14-12-comp.md:159	738	120.0,271.9,492.5,549.1
+fig-12-4	Figure 12-4. Comparator Short Switch	assets/figures/p739-figure-12-4-comparator-short-switch.png	sections/14-12-comp.md:184	739	8.9,343.6,403.1,676.1
+fig-13-1	Figure 13-1. MSPM0 VREF Superset Block Diagram	assets/figures/p773-figure-13-1-mspm0-vref-superset-block-diagram.png	sections/15-13-vref.md:34	773	53.5,67.0,557.3,642.1
+fig-14-1	Figure 14-1. UART Functional Block Diagram	assets/figures/p786-figure-14-1-uart-functional-block-diagram.png	sections/16-14-uart.md:54	786	6.2,87.5,562.9,532.6
+fig-14-2	Figure 14-2. UART Character Frame	assets/figures/p787-figure-14-2-uart-character-frame.png	sections/16-14-uart.md:99	787	35.8,546.3,498.4,711.9
+fig-14-3	Figure 14-3. UART Oversampling mode	assets/figures/p788-figure-14-3-uart-oversampling-mode.png	sections/16-14-uart.md:118	788	0.0,262.3,472.1,611.4
+fig-14-4	Figure 14-4. Majority voting for 8 oversampling	assets/figures/p789-figure-14-4-majority-voting-for-8-oversampling.png	sections/16-14-uart.md:123	789	48.6,87.3,563.1,306.7
+fig-14-5	Figure 14-5. Baud Rate Configuration	assets/figures/p790-figure-14-5-baud-rate-configuration.png	sections/16-14-uart.md:152	790	62.3,161.9,549.5,360.3
+fig-14-6	Figure 14-6. LIN Break Field Detection	assets/figures/p792-figure-14-6-lin-break-field-detection.png	sections/16-14-uart.md:240	792	117.0,406.8,495.0,518.1
+fig-14-7	Figure 14-7. LIN SYNC Field Detection	assets/figures/p793-figure-14-7-lin-sync-field-detection.png	sections/16-14-uart.md:255	793	120.5,91.3,491.1,201.1
+fig-14-8	Figure 14-8. LIN Responder Transmission Delay	assets/figures/p794-figure-14-8-lin-responder-transmission-delay.png	sections/16-14-uart.md:292	794	113.5,67.3,499.6,227.1
+fig-14-9	Figure 14-9. Flow Control	assets/figures/p794-figure-14-9-flow-control.png	sections/16-14-uart.md:301	794	221.0,315.4,390.9,421.0
+fig-14-10	Figure 14-10. Idle-Line Multiprocessor	assets/figures/p795-figure-14-10-idle-line-multiprocessor.png	sections/16-14-uart.md:335	795	49.1,372.5,589.5,612.3
+fig-14-11	Figure 14-11. RS485 Data Exchange	assets/figures/p797-figure-14-11-rs485-data-exchange.png	sections/16-14-uart.md:405	797	192.6,310.9,419.2,454.5
+fig-14-12	Figure 14-12. RS485 External Control	assets/figures/p797-figure-14-12-rs485-external-control.png	sections/16-14-uart.md:414	797	129.6,545.5,482.5,681.1
+fig-14-13	Figure 14-13. DALI Protocol	assets/figures/p798-figure-14-13-dali-protocol.png	sections/16-14-uart.md:439	798	0.0,376.3,537.5,628.4
+fig-14-14	Figure 14-14. IrDA Protocol	assets/figures/p799-figure-14-14-irda-protocol.png	sections/16-14-uart.md:464	799	165.5,290.6,447.5,396.7
+fig-14-15	Figure 14-15. UART Loopback mode	assets/figures/p801-figure-14-15-uart-loopback-mode.png	sections/16-14-uart.md:532	801	32.1,66.5,579.6,415.1
+fig-15-1	Figure 15-1. SPI Functional Block Diagram	assets/figures/p864-figure-15-1-spi-functional-block-diagram.png	sections/17-15-spi.md:50	864	0.0,87.5,557.9,531.1
+fig-15-2	Figure 15-2. External Connections for Different SPI Configurations	assets/figures/p865-figure-15-2-external-connections-for-different-s.png	sections/17-15-spi.md:57	865	0.0,67.7,594.5,662.2
+fig-15-3	Figure 15-3. Internal Loop Back Mode	assets/figures/p870-figure-15-3-internal-loop-back-mode.png	sections/17-15-spi.md:200	870	19.4,66.8,612.0,561.6
+fig-15-4	Figure 15-4. Motorola SPI Format With SPO = 0 and SPH = 0	assets/figures/p872-figure-15-4-motorola-spi-format-with-spo-0-and-s.png	sections/17-15-spi.md:252	872	48.7,66.7,563.5,258.6
+fig-15-5	Figure 15-5. Motorola SPI Frame Format With SPO = 0 and SPH = 1	assets/figures/p873-figure-15-5-motorola-spi-frame-format-with-spo-0.png	sections/17-15-spi.md:277	873	48.5,66.7,563.5,259.5
+fig-15-6	Figure 15-6. Motorola SPI Frame Format With SPO = 1 and SPH = 0	assets/figures/p873-figure-15-6-motorola-spi-frame-format-with-spo-1.png	sections/17-15-spi.md:300	873	0.0,487.2,612.0,673.5
+fig-15-7	Figure 15-7. Motorola SPI Frame Format With SPO = 1 and SPH = 1	assets/figures/p874-figure-15-7-motorola-spi-frame-format-with-spo-1.png	sections/17-15-spi.md:323	874	48.5,306.7,563.5,498.9
+fig-15-8	Figure 15-8. TI Synchronous Serial Frame Format	assets/figures/p875-figure-15-8-ti-synchronous-serial-frame-format.png	sections/17-15-spi.md:350	875	0.0,167.4,612.0,640.8
+fig-16-1	Figure 16-1. I2C Functional Block Diagram	assets/figures/p924-figure-16-1-i2c-functional-block-diagram.png	sections/18-16-i2c.md:50	924	0.0,87.6,563.0,453.7
+fig-16-3	Figure 16-3. Module Data Transfer	assets/figures/p926-figure-16-3-module-data-transfer.png	sections/18-16-i2c.md:142	926	48.9,466.2,563.2,570.5
+fig-16-4	Figure 16-4. Data Change Period	assets/figures/p926-figure-16-4-data-change-period.png	sections/18-16-i2c.md:147	926	19.2,600.1,612.0,711.6
+fig-16-5	Figure 16-5. START and STOP Conditions	assets/figures/p927-figure-16-5-start-and-stop-conditions.png	sections/18-16-i2c.md:154	927	128.9,152.8,482.9,285.9
+fig-16-6	Figure 16-6. Data Format with 7-Bit Address	assets/figures/p928-figure-16-6-data-format-with-7-bit-address.png	sections/18-16-i2c.md:175	928	48.5,66.8,563.3,137.0
+fig-16-7	Figure 16-7. Data Format with Repeated Start	assets/figures/p928-figure-16-7-data-format-with-repeated-start.png	sections/18-16-i2c.md:194	928	48.5,530.5,563.6,612.9
+fig-16-8	Figure 16-8. Arbitration Procedure Between Two Controller Transmitters	assets/figures/p931-figure-16-8-arbitration-procedure-between-two-co.png	sections/18-16-i2c.md:249	931	128.0,103.7,484.3,267.1
+fig-16-9	Figure 16-9. Clock Synchronization	assets/figures/p931-figure-16-9-clock-synchronization.png	sections/18-16-i2c.md:268	931	187.9,519.4,424.9,672.5
+fig-16-10	Figure 16-10. I2C Internal Loopback mode	assets/figures/p933-figure-16-10-i2c-internal-loopback-mode.png	sections/18-16-i2c.md:316	933	48.8,364.0,612.0,680.0
+fig-16-11	Figure 16-11. Controller Receiver Mode	assets/figures/p938-figure-16-11-controller-receiver-mode.png	sections/18-16-i2c.md:495	938	0.0,66.7,535.8,721.7
+fig-16-12	Figure 16-12. Controller Transmitter Mode	assets/figures/p940-figure-16-12-controller-transmitter-mode.png	sections/18-16-i2c.md:506	940	0.0,286.6,472.2,597.1
+fig-16-13	Figure 16-13. Target Receiver Mode using SRXDONE and ACK override	assets/figures/p942-figure-16-13-target-receiver-mode-using-srxdone-.png	sections/18-16-i2c.md:561	942	23.2,115.6,542.8,503.1
+fig-16-14	Figure 16-14. Target Receiver Mode using SRXFIFOTRG and automatic ACK	assets/figures/p943-figure-16-14-target-receiver-mode-using-srxfifot.png	sections/18-16-i2c.md:564	943	119.1,66.6,493.7,384.1
+fig-16-15	Figure 16-15. Target Transmitter Mode using STXDONE	assets/figures/p944-figure-16-15-target-transmitter-mode-using-stxdo.png	sections/18-16-i2c.md:581	944	101.7,66.6,510.1,443.1
+fig-16-16	Figure 16-16. Target Transmitter Mode using STXFIFOTRG	assets/figures/p945-figure-16-16-target-transmitter-mode-using-stxfi.png	sections/18-16-i2c.md:584	945	136.1,66.6,476.0,403.1
+fig-16-17	Figure 16-17. I2C DMA Trigger and Status	assets/figures/p948-figure-16-17-i2c-dma-trigger-and-status.png	sections/18-16-i2c.md:708	948	65.5,210.5,546.5,435.1
+fig-17-1	Figure 17-1. CRC and CRC-P Key Features	assets/figures/p1014-figure-17-1-crc-and-crc-p-key-features.png	sections/19-17-crc.md:36	1014	48.3,342.6,563.8,400.3
+fig-18-1	Figure 18-1. TIMG Functional Block Diagram	assets/figures/p1032-figure-18-1-timg-functional-block-diagram.png	sections/20-18-timers-timx.md:64	1032	48.8,66.8,612.0,445.1
+fig-18-2	Figure 18-2. TIMA Block Diagram	assets/figures/p1033-figure-18-2-tima-block-diagram.png	sections/20-18-timers-timx.md:95	1033	26.8,150.0,612.0,718.1
+fig-18-3	Figure 18-3. Event Suppressed by Repeat Counter with TIMx.RCLD = 4 in Down Counting Mode	assets/figures/p1037-figure-18-3-event-suppressed-by-repeat-counter-w.png	sections/20-18-timers-timx.md:227	1037	62.6,118.8,549.1,389.3
+fig-18-4	Figure 18-4. One-shot and Periodic Mode Behavior	assets/figures/p1039-figure-18-4-one-shot-and-periodic-mode-behavior.png	sections/20-18-timers-timx.md:275	1039	47.3,67.2,562.8,641.6
+fig-18-5	Figure 18-5. Down Counting Mode, CVAE = 0	assets/figures/p1040-figure-18-5-down-counting-mode-cvae-0.png	sections/20-18-timers-timx.md:284	1040	49.4,103.3,563.1,282.1
+fig-18-6	Figure 18-6. Down Counting Mode Event Generation	assets/figures/p1040-figure-18-6-down-counting-mode-event-generation.png	sections/20-18-timers-timx.md:287	1040	100.2,281.6,513.0,438.2
+fig-18-7	Figure 18-7. Down-up Counting Mode and Event Generation, CVAE = 0	assets/figures/p1041-figure-18-7-down-up-counting-mode-and-event-gene.png	sections/20-18-timers-timx.md:310	1041	49.2,67.6,563.1,303.4
+fig-18-8	Figure 18-8. Up-down Counting Mode and Event Generation, CVAE = 2	assets/figures/p1041-figure-18-8-up-down-counting-mode-and-event-gene.png	sections/20-18-timers-timx.md:319	1041	49.2,381.8,563.2,618.8
+fig-18-9	Figure 18-9. Up Counting Mode, CVAE = 2	assets/figures/p1042-figure-18-9-up-counting-mode-cvae-2.png	sections/20-18-timers-timx.md:328	1042	49.4,67.3,563.1,246.1
+fig-18-10	Figure 18-10. Up Counting Mode Event Generation	assets/figures/p1042-figure-18-10-up-counting-mode-event-generation.png	sections/20-18-timers-timx.md:331	1042	100.2,245.6,513.0,402.2
+fig-18-11	Figure 18-11. Phase Load Register Synchronization in Up-Down Mode	assets/figures/p1043-figure-18-11-phase-load-register-synchronization.png	sections/20-18-timers-timx.md:342	1043	133.4,67.0,479.0,419.1
+fig-18-12	Figure 18-12. TIMx Capture Block Diagram	assets/figures/p1044-figure-18-12-timx-capture-block-diagram.png	sections/20-18-timers-timx.md:373	1044	112.2,135.0,499.3,442.9
+fig-18-13	Figure 18-13. Consecutive Period and Majority Voting for Input Glitch Filtering using FP = 0 (3 TIMCLK	assets/figures/p1046-figure-18-13-consecutive-period-and-majority-vot.png	sections/20-18-timers-timx.md:478	1046	49.3,361.6,563.2,717.1
+fig-18-14	Figure 18-14. Edge Time Capture Mode in Up-Counting Mode, CVAE = 2	assets/figures/p1048-figure-18-14-edge-time-capture-mode-in-up-counti.png	sections/20-18-timers-timx.md:520	1048	57.5,67.9,554.6,412.1
+fig-18-15	Figure 18-15. Period Capture Mode in Up-Counting Mode, CVAE = 2	assets/figures/p1049-figure-18-15-period-capture-mode-in-up-counting-.png	sections/20-18-timers-timx.md:552	1049	49.1,157.0,562.9,464.8
+fig-18-16	Figure 18-16. Pulse-Width Capture Mode	assets/figures/p1050-figure-18-16-pulse-width-capture-mode.png	sections/20-18-timers-timx.md:583	1050	49.1,181.0,563.0,493.4
+fig-18-17	Figure 18-17. Combined Pulse-Width and Period Capture	assets/figures/p1051-figure-18-17-combined-pulse-width-and-period-cap.png	sections/20-18-timers-timx.md:613	1051	48.9,223.0,562.9,534.2
+fig-18-18	Figure 18-18. State Machine for 2-signal and 3-signal QEI mode	assets/figures/p1052-figure-18-18-state-machine-for-2-signal-and-3-si.png	sections/20-18-timers-timx.md:636	1052	149.3,242.7,463.1,366.9
+fig-18-19	Figure 18-19. 2-Signal QEI Operation	assets/figures/p1053-figure-18-19-2-signal-qei-operation.png	sections/20-18-timers-timx.md:660	1053	105.9,67.0,507.4,262.1
+fig-18-20	Figure 18-20. 2-Signal QEI with Index Input Operation	assets/figures/p1054-figure-18-20-2-signal-qei-with-index-input-opera.png	sections/20-18-timers-timx.md:684	1054	105.9,67.0,507.4,291.1
+fig-18-21	Figure 18-21. Hall 3-input XOR for Frequency Generator (FG) Signal to CC input block	assets/figures/p1055-figure-18-21-hall-3-input-xor-for-frequency-gene.png	sections/20-18-timers-timx.md:715	1055	96.2,67.9,516.5,136.1
+fig-18-22	Figure 18-22. Hall 3-Input XOR Signal used with Pulse Width or Period Capture for Speed Computation	assets/figures/p1055-figure-18-22-hall-3-input-xor-signal-used-with-p.png	sections/20-18-timers-timx.md:722	1055	56.0,208.1,556.1,465.2
+fig-18-23	Figure 18-23. Edge Count Operation to Generate Compare Event (TIMx.CC = 2)	assets/figures/p1057-figure-18-23-edge-count-operation-to-generate-co.png	sections/20-18-timers-timx.md:768	1057	48.9,67.7,563.6,290.3
+fig-18-24	Figure 18-24. Load value updates for TIMx instances when EN=1	assets/figures/p1058-figure-18-24-load-value-updates-for-timx-instanc.png	sections/20-18-timers-timx.md:787	1058	48.9,66.8,563.4,367.2
+fig-18-25	Figure 18-25. Shadow Load and Shadow Compare Taking Effect at Zero Event in Up/Down Mode	assets/figures/p1059-figure-18-25-shadow-load-and-shadow-compare-taki.png	sections/20-18-timers-timx.md:824	1059	49.0,343.8,612.0,678.7
+fig-18-26	Figure 18-26. Output Connection for TIMG	assets/figures/p1060-figure-18-26-output-connection-for-timg.png	sections/20-18-timers-timx.md:837	1060	49.1,163.0,563.1,354.8
+fig-18-27	Figure 18-27. Output Connection for TIMA	assets/figures/p1060-figure-18-27-output-connection-for-tima.png	sections/20-18-timers-timx.md:840	1060	49.0,348.2,612.0,635.6
+fig-18-28	Figure 18-28. Edge-Aligned PWM Signals in Down-Counting Mode	assets/figures/p1063-figure-18-28-edge-aligned-pwm-signals-in-down-co.png	sections/20-18-timers-timx.md:954	1063	142.6,271.9,469.8,530.1
+fig-18-29	Figure 18-29. Edge-Aligned PWM Signals in Up-Counting Mode	assets/figures/p1064-figure-18-29-edge-aligned-pwm-signals-in-up-coun.png	sections/20-18-timers-timx.md:969	1064	149.6,67.9,462.8,326.1
+fig-18-30	Figure 18-30. Center-Aligned PWM	assets/figures/p1065-figure-18-30-center-aligned-pwm.png	sections/20-18-timers-timx.md:995	1065	155.0,148.9,457.2,445.1
+fig-18-31	Figure 18-31. Asymmetric PWM Configuration with Phase Load for CCP channel 0 of TIMA0 and TIMA1	assets/figures/p1066-figure-18-31-asymmetric-pwm-configuration-with-p.png	sections/20-18-timers-timx.md:1010	1066	55.7,67.5,555.5,430.1
+fig-18-33	Figure 18-33. Dead Band Insertion for Center-Aligned PWM (Mode 0 and Mode 1)	assets/figures/p1068-figure-18-33-dead-band-insertion-for-center-alig.png	sections/20-18-timers-timx.md:1056	1068	89.6,127.9,522.6,533.1
+fig-18-34	Figure 18-34. Asynchronous Fault Handler Connections	assets/figures/p1070-figure-18-34-asynchronous-fault-handler-connecti.png	sections/20-18-timers-timx.md:1097	1070	0.0,67.4,563.2,448.0
+fig-18-35	Figure 18-35. Synchronous Fault Handler Connections	assets/figures/p1071-figure-18-35-synchronous-fault-handler-connectio.png	sections/20-18-timers-timx.md:1102	1071	0.0,382.0,442.7,419.8
+fig-18-36	Figure 18-36. Fault Output Generation Connections	assets/figures/p1071-figure-18-36-fault-output-generation-connections.png	sections/20-18-timers-timx.md:1105	1071	0.0,415.8,612.0,566.6
+fig-18-37	Figure 18-37. Counter Behavior in Fault Condition with TIMx.CTRCTL Register	assets/figures/p1074-figure-18-37-counter-behavior-in-fault-condition.png	sections/20-18-timers-timx.md:1191	1074	0.0,64.7,612.0,721.7
+fig-18-38	Figure 18-38. Cross Trigger Connections for Main Timer (TIMGx) and Secondary Timer (TIMAx) in Power	assets/figures/p1076-figure-18-38-cross-trigger-connections-for-main-.png	sections/20-18-timers-timx.md:1227	1076	52.5,67.0,558.2,224.5
+fig-18-39	Figure 18-39. Main Timer Cross Trigger Output Configuration	assets/figures/p1076-figure-18-39-main-timer-cross-trigger-output-con.png	sections/20-18-timers-timx.md:1238	1076	0.0,441.1,507.4,694.9
+fig-18-40	Figure 18-40. Secondary Timer Cross Trigger Input Configuration	assets/figures/p1077-figure-18-40-secondary-timer-cross-trigger-input.png	sections/20-18-timers-timx.md:1253	1077	98.7,339.6,513.8,528.4
+fig-19-1	Figure 19-1. RTC Block Diagram	assets/figures/p1179-figure-19-1-rtc-block-diagram.png	sections/21-19-rtc.md:86	1179	22.1,66.8,524.1,721.7
+fig-19-2	Figure 19-2. RTC Calibration	assets/figures/p1184-figure-19-2-rtc-calibration.png	sections/21-19-rtc.md:213	1184	0.0,66.3,554.3,721.7
+fig-19-3	Figure 19-3. RTC Prescaler and Interval Timer Event	assets/figures/p1187-figure-19-3-rtc-prescaler-and-interval-timer-eve.png	sections/21-19-rtc.md:284	1187	0.0,66.5,542.0,675.1
+fig-19-4	Figure 19-4. RTC Block Diagram and Timestamping	assets/figures/p1188-figure-19-4-rtc-block-diagram-and-timestamping.png	sections/21-19-rtc.md:295	1188	0.0,133.4,549.6,685.1
+fig-20-1	Figure 20-1. Independent Watchdog Timer (IWDT) Block Diagram	assets/figures/p1258-figure-20-1-independent-watchdog-timer-iwdt-bloc.png	sections/22-20-iwdt.md:22	1258	86.6,285.0,525.1,541.6
+fig-21-1	Figure 21-1. WWDT Functionality	assets/figures/p1261-figure-21-1-wwdt-functionality.png	sections/23-21-window-watchdog-timer-wwdt.md:46	1261	21.9,485.2,491.8,682.3
+fig-21-2	Figure 21-2. WWDT Diagram	assets/figures/p1262-figure-21-2-wwdt-diagram.png	sections/23-21-window-watchdog-timer-wwdt.md:65	1262	103.9,341.8,509.0,544.3
+fig-21-3	Figure 21-3. WWDT Simplified Clock Source Tree	assets/figures/p1263-figure-21-3-wwdt-simplified-clock-source-tree.png	sections/23-21-window-watchdog-timer-wwdt.md:82	1263	117.0,231.5,495.0,384.1
+fig-22-1	Figure 22-1. Debug Sub System Block Diagram	assets/figures/p1286-figure-22-1-debug-sub-system-block-diagram.png	sections/24-22-debug.md:44	1286	54.9,66.8,557.1,378.1

@@ -44,9 +44,64 @@ struct CandidateTableRegion {
 }
 
 fn is_table_caption(text: &str) -> bool {
+    let t = text.trim();
+    if t.contains("...") || t.contains(". . .") {
+        return false;
+    }
     static RE_TAB_CAP: OnceLock<Regex> = OnceLock::new();
-    let re =
-        RE_TAB_CAP.get_or_init(|| Regex::new(r"^Table\s+\d+(?:[-\.]\d+)*\b").expect("valid regex"));
+    static RE_TAB_PROSE_VERB: OnceLock<Regex> = OnceLock::new();
+    let re = RE_TAB_CAP
+        .get_or_init(|| Regex::new(r"^Table\s+\d+(?:[-\.]\d+)*(.*)$").expect("valid regex"));
+    let re_verb = RE_TAB_PROSE_VERB.get_or_init(|| {
+        Regex::new(
+            r"^(?i)(?:shows?|gives?|lists?|describes?|is|are|provides?|summarizes?|defines?|contains?|in|on|for|and)\b",
+        )
+        .expect("valid regex")
+    });
+
+    let Some(caps) = re.captures(t) else {
+        return false;
+    };
+    let raw_tail = caps.get(1).map(|m| m.as_str()).unwrap_or("");
+    if raw_tail
+        .chars()
+        .next()
+        .is_some_and(|c| c.is_ascii_lowercase() || c == ',' || c == ')' || c == ';')
+    {
+        return false;
+    }
+
+    let rest = raw_tail.trim_start_matches(|c: char| {
+        c == '.' || c == ':' || c == '-' || c == '–' || c.is_whitespace()
+    });
+    if rest.is_empty() {
+        return false;
+    }
+    if rest.chars().next().is_some_and(|c| c.is_ascii_lowercase()) || re_verb.is_match(rest) {
+        return false;
+    }
+
+    let low = rest.to_ascii_lowercase();
+    if low.ends_with("major update.")
+        || low.ends_with("minor update.")
+        || low.ends_with("updated.")
+        || low.ends_with("added.")
+        || low.ends_with("removed.")
+    {
+        return false;
+    }
+
+    true
+}
+
+fn is_bit_number_header_line(text: &str) -> bool {
+    static RE_BIT_HDR: OnceLock<Regex> = OnceLock::new();
+    let re = RE_BIT_HDR.get_or_init(|| {
+        Regex::new(
+            r"^(?:31\s+30\s+29\s+28|23\s+22\s+21\s+20|15\s+14\s+13\s+12|7\s+6\s+5\s+4(?:\s+3\s+2\s+1\s+0)?)\b",
+        )
+        .expect("valid regex")
+    });
     re.is_match(text.trim())
 }
 
@@ -119,17 +174,67 @@ fn detect_grid_table_regions(
                 .fold(f32::NEG_INFINITY, f32::max);
             let h_overlap = (seg.x1.min(cluster_x1) - seg.x0.max(cluster_x0)).max(0.0);
 
-            // Check if there is a "Table X-Y" caption, "Figure X-Y" caption, or section heading between prev_y and seg.y0
-            // which indicates a new table or section started below the previous one.
-            let has_intervening_caption = lines.iter().any(|l| {
-                l.bbox.center_y() > prev_y + 2.0
-                    && l.bbox.center_y() < seg.y0 - 2.0
-                    && (is_table_caption(&l.text)
-                        || l.text.trim().starts_with("Figure ")
-                        || is_major_heading_line(l))
+            let has_bridging_v_rule = segments.iter().any(|v| {
+                !v.is_horizontal
+                    && v.x0 >= cluster_x0 - 6.0
+                    && v.x1 <= cluster_x1 + 6.0
+                    && v.y0 <= prev_y + 5.0
+                    && v.y1 >= seg.y0 - 5.0
+            });
+            let same_table_width =
+                (seg.x0 - cluster_x0).abs() <= 8.0 && (seg.x1 - cluster_x1).abs() <= 8.0;
+            let max_y_gap = if has_bridging_v_rule || same_table_width {
+                560.0
+            } else {
+                180.0
+            };
+            let cluster_width = (cluster_x1 - cluster_x0).max(1.0);
+            let y_gap = seg.y0 - prev_y;
+
+            // Check if there is an intervening table/figure caption, heading, register metadata,
+            // bit-number header, callout header, or body prose line between prev_y and seg.y0.
+            let has_intervening_break = lines.iter().any(|l| {
+                if l.bbox.center_y() <= prev_y + 2.0 || l.bbox.center_y() >= seg.y0 - 2.0 {
+                    return false;
+                }
+                let t = l.text.trim();
+                if is_table_caption(&l.text)
+                    || t.starts_with("Figure ")
+                    || t.starts_with("Fig.")
+                    || is_major_heading_line(l)
+                    || t.starts_with("Address offset")
+                    || t.starts_with("Address:")
+                    || t.starts_with("Reset value")
+                    || t.starts_with("System reset value")
+                    || t.starts_with("Backup domain reset")
+                    || is_prose_bitfield_line(t)
+                    || is_bit_number_header_line(t)
+                {
+                    return true;
+                }
+                if !has_bridging_v_rule {
+                    if t == "Note"
+                        || t == "NOTE"
+                        || t.starts_with("Note:")
+                        || t.starts_with("NOTE:")
+                        || t == "CAUTION"
+                        || t == "WARNING"
+                    {
+                        return true;
+                    }
+                    if y_gap > 45.0
+                        && l.bbox.x0 <= cluster_x0 + 18.0
+                        && l.bbox.width() > cluster_width * 0.82
+                        && t.len() > 68
+                        && t.split_whitespace().count() >= 10
+                    {
+                        return true;
+                    }
+                }
+                false
             });
 
-            if (seg.y0 - prev_y) <= 560.0 && h_overlap >= 40.0 && !has_intervening_caption {
+            if y_gap <= max_y_gap && h_overlap >= 40.0 && !has_intervening_break {
                 last_cluster.push(seg);
                 continue;
             }
@@ -187,7 +292,7 @@ fn detect_grid_table_regions(
             }
         }
         h_junctions.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-        // Keep junction X coordinates that appear at least twice (e.g., top & bottom of a column header or rows)
+        // Keep junction X coordinates that appear at least twice across rows
         let mut j_idx = 0;
         while j_idx < h_junctions.len() {
             let base = h_junctions[j_idx];
@@ -207,17 +312,40 @@ fn detect_grid_table_regions(
 
         let v_rules = dedup_coords(v_coords, 4.0);
 
-        // Find any "Table X-Y." caption immediately above `bbox.y0` (within 40 pt)
+        // Find any "Table X-Y." caption immediately above `bbox.y0` (within 45 pt)
         let mut caption = None;
         let mut caption_bbox = None;
+        let mut preceded_by_figure_caption = false;
         for line in lines.iter().rev() {
-            if line.bbox.y1 <= bbox.y0 + 4.0
-                && (bbox.y0 - line.bbox.y0) <= 45.0
-                && is_table_caption(&line.text)
-            {
-                caption = Some(line.text.clone());
-                caption_bbox = Some(line.bbox);
-                break;
+            if line.bbox.y1 <= bbox.y0 + 8.0 && (bbox.y0 - line.bbox.y0) <= 45.0 {
+                let lt = line.text.trim();
+                if is_table_caption(lt) {
+                    caption = Some(line.text.clone());
+                    caption_bbox = Some(line.bbox);
+                    break;
+                }
+                if lt.starts_with("Figure ") || lt.starts_with("Fig.") {
+                    preceded_by_figure_caption = true;
+                    break;
+                }
+            }
+        }
+
+        // If the grid cluster is uncaptioned and associated with a `Figure X` caption
+        // (above within 45pt, inside bbox, or immediately below within 45pt),
+        // it is a vector block diagram or schematic figure, not a table.
+        if caption.is_none() {
+            let has_figure_caption_inside_or_below = lines.iter().any(|line| {
+                let lt = line.text.trim();
+                if !(lt.starts_with("Figure ") || lt.starts_with("Fig.")) {
+                    return false;
+                }
+                let inside = line.bbox.y0 >= bbox.y0 - 4.0 && line.bbox.y1 <= bbox.y1 + 4.0;
+                let below = line.bbox.y0 >= bbox.y1 - 8.0 && line.bbox.y0 <= bbox.y1 + 45.0;
+                inside || below
+            });
+            if preceded_by_figure_caption || has_figure_caption_inside_or_below {
+                continue;
             }
         }
 
@@ -235,13 +363,20 @@ fn detect_grid_table_regions(
 
 fn is_major_heading_line(line: &TextLine) -> bool {
     static RE_SEC: OnceLock<Regex> = OnceLock::new();
-    let re = RE_SEC.get_or_init(|| Regex::new(r"^\d+(?:\.\d+)+\s+[A-Z]").expect("valid regex"));
-    line.is_bold && line.font_size >= 10.5 && re.is_match(line.text.trim())
+    let re = RE_SEC.get_or_init(|| Regex::new(r"^\d+(?:\.\d+)*\s+[A-Z]").expect("valid regex"));
+    (line.is_bold || line.font_size >= 9.5) && re.is_match(line.text.trim())
+}
+
+fn is_prose_bitfield_line(text: &str) -> bool {
+    static RE_PROSE_BF: OnceLock<Regex> = OnceLock::new();
+    let re = RE_PROSE_BF
+        .get_or_init(|| Regex::new(r"^Bits?\s+\d+(?:\s*[:\-]\s*\d+)?\b").expect("valid regex"));
+    re.is_match(text.trim())
 }
 
 fn build_table_from_region(
     page: &mut RawPageData,
-    _lines: &[TextLine],
+    page_lines: &[TextLine],
     cand: CandidateTableRegion,
     ordinal: usize,
 ) -> Option<ExtractedTable> {
@@ -260,8 +395,53 @@ fn build_table_from_region(
     // Ignore visual 32-bit/16-bit register bit-box diagrams ("31 30 29 28 ...") so they are handled
     // by `suppress_visual_register_bitboxes` instead of being emitted as noisy 16-column tables.
     let internal_lines = assemble_text_lines(&table_spans, 2.2);
-    if looks_like_visual_register_bitbox(&internal_lines, &cand.caption) {
+    if looks_like_visual_register_bitbox(&internal_lines, page_lines, &cand.bbox, &cand.caption) {
         return None;
+    }
+
+    // Reject uncaptioned non-table regions (Callout/Note boxes, Mini-TOCs/Printed TOCs, CAD title blocks)
+    if cand.caption.is_none() {
+        // Callout / Note boxes
+        if cand.h_rules.len() <= 3
+            && cand.v_rules.len() < 3
+            && internal_lines.iter().any(|l| {
+                let t = l.text.trim();
+                t.starts_with("Note")
+                    || t.starts_with("NOTE")
+                    || t.starts_with("CAUTION")
+                    || t.starts_with("WARNING")
+            })
+        {
+            return None;
+        }
+
+        // Mini-TOCs / Printed TOCs
+        static RE_CHAP: OnceLock<Regex> = OnceLock::new();
+        let re_chap =
+            RE_CHAP.get_or_init(|| Regex::new(r"\bChapter\s+\d+\b").expect("valid regex"));
+        let toc_like_count = internal_lines
+            .iter()
+            .filter(|l| {
+                let t = l.text.trim();
+                t.contains("...") || t.contains(". . .") || re_chap.is_match(t)
+            })
+            .count();
+        if !internal_lines.is_empty() && toc_like_count * 100 >= internal_lines.len() * 30 {
+            return None;
+        }
+
+        // Mechanical CAD drawings (title-block markers)
+        let has_cad_marker = internal_lines.iter().any(|l| {
+            let u = l.text.to_ascii_uppercase();
+            u.contains("UNLESS OTHERWISE SPECIFIED")
+                || u.contains("THIRD ANGLE PROJECTION")
+                || u.contains("DIMENSIONS ARE IN")
+                || u.contains("SEATING PLANE")
+                || u.contains("GAGE PLANE")
+        });
+        if has_cad_marker {
+            return None;
+        }
     }
 
     // Determine row intervals `[y_top, y_bottom]` from horizontal rules
@@ -319,6 +499,19 @@ fn build_table_from_region(
         return None;
     }
 
+    // Reject uncaptioned sparse mechanical CAD grids (>= 12 columns and < 22% non-empty cells)
+    if cand.caption.is_none() && col_intervals.len() >= 12 {
+        let total_cells = raw_rows.len() * col_intervals.len();
+        let non_empty_cells: usize = raw_rows
+            .iter()
+            .flat_map(|r| r.iter())
+            .filter(|c| !c.trim().is_empty())
+            .count();
+        if total_cells > 0 && non_empty_cells * 100 < total_cells * 22 {
+            return None;
+        }
+    }
+
     // Flatten multi-level headers if the top 2 rows are both header rows (e.g., "-40°C" over "TYP | MAX")
     let (mut headers, mut body_rows) = split_and_flatten_headers(raw_rows);
     if headers.is_empty() || body_rows.is_empty() {
@@ -362,7 +555,12 @@ fn build_table_from_region(
     })
 }
 
-fn looks_like_visual_register_bitbox(lines: &[TextLine], caption: &Option<String>) -> bool {
+fn looks_like_visual_register_bitbox(
+    internal_lines: &[TextLine],
+    page_lines: &[TextLine],
+    bbox: &BBox,
+    caption: &Option<String>,
+) -> bool {
     if let Some(cap) = caption {
         if cap.trim().starts_with("Table ") {
             return false;
@@ -370,10 +568,59 @@ fn looks_like_visual_register_bitbox(lines: &[TextLine], caption: &Option<String
     }
     static RE_BITS: OnceLock<Regex> = OnceLock::new();
     let re = RE_BITS.get_or_init(|| {
-        Regex::new(r"\b(?:31\s+30\s+29\s+28|15\s+14\s+13\s+12|7\s+6\s+5\s+4\s+3\s+2\s+1\s+0)\b")
-            .expect("valid regex")
+        Regex::new(
+            r"\b(?:31\s+30\s+29\s+28|23\s+22\s+21\s+20|15\s+14\s+13\s+12|7\s+6\s+5\s+4\s+3\s+2\s+1\s+0)\b",
+        )
+        .expect("valid regex")
     });
-    lines.iter().any(|l| re.is_match(&l.text))
+    if internal_lines.iter().any(|l| re.is_match(&l.text)) {
+        return true;
+    }
+    if page_lines.iter().any(|l| {
+        l.bbox.y1 >= bbox.y0 - 22.0
+            && l.bbox.y0 <= bbox.y1
+            && l.bbox.horizontal_overlap(bbox) >= 30.0
+            && re.is_match(&l.text)
+    }) {
+        return true;
+    }
+    if internal_lines.iter().any(|l| {
+        let tokens: Vec<&str> = l.text.split_whitespace().collect();
+        tokens.len() >= 4
+            && tokens
+                .iter()
+                .all(|tok| is_bitbox_access_or_reserved_token(tok))
+    }) {
+        return true;
+    }
+    false
+}
+
+fn is_bitbox_access_or_reserved_token(tok: &str) -> bool {
+    matches!(
+        tok,
+        "rw" | "r"
+            | "w"
+            | "rc_w0"
+            | "rc_w1"
+            | "rs"
+            | "rt_w"
+            | "t"
+            | "Res."
+            | "Res"
+            | "RESERVED"
+            | "Reserved"
+            | "R/W-0h"
+            | "RO-0h"
+            | "WO-0h"
+            | "RW1C-0h"
+    ) || {
+        static RE_ACC_TOK: OnceLock<Regex> = OnceLock::new();
+        let re = RE_ACC_TOK.get_or_init(|| {
+            Regex::new(r"^(?:R/W|RO|WO|RW1C|RW1S|R|W)-[0-9A-Fa-fXxhb]+$").expect("valid regex")
+        });
+        re.is_match(tok)
+    }
 }
 
 fn build_row_intervals(h_rules: &[f32], lines: &[TextLine]) -> Vec<(f32, f32)> {
@@ -449,21 +696,123 @@ fn build_column_intervals(
     // If vertical rules already divide the table into >= 3 columns, check whether any wide column
     // contains multiple distinct header/body columns without vertical lines.
     if x_bounds.len() >= 4 {
-        return x_bounds
-            .windows(2)
-            .filter(|w| (w[1] - w[0]) >= 10.0)
-            .map(|w| (w[0], w[1]))
-            .collect();
+        let mut cols = Vec::new();
+        let header_slice = &row_intervals[..2.min(row_intervals.len())];
+        let body_slice = if row_intervals.len() > 1 {
+            &row_intervals[1..]
+        } else {
+            &[]
+        };
+
+        for w in x_bounds.windows(2) {
+            let (wx0, wx1) = (w[0], w[1]);
+            if (wx1 - wx0) < 10.0 {
+                continue;
+            }
+            if (wx1 - wx0) > 110.0 && x_bounds.len() <= 7 && !header_slice.is_empty() {
+                let mut best_phrases: Vec<(f32, f32)> = Vec::new();
+                for &(hy0, hy1) in header_slice {
+                    let mut h_spans: Vec<&TextSpan> = spans
+                        .iter()
+                        .filter(|s| {
+                            let cy = s.bbox.center_y();
+                            let cx = s.bbox.center_x();
+                            cy >= hy0 - 1.5 && cy <= hy1 + 1.5 && cx >= wx0 + 1.0 && cx <= wx1 - 1.0
+                        })
+                        .collect();
+                    h_spans.sort_by(|a, b| {
+                        a.bbox
+                            .x0
+                            .partial_cmp(&b.bbox.x0)
+                            .unwrap_or(std::cmp::Ordering::Equal)
+                    });
+                    let mut phrases: Vec<(f32, f32)> = Vec::new();
+                    for sp in h_spans {
+                        if let Some(last) = phrases.last_mut() {
+                            if sp.bbox.x0 - last.1 < 9.0 {
+                                last.1 = last.1.max(sp.bbox.x1);
+                                continue;
+                            }
+                        }
+                        phrases.push((sp.bbox.x0, sp.bbox.x1));
+                    }
+                    if phrases.len() > best_phrases.len() {
+                        best_phrases = phrases;
+                    }
+                }
+
+                if best_phrases.len() >= 2 {
+                    let mids: Vec<f32> = best_phrases
+                        .windows(2)
+                        .map(|p| (p[0].1 + p[1].0) * 0.5)
+                        .collect();
+                    let mut active_body_rows = 0usize;
+                    let mut cut_body_rows = 0usize;
+                    for &(by0, by1) in body_slice {
+                        let b_spans: Vec<&TextSpan> = spans
+                            .iter()
+                            .filter(|s| {
+                                let cy = s.bbox.center_y();
+                                let cx = s.bbox.center_x();
+                                cy >= by0 - 1.5
+                                    && cy <= by1 + 1.5
+                                    && cx >= wx0 + 1.0
+                                    && cx <= wx1 - 1.0
+                            })
+                            .collect();
+                        if b_spans.is_empty() {
+                            continue;
+                        }
+                        active_body_rows += 1;
+                        let row_cut = mids.iter().any(|&mid| {
+                            b_spans
+                                .iter()
+                                .any(|sp| sp.bbox.x0 + 2.0 < mid && sp.bbox.x1 - 2.0 > mid)
+                        });
+                        if row_cut {
+                            cut_body_rows += 1;
+                        }
+                    }
+
+                    if active_body_rows > 0 && cut_body_rows * 5 <= active_body_rows * 4 {
+                        let mut bounds = Vec::with_capacity(mids.len() + 2);
+                        bounds.push(wx0);
+                        bounds.extend(mids);
+                        bounds.push(wx1);
+                        for sub in bounds.windows(2) {
+                            if (sub[1] - sub[0]) >= 10.0 {
+                                cols.push((sub[0], sub[1]));
+                            }
+                        }
+                        continue;
+                    }
+                }
+            }
+            cols.push((wx0, wx1));
+        }
+        return cols;
     }
 
     // Fallback for tables without vertical rules: cluster horizontal span intervals across rows
+    let span_refs: Vec<&TextSpan> = spans.iter().collect();
+    discover_unruled_column_tracks(&span_refs, row_intervals, table_bbox.x0, table_bbox.x1)
+}
+
+fn discover_unruled_column_tracks(
+    span_slice: &[&TextSpan],
+    row_intervals: &[(f32, f32)],
+    min_x: f32,
+    max_x: f32,
+) -> Vec<(f32, f32)> {
     let mut intervals: Vec<(f32, f32)> = Vec::new();
     for &(ry0, ry1) in row_intervals.iter().take(15) {
-        let mut row_spans: Vec<&TextSpan> = spans
+        let mut row_spans: Vec<&TextSpan> = span_slice
             .iter()
+            .copied()
             .filter(|s| {
                 let cy = s.bbox.center_y();
-                cy >= ry0 - 1.0 && cy <= ry1 + 1.0
+                let cx = s.bbox.center_x();
+                cy >= ry0 - 1.0 && cy <= ry1 + 1.0 && cx >= min_x - 2.0 && cx <= max_x + 2.0
             })
             .collect();
         row_spans.sort_by(|a, b| {
@@ -514,12 +863,12 @@ fn build_column_intervals(
     let mut result = Vec::with_capacity(col_tracks.len());
     for i in 0..col_tracks.len() {
         let left = if i == 0 {
-            table_bbox.x0
+            min_x
         } else {
             (col_tracks[i - 1].1 + col_tracks[i].0) * 0.5
         };
         let right = if i + 1 == col_tracks.len() {
-            table_bbox.x1
+            max_x
         } else {
             (col_tracks[i].1 + col_tracks[i + 1].0) * 0.5
         };
@@ -577,17 +926,27 @@ fn should_join_without_space(prev: &str, next: &str) -> bool {
     }
     // Case 2: prev is a single uppercase identifier token containing '_' (like "GEN_EVENT")
     // and next is a short digit or uppercase suffix ("0", "1")
-    let prev_is_ident = !prev_trim.contains(' ')
-        && prev_trim.contains('_')
+    let prev_all_ident_chars = !prev_trim.contains(' ')
         && prev_trim
             .chars()
             .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_');
-    let next_is_short_suffix = next_trim.len() <= 3
+    let next_all_ident_chars = !next_trim.contains(' ')
         && next_trim
             .chars()
-            .all(|c| c.is_ascii_digit() || c.is_ascii_uppercase());
+            .all(|c| c.is_ascii_digit() || c.is_ascii_uppercase() || c == '_');
 
-    prev_is_ident && next_is_short_suffix
+    let prev_is_ident = prev_all_ident_chars && prev_trim.contains('_');
+    let next_is_short_suffix = next_all_ident_chars && next_trim.len() <= 3;
+
+    // Case 3: long uppercase identifier wrapped across two lines inside a narrow column
+    // (e.g. "FACTORYRESETCMDAC" + "CESS" -> "FACTORYRESETCMDACCESS")
+    let long_ident_wrap = prev_all_ident_chars
+        && prev_trim.len() >= 10
+        && next_all_ident_chars
+        && next_trim.len() <= 8
+        && !next_trim.eq_ignore_ascii_case("RESERVED");
+
+    (prev_is_ident && next_is_short_suffix) || long_ident_wrap
 }
 
 fn is_enum_value_line(line: &str) -> bool {
@@ -614,6 +973,26 @@ fn split_and_flatten_headers(mut rows: Vec<Vec<String>>) -> (Vec<String>, Vec<Ve
     }
     if rows.len() == 1 {
         return (rows.remove(0), Vec::new());
+    }
+
+    // Strip a full-width condition preamble row (e.g. "over operating free-air temperature range...")
+    if rows.len() >= 3 {
+        let r0_non_empty: Vec<&str> = rows[0]
+            .iter()
+            .map(|c| c.trim())
+            .filter(|c| !c.is_empty())
+            .collect();
+        let r1_non_empty_count = rows[1].iter().filter(|c| !c.trim().is_empty()).count();
+        if r0_non_empty.len() == 1
+            && r0_non_empty[0].len() > 35
+            && r0_non_empty[0]
+                .chars()
+                .next()
+                .is_some_and(|c| c.is_ascii_lowercase())
+            && r1_non_empty_count >= 3
+        {
+            rows.remove(0);
+        }
     }
 
     let r0 = &rows[0];
@@ -861,5 +1240,205 @@ mod tests {
         strip_navigation_columns(&mut headers, &mut rows);
         assert_eq!(headers, vec!["Offset", "Acronym"]);
         assert_eq!(rows[0], vec!["400h", "FSUB_0"]);
+    }
+
+    #[test]
+    fn test_reject_16bit_bitbox_with_bit_numbers_above_bbox() {
+        let mut page = RawPageData {
+            page_number: 1,
+            width: 612.0,
+            height: 792.0,
+            spans: vec![
+                // Bit numbers sitting above the top border rule (y0 = 200.0)
+                TextSpan {
+                    text: "15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0".to_string(),
+                    bbox: BBox::new(80.0, 186.0, 520.0, 196.0),
+                    font_size: 8.5,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "RESERVED".to_string(),
+                    bbox: BBox::new(90.0, 204.0, 280.0, 214.0),
+                    font_size: 8.5,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "MODE".to_string(),
+                    bbox: BBox::new(320.0, 204.0, 500.0, 214.0),
+                    font_size: 8.5,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "r".to_string(),
+                    bbox: BBox::new(150.0, 224.0, 165.0, 234.0),
+                    font_size: 8.5,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "rw".to_string(),
+                    bbox: BBox::new(400.0, 224.0, 420.0, 234.0),
+                    font_size: 8.5,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+            ],
+            grid_segments: vec![
+                GridSegment {
+                    x0: 72.0,
+                    y0: 200.0,
+                    x1: 540.0,
+                    y1: 200.0,
+                    is_horizontal: true,
+                },
+                GridSegment {
+                    x0: 72.0,
+                    y0: 220.0,
+                    x1: 540.0,
+                    y1: 220.0,
+                    is_horizontal: true,
+                },
+                GridSegment {
+                    x0: 72.0,
+                    y0: 240.0,
+                    x1: 540.0,
+                    y1: 240.0,
+                    is_horizontal: true,
+                },
+                GridSegment {
+                    x0: 72.0,
+                    y0: 200.0,
+                    x1: 72.0,
+                    y1: 240.0,
+                    is_horizontal: false,
+                },
+                GridSegment {
+                    x0: 306.0,
+                    y0: 200.0,
+                    x1: 306.0,
+                    y1: 240.0,
+                    is_horizontal: false,
+                },
+                GridSegment {
+                    x0: 540.0,
+                    y0: 200.0,
+                    x1: 540.0,
+                    y1: 240.0,
+                    is_horizontal: false,
+                },
+            ],
+            graphic_bboxes: Vec::new(),
+            image_bboxes: Vec::new(),
+        };
+
+        let tables = extract_page_tables(&mut page);
+        assert!(tables.is_empty());
+        assert!(page.spans.iter().all(|s| !s.consumed));
+    }
+
+    #[test]
+    fn test_reject_uncaptioned_note_callout_box() {
+        let mut page = RawPageData {
+            page_number: 1,
+            width: 612.0,
+            height: 792.0,
+            spans: vec![
+                TextSpan {
+                    text: "Note:".to_string(),
+                    bbox: BBox::new(80.0, 310.0, 110.0, 320.0),
+                    font_size: 9.0,
+                    is_bold: true,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "Do not modify this register while the module is active.".to_string(),
+                    bbox: BBox::new(120.0, 310.0, 480.0, 320.0),
+                    font_size: 9.0,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "Clear EN".to_string(),
+                    bbox: BBox::new(80.0, 326.0, 130.0, 336.0),
+                    font_size: 9.0,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+                TextSpan {
+                    text: "Wait for BUSY = 0 before writing.".to_string(),
+                    bbox: BBox::new(150.0, 326.0, 420.0, 336.0),
+                    font_size: 9.0,
+                    is_bold: false,
+                    is_mono: false,
+                    consumed: false,
+                },
+            ],
+            grid_segments: vec![
+                GridSegment {
+                    x0: 72.0,
+                    y0: 300.0,
+                    x1: 520.0,
+                    y1: 300.0,
+                    is_horizontal: true,
+                },
+                GridSegment {
+                    x0: 72.0,
+                    y0: 345.0,
+                    x1: 520.0,
+                    y1: 345.0,
+                    is_horizontal: true,
+                },
+            ],
+            graphic_bboxes: Vec::new(),
+            image_bboxes: Vec::new(),
+        };
+
+        let tables = extract_page_tables(&mut page);
+        assert!(tables.is_empty());
+    }
+
+    #[test]
+    fn test_condition_preamble_stripping_and_caption_validation() {
+        let rows = vec![
+            vec![
+                "over operating free-air temperature range (unless otherwise noted)".to_string(),
+                "".to_string(),
+                "".to_string(),
+                "".to_string(),
+            ],
+            vec![
+                "PARAMETER".to_string(),
+                "MIN".to_string(),
+                "TYP".to_string(),
+                "MAX".to_string(),
+            ],
+            vec![
+                "Supply voltage".to_string(),
+                "1.62".to_string(),
+                "3.3".to_string(),
+                "3.6".to_string(),
+            ],
+        ];
+        let (headers, body) = split_and_flatten_headers(rows);
+        assert_eq!(headers, vec!["PARAMETER", "MIN", "TYP", "MAX"]);
+        assert_eq!(body.len(), 1);
+
+        assert!(is_table_caption("Table 6-1. Pin Attributes"));
+        assert!(!is_table_caption("Table 21-2 gives the register summary."));
+        assert!(!is_table_caption(
+            "Table 56: ADC characteristics: major update."
+        ));
+        assert!(!is_table_caption("Table 1-1. Pin Attributes ... 14"));
     }
 }

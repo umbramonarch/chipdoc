@@ -195,6 +195,18 @@ pub struct RegisterBitfield {
     pub page_number: usize,
 }
 
+/// A cross-reference graph entry for `index/xref.tsv` linking peripherals, registers,
+/// bitfields, pins/table rows, figures, and chapters across the document.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct XrefEntry {
+    pub symbol: String,
+    pub kind: String,
+    pub peripheral: String,
+    pub summary: String,
+    pub location: String,
+    pub page_number: usize,
+}
+
 /// Ordered semantic elements assembled for a page.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum PageBlock {
@@ -263,6 +275,10 @@ impl PageBlock {
 pub struct DocMetadata {
     pub file_name: String,
     pub doc_stem: String,
+    #[serde(default)]
+    pub source_hash: String,
+    #[serde(default)]
+    pub source_size_bytes: u64,
     pub title: Option<String>,
     pub author: Option<String>,
     pub subject: Option<String>,
@@ -307,6 +323,10 @@ pub struct SanityReport {
     pub figures_rendered: usize,
     pub figure_text_spans_suppressed: usize,
     pub header_footer_spans_stripped: usize,
+    #[serde(default)]
+    pub xrefs_indexed: usize,
+    #[serde(default)]
+    pub cache_hit: bool,
     pub replacement_char_count: usize,
     pub estimated_tokens: usize,
     pub sanity_score: u8, // 0..=100
@@ -321,8 +341,29 @@ pub struct ConvertConfig {
     pub page_filter: Option<Vec<usize>>, // Sorted 1-based page numbers
     pub single_file: bool,
     pub render_figures: bool,
+    pub lazy_figures: bool,
+    pub force: bool,
+    pub update_claudeignore: bool,
     pub figure_dpi: f32,
     pub pdfium_lib_dir: Option<PathBuf>,
+}
+
+impl ConvertConfig {
+    /// Creates a default conversion configuration for `input_pdf` into `output_root`.
+    pub fn new(input_pdf: PathBuf, output_root: PathBuf) -> Self {
+        Self {
+            input_pdf,
+            output_root,
+            page_filter: None,
+            single_file: false,
+            render_figures: true,
+            lazy_figures: false,
+            force: false,
+            update_claudeignore: true,
+            figure_dpi: 200.0,
+            pdfium_lib_dir: None,
+        }
+    }
 }
 
 /// Result returned from a full conversion run.

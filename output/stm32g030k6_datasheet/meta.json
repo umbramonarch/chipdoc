@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "author": "STMICROELECTRONICS",
+    "converted_pages": 100,
+    "creator": "C2 v20.4.0000 build 240 - c2_rendition_config : Techlit_Active",
+    "doc_stem": "stm32g030k6_datasheet",
+    "file_name": "stm32g030k6_datasheet.pdf",
+    "keywords": null,
+    "producer": "Acrobat Elements 15.0 (Windows); modified using iText 2.1.7 by 1T3XT",
+    "source_hash": "5c85e9d7c3da6e04",
+    "source_size_bytes": 2056282,
+    "subject": "The STM32G030x6/x8 mainstream microcontrollers are based on high-performance Arm®Cortex®-M0+ 32-bit RISC core operating at up to 64MHz frequency. Offering a high level of integration, they are suitable for a wide range of applications in consumer, industrial and appliance domains and ready for the Internet of Things (IoT) solutions.",
+    "title": "Datasheet - STM32G030x6/x8 - Arm® Cortex®-M0+ 32-bit MCU, up to 64 KB Flash, 8 KB RAM, 2x USART, timers, ADC, comm. I/Fs, 2.0-3.6 V",
+    "total_pages": 100
+  },
+  "sanity": {
+    "bitfields_indexed": 0,
+    "cache_hit": false,
+    "chipdoc_version": "1.1.0",
+    "converted_pages": 100,
+    "elapsed_ms": 2007,
+    "estimated_tokens": 44477,
+    "figure_text_spans_suppressed": 1060,
+    "figures_detected": 34,
+    "figures_rendered": 34,
+    "header_footer_spans_stripped": 440,
+    "multi_page_tables_stitched": 20,
+    "registers_indexed": 0,
+    "replacement_char_count": 0,
+    "sanity_score": 100,
+    "section_files_count": 10,
+    "tables_extracted": 75,
+    "total_pages": 100,
+    "visual_bitboxes_deduplicated": 0,
+    "warnings": [],
+    "xrefs_indexed": 1033
+  }
+}

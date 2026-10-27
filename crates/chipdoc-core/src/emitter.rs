@@ -1,10 +1,15 @@
 use crate::error::{ChipdocError, Result};
 use crate::model::{
     ConversionBundle, ConvertConfig, DocMetadata, ExtractedTable, FigureRegion, PageBlock,
-    RegisterBitfield, SanityReport, SectionFile, TocEntry,
+    RegisterBitfield, SanityReport, SectionFile, TocEntry, XrefEntry,
 };
-use crate::registers::{extract_bitfields_from_table, infer_peripheral_name};
+use crate::registers::{
+    extract_bitfield_from_paragraph, extract_bitfields_from_table,
+    infer_peripheral_from_register_name, infer_peripheral_from_registers_heading,
+    infer_peripheral_name,
+};
 use crate::tables::render_table_markdown;
+use crate::xref::build_xref_graph;
 use std::fs;
 use std::path::Path;
 
@@ -15,6 +20,7 @@ pub struct BundleIndexes {
     pub tables: Vec<ExtractedTable>,
     pub registers: Vec<RegisterBitfield>,
     pub figures: Vec<FigureRegion>,
+    pub xrefs: Vec<XrefEntry>,
     pub unique_registers_count: usize,
 }
 
@@ -28,15 +34,57 @@ pub fn build_section_files(
     let mut seen_registers = std::collections::HashSet::new();
 
     for (shard_idx, shard) in shards.iter().enumerate() {
-        // Select blocks belonging to this shard's page range.
-        // Note: if the next shard starts on the SAME page as this shard ends, avoid duplicating blocks.
-        let shard_blocks: Vec<&PageBlock> = blocks
-            .iter()
-            .filter(|b| {
-                let p = b.page();
-                p >= shard.start_page && p <= shard.end_page
-            })
-            .collect();
+        let start_split_idx = if shard_idx > 0
+            && shard.start_page > shards[shard_idx - 1].start_page
+        {
+            find_shard_split_index_on_page(blocks, shard.start_page, shard).filter(|&idx| idx > 0)
+        } else {
+            None
+        };
+
+        let next_shard_opt = shards
+            .get(shard_idx + 1)
+            .filter(|ns| ns.start_page > shard.start_page);
+        let end_split_idx = next_shard_opt
+            .and_then(|ns| find_shard_split_index_on_page(blocks, ns.start_page, ns))
+            .filter(|&idx| idx > 0);
+
+        let effective_end_page = match (next_shard_opt, end_split_idx) {
+            (Some(ns), Some(_)) => ns.start_page,
+            (Some(ns), None) => ns.start_page - 1,
+            (None, _) => shard.end_page,
+        };
+
+        let boundary_page = next_shard_opt.and_then(|ns| end_split_idx.map(|_| ns.start_page));
+        let mut shard_blocks: Vec<&PageBlock> = Vec::new();
+        let mut start_page_seen = 0usize;
+        let mut boundary_page_seen = 0usize;
+
+        for b in blocks {
+            let p = b.page();
+            if p < shard.start_page || p > effective_end_page {
+                continue;
+            }
+            if p == shard.start_page {
+                let cur_idx = start_page_seen;
+                start_page_seen += 1;
+                if let Some(skip_before) = start_split_idx {
+                    if cur_idx < skip_before {
+                        continue;
+                    }
+                }
+            }
+            if Some(p) == boundary_page {
+                let cur_idx = boundary_page_seen;
+                boundary_page_seen += 1;
+                if let Some(limit) = end_split_idx {
+                    if cur_idx >= limit {
+                        continue;
+                    }
+                }
+            }
+            shard_blocks.push(b);
+        }
 
         if shard_blocks.is_empty() {
             continue;
@@ -62,13 +110,13 @@ pub fn build_section_files(
         ));
         md_lines.push(format!(
             "pages: \"{}-{}\"",
-            shard.start_page, shard.end_page
+            shard.start_page, effective_end_page
         ));
         md_lines.push("---".to_string());
         md_lines.push(String::new());
         md_lines.push(format!(
             "# {} (pp. {}-{})",
-            shard.title, shard.start_page, shard.end_page
+            shard.title, shard.start_page, effective_end_page
         ));
         md_lines.push(String::new());
 
@@ -87,9 +135,15 @@ pub fn build_section_files(
                     level, text, page, ..
                 } => {
                     let hashes = "#".repeat((*level + 1).clamp(2, 6));
-                    let inferred = infer_peripheral_name(text);
-                    if inferred != "SYS" && *level <= 2 {
-                        active_peripheral = inferred;
+                    if *level <= 2 {
+                        let inferred = infer_peripheral_name(text);
+                        if inferred != "SYS" {
+                            active_peripheral = inferred;
+                        }
+                    } else if *level == 3 {
+                        if let Some(inferred) = infer_peripheral_from_registers_heading(text) {
+                            active_peripheral = inferred;
+                        }
                     }
                     md_lines.push(format!("{hashes} {text} (p. {page})"));
                     md_lines.push(String::new());
@@ -104,18 +158,34 @@ pub fn build_section_files(
                     ..
                 } => {
                     let periph = if peripheral != "SYS" && !peripheral.is_empty() {
-                        peripheral.as_str()
+                        if active_peripheral != "SYS"
+                            && active_peripheral.len() > peripheral.len()
+                            && active_peripheral.starts_with(peripheral.as_str())
+                        {
+                            active_peripheral.clone()
+                        } else {
+                            peripheral.clone()
+                        }
+                    } else if active_peripheral != "SYS" && !active_peripheral.is_empty() {
+                        active_peripheral.clone()
                     } else {
-                        active_peripheral.as_str()
+                        infer_peripheral_from_register_name(register)
+                            .unwrap_or_else(|| "SYS".to_string())
                     };
+                    active_peripheral = periph.clone();
                     active_register = register.clone();
                     active_offset = offset.clone();
                     active_reset = reset.clone();
                     seen_registers.insert(format!("{periph}.{register}"));
                     shard_regs += 1;
 
+                    let sec_prefix = if section_num.is_empty() {
+                        String::new()
+                    } else {
+                        format!("{section_num} ")
+                    };
                     md_lines.push(format!(
-                        "### {section_num} [{periph}.{register}] Offset: {offset} | Reset: {reset} (p. {page})"
+                        "### {sec_prefix}[{periph}.{register}] Offset: {offset} | Reset: {reset} (p. {page})"
                     ));
                     md_lines.push(String::new());
                 }
@@ -123,7 +193,20 @@ pub fn build_section_files(
                     md_lines.push(summary.clone());
                     md_lines.push(String::new());
                 }
-                PageBlock::Paragraph { text, .. } => {
+                PageBlock::Paragraph { text, page, .. } => {
+                    let para_line = md_lines.len() + 1;
+                    if let Some(bf) = extract_bitfield_from_paragraph(
+                        text,
+                        &active_peripheral,
+                        &active_register,
+                        &active_offset,
+                        &active_reset,
+                        &file_rel_path,
+                        para_line,
+                        *page,
+                    ) {
+                        indexes.registers.push(bf);
+                    }
                     md_lines.push(text.clone());
                     md_lines.push(String::new());
                 }
@@ -194,7 +277,7 @@ pub fn build_section_files(
             title: shard.title.clone(),
             level: shard.level,
             start_page: shard.start_page,
-            end_page: shard.end_page,
+            end_page: effective_end_page,
             file_rel_path,
             markdown,
             line_count,
@@ -205,7 +288,109 @@ pub fn build_section_files(
     }
 
     indexes.unique_registers_count = seen_registers.len();
+    indexes.xrefs = build_xref_graph(&indexes);
     indexes
+}
+
+fn find_shard_split_index_on_page(
+    blocks: &[PageBlock],
+    page: usize,
+    target_shard: &TocEntry,
+) -> Option<usize> {
+    let page_blocks: Vec<&PageBlock> = blocks.iter().filter(|b| b.page() == page).collect();
+    if page_blocks.is_empty() {
+        return None;
+    }
+
+    // Pass 1: exact chapter number match or normalized title match
+    for (idx, b) in page_blocks.iter().enumerate() {
+        if let PageBlock::Heading { text, .. } = b {
+            if heading_matches_shard_title(text, &target_shard.title, false) {
+                return Some(idx);
+            }
+        }
+    }
+
+    // Pass 2: subsection prefix match (e.g. "11.1 ..." for shard "11 ...")
+    for (idx, b) in page_blocks.iter().enumerate() {
+        if let PageBlock::Heading { text, .. } = b {
+            if heading_matches_shard_title(text, &target_shard.title, true) {
+                return Some(idx);
+            }
+        }
+    }
+
+    None
+}
+
+fn heading_matches_shard_title(
+    heading_text: &str,
+    shard_title: &str,
+    allow_subchapter: bool,
+) -> bool {
+    let h_trim = heading_text.trim();
+    let h_first_tok = h_trim.split_whitespace().next().unwrap_or("");
+    let h_is_numbered =
+        !h_first_tok.is_empty() && h_first_tok.chars().all(|c| c.is_ascii_digit() || c == '.');
+    let h_rest = if h_is_numbered {
+        h_trim[h_first_tok.len()..].trim()
+    } else {
+        h_trim
+    };
+    let h_norm = normalize_heading_words(h_rest);
+
+    for part in shard_title.split(" / ") {
+        let s_trim = part.trim();
+        let s_first_tok = s_trim.split_whitespace().next().unwrap_or("");
+        let s_is_numbered =
+            !s_first_tok.is_empty() && s_first_tok.chars().all(|c| c.is_ascii_digit() || c == '.');
+        let s_rest = if s_is_numbered {
+            s_trim[s_first_tok.len()..].trim()
+        } else {
+            s_trim
+        };
+        let s_norm = normalize_heading_words(s_rest);
+
+        if !allow_subchapter {
+            if h_is_numbered && s_is_numbered && h_first_tok == s_first_tok {
+                return true;
+            }
+            if !h_norm.is_empty()
+                && !s_norm.is_empty()
+                && h_norm.len() >= 4
+                && s_norm.len() >= 4
+                && (!h_is_numbered || !s_is_numbered || h_first_tok == s_first_tok)
+                && (h_norm.starts_with(&s_norm) || s_norm.starts_with(&h_norm))
+            {
+                return true;
+            }
+        } else if h_is_numbered
+            && s_is_numbered
+            && h_first_tok.starts_with(&format!("{s_first_tok}."))
+        {
+            return true;
+        }
+    }
+
+    false
+}
+
+fn normalize_heading_words(s: &str) -> String {
+    s.split(|c: char| !c.is_ascii_alphanumeric())
+        .filter(|w| !w.is_empty())
+        .map(|w| w.to_ascii_lowercase())
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+fn leading_chapter_number(title: &str) -> Option<&str> {
+    let first_tok = title.split_whitespace().next()?;
+    let chap = first_tok.split('.').next()?;
+    if !chap.is_empty() && chap.chars().all(|c| c.is_ascii_digit()) {
+        Some(chap)
+    } else {
+        None
+    }
 }
 
 /// Writes the complete Agent Documentation Bundle (`INDEX.md`, `sections/*.md`, `index/*.tsv`,
@@ -229,7 +414,35 @@ pub fn write_agent_bundle(
         create_dir(&figures_dir)?;
     }
 
-    // 1. Write `sections/*.md`
+    // 1. Write `sections/*.md` (remove any stale `.md` files from prior runs first)
+    if let Ok(entries) = fs::read_dir(&sections_dir) {
+        for entry in entries.flatten() {
+            let p = entry.path();
+            if p.extension().and_then(|s| s.to_str()) == Some("md") {
+                let _ = fs::remove_file(p);
+            }
+        }
+    }
+    if let Ok(entries) = fs::read_dir(&figures_dir) {
+        let valid_png_names: std::collections::HashSet<&str> = indexes
+            .figures
+            .iter()
+            .filter_map(|f| f.image_rel_path.as_deref())
+            .filter_map(|rel| rel.rsplit('/').next())
+            .collect();
+        for entry in entries.flatten() {
+            let p = entry.path();
+            if p.extension().and_then(|s| s.to_str()) == Some("png") {
+                let keep = p
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .is_some_and(|name| valid_png_names.contains(name));
+                if !keep {
+                    let _ = fs::remove_file(p);
+                }
+            }
+        }
+    }
     for sec in &indexes.sections {
         let out_path = bundle_dir.join(&sec.file_rel_path);
         write_file(&out_path, &sec.markdown)?;
@@ -301,26 +514,50 @@ pub fn write_agent_bundle(
     write_file(&index_dir.join("registers.tsv"), &reg_tsv)?;
 
     // 5. Write `index/figures.tsv`
-    let mut fig_tsv = String::from("figure_id\tcaption\timage_path\tlocation\tpage\n");
+    let mut fig_tsv = String::from("figure_id\tcaption\timage_path\tlocation\tpage\tbbox\n");
     for f in &indexes.figures {
         fig_tsv.push_str(&format!(
-            "{}\t{}\t{}\t{}:{}\t{}\n",
+            "{}\t{}\t{}\t{}:{}\t{}\t{:.1},{:.1},{:.1},{:.1}\n",
             f.id,
             sanitize_tsv(&f.caption),
             f.image_rel_path.as_deref().unwrap_or(""),
             f.section_file,
             f.line_number,
-            f.page_number
+            f.page_number,
+            f.bbox.x0,
+            f.bbox.y0,
+            f.bbox.x1,
+            f.bbox.y1,
         ));
     }
     write_file(&index_dir.join("figures.tsv"), &fig_tsv)?;
 
-    // 6. Write `INDEX.md`
+    // 6. Write `index/xref.tsv` (Hardware Cross-Reference Graph)
+    let mut xref_tsv = String::from("symbol\tkind\tperipheral\tsummary\tlocation\tpage\n");
+    for x in &indexes.xrefs {
+        xref_tsv.push_str(&format!(
+            "{}\t{}\t{}\t{}\t{}\t{}\n",
+            sanitize_tsv(&x.symbol),
+            sanitize_tsv(&x.kind),
+            sanitize_tsv(&x.peripheral),
+            sanitize_tsv(&x.summary),
+            x.location,
+            x.page_number,
+        ));
+    }
+    write_file(&index_dir.join("xref.tsv"), &xref_tsv)?;
+
+    // 7. Ensure `.claudeignore` protects prompt cache if requested
+    if config.update_claudeignore {
+        let _ = ensure_claudeignore_entry(&config.output_root);
+    }
+
+    // 8. Write `INDEX.md`
     let index_md = build_master_index_markdown(doc_meta, toc, indexes, sanity);
     let index_md_path = bundle_dir.join("INDEX.md");
     write_file(&index_md_path, &index_md)?;
 
-    // 7. Write `meta.json`
+    // 9. Write `meta.json`
     let meta_json = serde_json::to_string_pretty(&serde_json::json!({
         "metadata": doc_meta,
         "sanity": sanity,
@@ -364,7 +601,15 @@ fn build_master_index_markdown(
     lines.push(String::new());
     lines.push("> **Agent Navigation Guide**:".to_string());
     lines.push(
+        "> - Prefer 1-turn CLI queries: `chipdoc reg <name|hex>`, `chipdoc table <query> --show`, `chipdoc xref <symbol>`, `chipdoc page <N>`."
+            .to_string(),
+    );
+    lines.push(
         "> - For fast 1-line-per-bitfield register lookups, grep `index/registers.tsv`."
+            .to_string(),
+    );
+    lines.push(
+        "> - For cross-chapter hardware relationships (pins, interrupts, memory map, registers), grep `index/xref.tsv`."
             .to_string(),
     );
     lines.push(
@@ -406,6 +651,10 @@ fn build_master_index_markdown(
         sanity.figures_detected, sanity.figures_rendered
     ));
     lines.push(format!(
+        "- **Cross-References Indexed**: {} symbols -> `index/xref.tsv`",
+        sanity.xrefs_indexed
+    ));
+    lines.push(format!(
         "- **Sanity Score**: {}/100 (~{} tokens)",
         sanity.sanity_score, sanity.estimated_tokens
     ));
@@ -437,13 +686,38 @@ fn build_master_index_markdown(
     if !toc.is_empty() {
         lines.push("## Detailed Outline (Table of Contents)".to_string());
         lines.push(String::new());
-        for entry in toc.iter().filter(|e| e.level <= 2) {
+        for entry in toc.iter().filter(|e| {
+            e.level == 0
+                || (e.level <= 2
+                    && e.title
+                        .trim_start()
+                        .chars()
+                        .next()
+                        .is_some_and(|c| c.is_ascii_digit()))
+        }) {
             let indent = "  ".repeat(entry.level);
-            // Find which section file covers `entry.start_page`
-            let shard_link = indexes
-                .sections
-                .iter()
-                .find(|s| entry.start_page >= s.start_page && entry.start_page <= s.end_page)
+            let entry_chap = leading_chapter_number(&entry.title);
+            let matched_sec = if let Some(ec) = entry_chap {
+                indexes.sections.iter().find(|s| {
+                    s.title
+                        .split(" / ")
+                        .any(|part| leading_chapter_number(part) == Some(ec))
+                })
+            } else {
+                indexes.sections.iter().find(|s| {
+                    s.title
+                        .split(" / ")
+                        .any(|part| part.trim().eq_ignore_ascii_case(entry.title.trim()))
+                })
+            }
+            .or_else(|| {
+                indexes
+                    .sections
+                    .iter()
+                    .find(|s| entry.start_page >= s.start_page && entry.start_page <= s.end_page)
+            });
+
+            let shard_link = matched_sec
                 .map(|s| format!(" (`{}`)", s.file_rel_path))
                 .unwrap_or_default();
             lines.push(format!(
@@ -462,6 +736,39 @@ fn sanitize_tsv(s: &str) -> String {
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ")
+}
+
+/// Ensures `.claudeignore` in the workspace contains the bundle output directory so
+/// generating or refreshing bundles never invalidates Claude Code's prompt cache.
+pub fn ensure_claudeignore_entry(output_root: &Path) -> Result<bool> {
+    let dir_name = output_root
+        .file_name()
+        .and_then(|s| s.to_str())
+        .unwrap_or("output");
+    let entry = format!("{dir_name}/");
+    let claudeignore_path = output_root
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .map(|p| p.join(".claudeignore"))
+        .unwrap_or_else(|| Path::new(".claudeignore").to_path_buf());
+
+    let existing = fs::read_to_string(&claudeignore_path).unwrap_or_default();
+    if existing
+        .lines()
+        .any(|l| l.trim() == entry || l.trim() == dir_name)
+    {
+        return Ok(false);
+    }
+
+    let mut updated = existing;
+    if !updated.is_empty() && !updated.ends_with('\n') {
+        updated.push('\n');
+    }
+    updated.push_str("# chipdoc generated bundles (prevents prompt cache invalidation)\n");
+    updated.push_str(&entry);
+    updated.push('\n');
+    write_file(&claudeignore_path, &updated)?;
+    Ok(true)
 }
 
 fn create_dir(path: &Path) -> Result<()> {

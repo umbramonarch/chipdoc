@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "author": "STMICROELECTRONICS",
+    "converted_pages": 989,
+    "creator": "C2 v4.2.0220 build 670 - c2_rendition_config : Techlit_Active",
+    "doc_stem": "stm32g030k6_trm",
+    "file_name": "stm32g030k6_trm.pdf",
+    "keywords": null,
+    "producer": "Acrobat Elements 15.0 (Windows); modified using iText 2.1.7 by 1T3XT",
+    "source_hash": "ae3303a3674eb1a2",
+    "source_size_bytes": 12642941,
+    "subject": "This reference manual complements the datasheets of the STM32G0x0 microcontrollers, providing information required for application and in particular for software development. It pertains to the superset of feature sets available on STM32G0x0 microcontrollers.",
+    "title": "STM32G0x0 advanced Arm®-based 32-bit MCUs - Reference manual",
+    "total_pages": 989
+  },
+  "sanity": {
+    "bitfields_indexed": 1675,
+    "cache_hit": false,
+    "chipdoc_version": "1.1.0",
+    "converted_pages": 989,
+    "elapsed_ms": 14979,
+    "estimated_tokens": 465056,
+    "figure_text_spans_suppressed": 7374,
+    "figures_detected": 302,
+    "figures_rendered": 302,
+    "header_footer_spans_stripped": 4623,
+    "multi_page_tables_stitched": 23,
+    "registers_indexed": 310,
+    "replacement_char_count": 0,
+    "sanity_score": 100,
+    "section_files_count": 32,
+    "tables_extracted": 190,
+    "total_pages": 989,
+    "visual_bitboxes_deduplicated": 366,
+    "warnings": [],
+    "xrefs_indexed": 4404
+  }
+}
