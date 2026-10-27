@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "author": "Texas Instruments, Incorporated [SLASFJ6,B]",
+    "converted_pages": 138,
+    "creator": "Antenna House XSL Formatter V7.4 R1 Windows : 7.4.1.63121 (2023-12-20T11:05+09)",
+    "doc_stem": "mspm0c1105_datasheet",
+    "file_name": "mspm0c1105_datasheet.pdf",
+    "keywords": "SLASFJ6B",
+    "producer": "iText 2.1.7 by 1T3XT",
+    "source_hash": "8a34e69207bfa9c3",
+    "source_size_bytes": 8662635,
+    "subject": "Data Sheet",
+    "title": "MSPM0C1105, MSPM0C1106 Mixed-Signal Microcontrollers datasheet (Rev. B)",
+    "total_pages": 138
+  },
+  "sanity": {
+    "bitfields_indexed": 0,
+    "cache_hit": false,
+    "chipdoc_version": "1.1.0",
+    "converted_pages": 138,
+    "elapsed_ms": 2250,
+    "estimated_tokens": 56904,
+    "figure_text_spans_suppressed": 46,
+    "figures_detected": 21,
+    "figures_rendered": 21,
+    "header_footer_spans_stripped": 1206,
+    "multi_page_tables_stitched": 34,
+    "registers_indexed": 0,
+    "replacement_char_count": 0,
+    "sanity_score": 100,
+    "section_files_count": 12,
+    "tables_extracted": 84,
+    "total_pages": 138,
+    "visual_bitboxes_deduplicated": 0,
+    "warnings": [],
+    "xrefs_indexed": 2479
+  }
+}

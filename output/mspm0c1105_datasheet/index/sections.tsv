@@ -1,0 +1,13 @@
+section_id	title	file_path	lines	pages	tables	registers	figures
+01	1 Features / 2 Applications	sections/01-1-features-2-applications.md	43	1-1	0	0	0
+02	3 Description	sections/02-3-description.md	63	2-3	1	0	0
+03	4 Functional Block Diagram	sections/03-4-functional-block-diagram.md	16	4-4	0	0	1
+04	Table of Contents	sections/04-table-of-contents.md	25	5-5	0	0	0
+05	5 Device Comparison	sections/05-5-device-comparison.md	44	6-6	1	0	0
+06	6 Pin Configuration and Functions	sections/06-6-pin-configuration-and-functions.md	908	7-40	15	0	10
+07	7 Specifications	sections/07-7-specifications.md	700	41-57	33	0	5
+08	8 Detailed Description	sections/08-8-detailed-description.md	869	58-78	17	0	3
+09	9 Applications, Implementation, and Layout	sections/09-9-applications-implementation-and-layout.md	30	79-79	0	0	1
+10	10 Device and Documentation Support	sections/10-10-device-and-documentation-support.md	92	80-82	1	0	1
+11	11 Revision History	sections/11-11-revision-history.md	23	82-82	1	0	0
+12	12 Mechanical, Packaging, and Orderable Information	sections/12-12-mechanical-packaging-and-orderable-information.md	692	83-138	15	0	0

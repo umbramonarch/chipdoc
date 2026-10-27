@@ -6,6 +6,31 @@ All notable changes to this project are listed here. Versions follow
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-27
+
+### Added
+
+- **Expanded Universal Register & Bitfield Extraction (`registers.rs`, `stitcher.rs`, `emitter.rs`)**:
+  - Support for arrayed and formula-offset inline register headings (`REG[y] (Offset = 41C00024h + formula)`), 2-line wrapped register headings with alternate modes (`[alternate] (PERIPH_REG)`), kerning spaces inside parenthesized acronyms (`(PERIPH_REG1 0)` -> `PERIPH_REG10`), `Address:` metadata lines, unnumbered bold register headings, numbered plain register headings, and prefixed/binary reset values (`System reset value:`, `Backup domain reset value:`, `POR:`, `0b...`).
+  - Support for non-contiguous bit lists (`Bits 24, 14:12`), `+` arithmetic in field names (`EXTIm+3[7:0]`), space-delimited uppercase prose bitfields without colons (`Bits 31:16 REV_ID[15:0] Revision identifier`), and context-aware `R/W` vs `RO` access inference that avoids false-positive `RO` on conditional `"read-only when..."` clauses.
+  - Long uppercase identifier line-wrap joining inside narrow table columns (`FACTORYRESETCMDAC\nCESS` -> `FACTORYRESETCMDACCESS`).
+  - Peripheral context tracking across chapter headings, register acronyms, slash-separated peripheral groups, and multi-page register definitions while ignoring functional subheadings.
+- **Geometric Table, Stitching & Figure Improvements (`tables.rs`, `stitcher.rs`, `figures.rs`)**:
+  - Break detection between vertically separated table clusters when separated by captions, section/register headings, 16-/32-bit bit-number headers, callout headers (`Note`), or full-width body paragraphs.
+  - Sub-column track discovery inside wide unruled table columns (`>110 pt`) such as multi-package pinout tables.
+  - Lookahead cross-page table stitching across intervening footnote/page-number tables (`i + 2`) and minor column-count differences (`<= 1` empty margin column).
+  - Uncaptioned vector diagram rejection in `tables.rs` and strict caption/prose boundary detection in `figures.rs`.
+- **Cleaner, Bookmark & Sharding Refinements (`cleaner.rs`, `pdf_loader.rs`, `emitter.rs`, `sanity.rs`)**:
+  - Inline HTML/XML markup tag stripping (`<Sup>`, `</Sup>`, `<sub>`, etc.) in body text, PDF metadata, and bookmarks.
+  - Filtering of `Table N.` and `Figure N.` caption bookmarks from chapter sharding while preserving `Table of Contents`.
+  - Shared-page section boundary routing in `stitcher.rs` so trailing subsections on a boundary page stay in their parent chapter before the next top-level heading.
+  - Alternating odd/even running header/footer stripping, whole-line margin eviction, `N/M` page counter stripping, superscript attachment (`I2C`, `®`, `™`), and acronym/cross-reference boundary spacing.
+  - Automatic cleanup of stale `.md` files in `sections/` during bundle emission.
+- **Hardware Cross-Reference Graph & 1-Turn Query Engine (`xref.rs`, `query.rs`, `main.rs`)**:
+  - Full-row scanning (`take(12)`) for pin names and memory-map addresses in wide multi-package tables, plus peripheral sanitization to prevent `(continued)` table artifacts.
+  - Multi-page `RegCard` merging, template-to-concrete peripheral/register matching (`GPIOA_MODER` <-> `GPIOx_MODER`, `USART1_CR1` <-> `USART_CR1`, `DMA1_CCR1` <-> `DMA_CCRx`), and underscore bitfield fallback (`SWDP_MODE`, `OBL_LAUNCH`).
+  - `chipdoc page <N>` multi-bundle lookup when `<bundle>` is omitted, dotted sub-section lookup (`chipdoc section 10.3`), and exact word-boundary pin/symbol matching in `chipdoc xref`.
+
 ## [1.0.0] - 2026-10-26
 
 ### Added
@@ -34,5 +59,6 @@ All notable changes to this project are listed here. Versions follow
   - `PreToolUse` hook (`scripts/pre_read_pdf_hook.py`) blocking raw `.pdf` `Read` calls and steering agents to `chipdoc`.
   - `/chipdoc` skill (`skills/chipdoc/SKILL.md`) teaching 1-turn CLI retrieval workflows.
 
-[Unreleased]: https://github.com/umbramonarch/chipdoc/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/umbramonarch/chipdoc/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/umbramonarch/chipdoc/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/umbramonarch/chipdoc/releases/tag/v1.0.0

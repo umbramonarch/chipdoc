@@ -5,9 +5,9 @@ use memchr::memmem;
 use rayon::prelude::*;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 /// Summary of a discovered Agent Documentation Bundle on disk.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -32,6 +32,7 @@ pub struct NormalizedHwQuery {
     pub peripheral_hint: Option<String>,
     pub symbol: String,
     pub hex_value: Option<u64>,
+    pub explicit_sep: bool,
 }
 
 impl NormalizedHwQuery {
@@ -51,6 +52,7 @@ impl NormalizedHwQuery {
                     peripheral_hint: Some(p.trim().to_ascii_uppercase()),
                     symbol: s.trim().to_string(),
                     hex_value,
+                    explicit_sep: true,
                 };
             }
         }
@@ -66,6 +68,7 @@ impl NormalizedHwQuery {
                     peripheral_hint: Some(prefix.to_ascii_uppercase()),
                     symbol: rest.to_string(),
                     hex_value,
+                    explicit_sep: false,
                 };
             }
         }
@@ -75,8 +78,171 @@ impl NormalizedHwQuery {
             peripheral_hint: None,
             symbol: trimmed.to_string(),
             hex_value,
+            explicit_sep: false,
         }
     }
+}
+
+/// Splits a hardware identifier token into `(canonical_stem, optional_instance)`.
+/// Examples:
+/// - `SYSCTL_C1105_C1106` -> `("SYSCTL", None)`
+/// - `GPIOx` / `TIMx` / `CCRx` -> `("GPIO", None)` / `("TIM", None)` / `("CCR", None)`
+/// - `GPIOA`..`GPIOK` -> `("GPIO", Some("A"))`..`("GPIO", Some("K"))`
+/// - `TIM14` -> `("TIM", Some("14"))`, `USART1` -> `("USART", Some("1"))`, `CCR1` -> `("CCR", Some("1"))`
+/// - `TIMA0` / `TIMG14` -> `("TIM", Some("A0"))` / `("TIM", Some("G14"))`
+pub fn split_hw_stem_instance(raw_token: &str) -> (String, Option<String>) {
+    let trimmed = raw_token.trim();
+    if trimmed.is_empty() {
+        return (String::new(), None);
+    }
+
+    // Strip peripheral variant suffixes after `_` (e.g., `SYSCTL_C1105_C1106` -> `SYSCTL`)
+    let base = if let Some((prefix, rest)) = trimmed.split_once('_') {
+        let is_variant_suffix = prefix.len() >= 2
+            && !rest.is_empty()
+            && rest.split('_').all(|seg| {
+                seg.len() >= 3
+                    && seg.chars().next().is_some_and(|c| c.is_ascii_alphabetic())
+                    && seg.chars().filter(|c| c.is_ascii_digit()).count() >= 2
+            });
+        if is_variant_suffix {
+            prefix
+        } else {
+            trimmed
+        }
+    } else {
+        trimmed
+    };
+
+    // Check template placeholder ending with lowercase 'x', 'n', 'y'
+    // or uppercase 'X' when length >= 4 and not ending in MUX, IDX, BOX, MAX, AUX, TX, RX
+    if base.len() >= 3 {
+        let last_ch = base.chars().last().unwrap_or('\0');
+        let upper = base.to_ascii_uppercase();
+        let is_lower_placeholder = matches!(last_ch, 'x' | 'n' | 'y')
+            && base[..base.len() - 1]
+                .chars()
+                .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_');
+        let is_upper_x_placeholder = last_ch == 'X'
+            && upper.len() >= 4
+            && !["MUX", "IDX", "BOX", "MAX", "AUX", "TX", "RX"]
+                .iter()
+                .any(|s| upper.ends_with(s));
+
+        if is_lower_placeholder || is_upper_x_placeholder {
+            let stem = upper[..upper.len() - 1].trim_end_matches('_').to_string();
+            if stem.len() >= 2 {
+                return (stem, None);
+            }
+        }
+    }
+
+    let upper = base.to_ascii_uppercase();
+
+    // Check trailing digits after >= 2 letters (e.g. TIM14, USART1, CCR1, EXTICR1, TIMA0, TIMG14)
+    if !upper.contains('_') {
+        let digit_start = upper
+            .find(|c: char| c.is_ascii_digit())
+            .unwrap_or(upper.len());
+        if digit_start >= 2 && digit_start < upper.len() {
+            let alpha_part = &upper[..digit_start];
+            let rest_part = &upper[digit_start..];
+            if alpha_part.chars().all(|c| c.is_ascii_alphabetic())
+                && rest_part.chars().all(|c| c.is_ascii_digit())
+            {
+                if (alpha_part.starts_with("TIM") && alpha_part.len() == 4)
+                    || (alpha_part.starts_with("GPIO") && alpha_part.len() == 5)
+                {
+                    let stem_len = if alpha_part.starts_with("TIM") { 3 } else { 4 };
+                    return (
+                        alpha_part[..stem_len].to_string(),
+                        Some(upper[stem_len..].to_string()),
+                    );
+                }
+                return (alpha_part.to_string(), Some(rest_part.to_string()));
+            }
+        }
+    }
+
+    // Port-letter instance of length >= 5 like GPIOA..GPIOK
+    if upper.len() == 5 && upper.starts_with("GPIO") && matches!(upper.as_bytes()[4], b'A'..=b'K') {
+        return ("GPIO".to_string(), Some(upper[4..].to_string()));
+    }
+
+    (upper, None)
+}
+
+/// Checks whether a document hardware token and a query hardware token are compatible.
+/// Returns `Some(4)` for exact match, `Some(3)` for template/instance/short-suffix match, or `None`.
+pub fn hw_tokens_compatible(doc_tok: &str, query_tok: &str) -> Option<u8> {
+    let d_trim = doc_tok.trim();
+    let q_trim = query_tok.trim();
+    if d_trim.is_empty() || q_trim.is_empty() {
+        return None;
+    }
+    if d_trim.eq_ignore_ascii_case(q_trim) {
+        return Some(4);
+    }
+
+    let (d_stem, d_inst) = split_hw_stem_instance(d_trim);
+    let (q_stem, q_inst) = split_hw_stem_instance(q_trim);
+    if !d_stem.is_empty() && d_stem == q_stem {
+        let d_has_placeholder = d_trim.ends_with(['x', 'n', 'y', 'X']);
+        let q_has_placeholder = q_trim.ends_with(['x', 'n', 'y', 'X']);
+        match (d_inst, q_inst) {
+            (Some(di), Some(qi)) if di == qi => return Some(4),
+            (None, Some(_)) if d_stem.len() >= 3 || d_has_placeholder => return Some(3),
+            (Some(_), None) if d_stem.len() >= 3 || q_has_placeholder => return Some(3),
+            (None, None) => return Some(3),
+            _ => return None,
+        }
+    }
+
+    fn split_periph_reg(s: &str) -> Option<(&str, &str)> {
+        s.split_once('.').or_else(|| s.split_once('_'))
+    }
+
+    if let (Some((dp, dr)), Some((qp, qr))) = (split_periph_reg(d_trim), split_periph_reg(q_trim)) {
+        if let (Some(_), Some(_)) = (hw_tokens_compatible(dp, qp), hw_tokens_compatible(dr, qr)) {
+            return Some(3);
+        }
+    }
+
+    if !q_trim.contains('_') && !q_trim.contains('.') {
+        if let Some((_, doc_short_reg)) = split_periph_reg(d_trim) {
+            if hw_tokens_compatible(doc_short_reg, q_trim).is_some() {
+                return Some(3);
+            }
+        }
+    }
+
+    None
+}
+
+/// Checks whether `haystack` contains `needle` at hardware identifier boundaries,
+/// ensuring a trailing digit or short token does not match a longer number (e.g. `PA1` never matches `PA10`).
+pub fn contains_hw_token_bounded(haystack: &str, needle: &str) -> bool {
+    let h = haystack.to_ascii_uppercase();
+    let n = needle.trim().to_ascii_uppercase();
+    if n.is_empty() || n.len() > h.len() {
+        return false;
+    }
+    for (start, _) in h.match_indices(&n) {
+        let prev_ok = h[..start]
+            .chars()
+            .next_back()
+            .is_none_or(|c| !c.is_ascii_alphanumeric());
+        let next_ch = h[start + n.len()..].chars().next();
+        let next_ok = if n.ends_with(|c: char| c.is_ascii_digit()) || n.len() <= 4 {
+            next_ch.is_none_or(|c| !c.is_ascii_alphanumeric())
+        } else {
+            next_ch.is_none_or(|c| !c.is_ascii_digit())
+        };
+        if prev_ok && next_ok {
+            return true;
+        }
+    }
+    false
 }
 
 /// Parses either C-style hex (`0x41C00004`, `0x400`) or vendor-style hex (`41C00004h`, `400h`)
@@ -105,6 +271,10 @@ pub fn parse_hw_hex(token: &str) -> Option<u64> {
 pub fn resolve_bundles(target: &Path) -> Result<Vec<PathBuf>> {
     if target.join("meta.json").exists() && target.join("INDEX.md").exists() {
         return Ok(vec![target.to_path_buf()]);
+    }
+    let output_candidate = Path::new("output").join(target);
+    if output_candidate.join("meta.json").exists() && output_candidate.join("INDEX.md").exists() {
+        return Ok(vec![output_candidate]);
     }
 
     let mut bundles = Vec::new();
@@ -235,8 +405,11 @@ pub fn query_registers_formatted(
         offset: String,
         reset: String,
         location: String,
+        start_page: usize,
+        end_page: usize,
         page: String,
         fields: Vec<(String, String, String, String, String)>,
+        match_score: u8,
     }
 
     let per_bundle: Vec<Vec<RegCard>> = bundles
@@ -252,10 +425,7 @@ pub fn query_registers_formatted(
                 .unwrap_or("bundle")
                 .to_string();
 
-            // First group all bitfields by (peripheral, register, location_file, page)
-            let mut grouped: BTreeMap<(String, String, String), RegCard> = BTreeMap::new();
-            let mut matched_keys: std::collections::HashSet<(String, String, String)> =
-                std::collections::HashSet::new();
+            let mut cards: Vec<RegCard> = Vec::new();
 
             for line in content.lines().skip(1) {
                 let cols: Vec<&str> = line.split('\t').collect();
@@ -272,108 +442,196 @@ pub fn query_registers_formatted(
                 let f_reset = cols[7];
                 let desc = cols[8];
                 let loc = cols[9];
-                let page = cols[10];
+                let page_str = cols[10];
+                let page_num = page_str.parse::<usize>().unwrap_or(0);
 
-                let key = (periph.to_string(), reg.to_string(), page.to_string());
-                let card = grouped.entry(key.clone()).or_insert_with(|| RegCard {
-                    bundle_name: bundle_name.clone(),
-                    peripheral: periph.to_string(),
-                    register: reg.to_string(),
-                    offset: offset.to_string(),
-                    reset: reset.to_string(),
-                    location: loc.to_string(),
-                    page: page.to_string(),
-                    fields: Vec::new(),
+                let append_to_last = cards.last().is_some_and(|last| {
+                    last.peripheral == periph
+                        && last.register == reg
+                        && last.offset == offset
+                        && page_num >= last.start_page
+                        && page_num <= last.end_page + 1
                 });
-                card.fields.push((
-                    bits.to_string(),
-                    field.to_string(),
-                    access.to_string(),
-                    f_reset.to_string(),
-                    desc.to_string(),
-                ));
 
-                // Check if this register or bitfield matches the query
-                let periph_u = periph.to_ascii_uppercase();
-                let reg_u = reg.to_ascii_uppercase();
-                let field_u = field.to_ascii_uppercase();
+                if append_to_last {
+                    let card = cards.last_mut().expect("non-empty");
+                    if page_num > card.end_page {
+                        card.end_page = page_num;
+                        if card.start_page != card.end_page {
+                            card.page = format!("{}-{}", card.start_page, card.end_page);
+                        }
+                    }
+                    let dup_field = card
+                        .fields
+                        .iter()
+                        .any(|(b, f, _, _, _)| b == bits && f == field);
+                    if !dup_field {
+                        card.fields.push((
+                            bits.to_string(),
+                            field.to_string(),
+                            access.to_string(),
+                            f_reset.to_string(),
+                            desc.to_string(),
+                        ));
+                    }
+                } else {
+                    cards.push(RegCard {
+                        bundle_name: bundle_name.clone(),
+                        peripheral: periph.to_string(),
+                        register: reg.to_string(),
+                        offset: offset.to_string(),
+                        reset: reset.to_string(),
+                        location: loc.to_string(),
+                        start_page: page_num,
+                        end_page: page_num,
+                        page: page_str.to_string(),
+                        fields: vec![(
+                            bits.to_string(),
+                            field.to_string(),
+                            access.to_string(),
+                            f_reset.to_string(),
+                            desc.to_string(),
+                        )],
+                        match_score: 0,
+                    });
+                }
+            }
+
+            for card in &mut cards {
+                let periph_u = card.peripheral.to_ascii_uppercase();
+                let reg_u = card.register.to_ascii_uppercase();
+                let short_reg = card
+                    .register
+                    .split_once('_')
+                    .map(|(_, r)| r)
+                    .unwrap_or(&card.register);
+                let short_reg_u = short_reg.to_ascii_uppercase();
+                let reg_prefix = card.register.split_once('_').map(|(p, _)| p).unwrap_or("");
+
                 let combined_dot = format!("{periph_u}.{reg_u}");
                 let combined_under = format!("{periph_u}_{reg_u}");
+                let combined_short_dot = format!("{periph_u}.{short_reg_u}");
+                let combined_short_under = format!("{periph_u}_{short_reg_u}");
 
-                let hex_match = match (q.hex_value, parse_hw_hex(offset)) {
+                let hex_match = match (q.hex_value, parse_hw_hex(&card.offset)) {
                     (Some(qv), Some(ov)) => qv == ov,
                     _ => false,
                 };
 
-                let periph_filter_ok = q
-                    .peripheral_hint
-                    .as_ref()
-                    .is_none_or(|ph| periph_u.contains(ph) || reg_u.starts_with(ph));
+                let periph_filter_ok = q.peripheral_hint.as_ref().is_none_or(|ph| {
+                    periph_u.contains(ph)
+                        || reg_u.starts_with(ph)
+                        || hw_tokens_compatible(&card.peripheral, ph).is_some()
+                        || (!reg_prefix.is_empty()
+                            && hw_tokens_compatible(reg_prefix, ph).is_some())
+                });
 
-                let symbol_match = reg_u.contains(&sym_upper)
-                    || field_u.contains(&sym_upper)
-                    || combined_dot.contains(&raw_upper)
-                    || combined_under.contains(&raw_upper)
-                    || (q.peripheral_hint.is_none() && periph_u == raw_upper);
+                let exact_reg_match = reg_u == raw_upper
+                    || (!q.explicit_sep && short_reg_u == raw_upper)
+                    || (periph_filter_ok
+                        && (combined_dot == raw_upper
+                            || combined_under == raw_upper
+                            || combined_short_dot == raw_upper
+                            || combined_short_under == raw_upper
+                            || (q
+                                .peripheral_hint
+                                .as_deref()
+                                .is_some_and(|ph| periph_u == ph)
+                                && (reg_u == sym_upper || short_reg_u == sym_upper))));
 
-                if hex_match || (periph_filter_ok && symbol_match) {
-                    matched_keys.insert(key);
-                }
+                let template_reg_match = hw_tokens_compatible(&card.register, &q.raw).is_some()
+                    || hw_tokens_compatible(&combined_under, &q.raw).is_some()
+                    || hw_tokens_compatible(&combined_short_under, &q.raw).is_some()
+                    || (periph_filter_ok
+                        && (hw_tokens_compatible(&card.register, &q.symbol).is_some()
+                            || hw_tokens_compatible(short_reg, &q.symbol).is_some()));
+
+                let exact_bitfield_match = card.fields.iter().any(|(_, f, _, _, _)| {
+                    let fu = f.to_ascii_uppercase();
+                    let fb = fu.split('[').next().unwrap_or(&fu);
+                    (!q.explicit_sep
+                        && (fu == raw_upper
+                            || fb == raw_upper
+                            || hw_tokens_compatible(fb, &q.raw).is_some()))
+                        || (periph_filter_ok
+                            && (fu == sym_upper
+                                || fb == sym_upper
+                                || hw_tokens_compatible(fb, &q.symbol).is_some()))
+                });
+
+                let periph_match = q.peripheral_hint.is_none()
+                    && hw_tokens_compatible(&card.peripheral, &q.raw).is_some();
+
+                let substring_match = (periph_filter_ok
+                    && (reg_u.contains(&sym_upper)
+                        || card
+                            .fields
+                            .iter()
+                            .any(|(_, f, _, _, _)| f.to_ascii_uppercase().contains(&sym_upper))
+                        || combined_dot.contains(&raw_upper)
+                        || combined_under.contains(&raw_upper)))
+                    || (!q.explicit_sep
+                        && (reg_u.contains(&raw_upper)
+                            || card.fields.iter().any(|(_, f, _, _, _)| {
+                                f.to_ascii_uppercase().contains(&raw_upper)
+                            })));
+
+                card.match_score = if hex_match || exact_reg_match {
+                    5
+                } else if template_reg_match || exact_bitfield_match {
+                    4
+                } else if periph_match {
+                    3
+                } else if substring_match {
+                    2
+                } else {
+                    0
+                };
             }
 
-            grouped
-                .into_iter()
-                .filter(|(k, _)| matched_keys.contains(k))
-                .map(|(_, card)| card)
-                .collect()
+            cards.into_iter().filter(|c| c.match_score > 0).collect()
         })
         .collect();
 
-    let mut out = String::new();
-    let mut total_shown = 0usize;
-    let mut total_found = 0usize;
+    let mut all_cards: Vec<RegCard> = per_bundle.into_iter().flatten().collect();
+    all_cards.sort_by_key(|a| std::cmp::Reverse(a.match_score));
 
-    for cards in &per_bundle {
-        total_found += cards.len();
-    }
-
+    let total_found = all_cards.len();
     if total_found == 0 {
         return Ok(format!(
             "No register or bitfield matches for '{raw_query}'. Try `chipdoc search \"{raw_query}\"` or `chipdoc table \"{raw_query}\"`.\n"
         ));
     }
 
-    for cards in per_bundle {
-        for card in cards {
-            if total_shown >= limit {
-                break;
-            }
-            total_shown += 1;
-            let hex_norm = parse_hw_hex(&card.offset)
-                .map(|v| format!(" (0x{v:X})"))
-                .unwrap_or_default();
+    let mut out = String::new();
+    let mut total_shown = 0usize;
+
+    for card in all_cards.into_iter().take(limit) {
+        total_shown += 1;
+        let hex_norm = parse_hw_hex(&card.offset)
+            .map(|v| format!(" (0x{v:X})"))
+            .unwrap_or_default();
+        out.push_str(&format!(
+            "[{bundle}] {periph}.{reg} | Offset: {off}{hex_norm} | Reset: {rst} | p. {page} ({loc})\n",
+            bundle = card.bundle_name,
+            periph = card.peripheral,
+            reg = card.register,
+            off = card.offset,
+            rst = card.reset,
+            page = card.page,
+            loc = card.location,
+        ));
+        for (bits, fname, acc, frst, desc) in &card.fields {
+            let short_desc = if compact && desc.len() > 120 {
+                format!("{}...", &desc[..117])
+            } else {
+                desc.clone()
+            };
             out.push_str(&format!(
-                "[{bundle}] {periph}.{reg} | Offset: {off}{hex_norm} | Reset: {rst} | p. {page} ({loc})\n",
-                bundle = card.bundle_name,
-                periph = card.peripheral,
-                reg = card.register,
-                off = card.offset,
-                rst = card.reset,
-                page = card.page,
-                loc = card.location,
+                "  [{bits:>5}] {fname:<18} ({acc}, reset={frst}): {short_desc}\n"
             ));
-            for (bits, fname, acc, frst, desc) in &card.fields {
-                let short_desc = if compact && desc.len() > 120 {
-                    format!("{}...", &desc[..117])
-                } else {
-                    desc.clone()
-                };
-                out.push_str(&format!(
-                    "  [{bits:>5}] {fname:<18} ({acc}, reset={frst}): {short_desc}\n"
-                ));
-            }
-            out.push('\n');
         }
+        out.push('\n');
     }
 
     if total_found > total_shown {
@@ -385,6 +643,60 @@ pub fn query_registers_formatted(
     }
 
     Ok(out)
+}
+
+fn has_exact_number_boundary(text: &str, pat: &str) -> bool {
+    if pat.is_empty() || pat.len() > text.len() {
+        return false;
+    }
+    for (idx, _) in text.match_indices(pat) {
+        let prev_ok = text[..idx]
+            .chars()
+            .next_back()
+            .is_none_or(|c| !c.is_ascii_alphanumeric());
+        let next_ch = text[idx + pat.len()..].chars().next();
+        let next_ok = next_ch.is_none_or(|c| !c.is_ascii_digit() && c != '-');
+        if prev_ok && next_ok {
+            return true;
+        }
+    }
+    false
+}
+
+fn score_caption_or_id_hit(id: &str, caption: &str, q_lower: &str) -> u8 {
+    if q_lower.is_empty() {
+        return 1;
+    }
+    let id_lower = id.to_ascii_lowercase();
+    let cap_lower = caption.to_ascii_lowercase();
+
+    let id_target = if let Some(rest) = q_lower.strip_prefix("table ") {
+        Some(format!("table-{}", rest.trim()))
+    } else if let Some(rest) = q_lower.strip_prefix("figure ") {
+        Some(format!("fig-{}", rest.trim()))
+    } else {
+        q_lower
+            .strip_prefix("fig.")
+            .or_else(|| q_lower.strip_prefix("fig "))
+            .map(|rest| format!("fig-{}", rest.trim()))
+    };
+
+    if id_lower == q_lower
+        || cap_lower == q_lower
+        || has_exact_number_boundary(&cap_lower, q_lower)
+        || id_target
+            .as_deref()
+            .is_some_and(|t| id_lower == t || has_exact_number_boundary(&id_lower, t))
+    {
+        3
+    } else if cap_lower.contains(q_lower)
+        || id_lower.contains(q_lower)
+        || id_target.as_deref().is_some_and(|t| id_lower.contains(t))
+    {
+        2
+    } else {
+        1
+    }
 }
 
 /// Queries tables across one or more bundles, optionally rendering the full Markdown table directly.
@@ -407,6 +719,7 @@ pub fn query_tables_formatted(
         rows_count: String,
         location: String,
         pages: String,
+        score: u8,
     }
 
     let hits_per_bundle: Vec<Vec<TableHit>> = bundles
@@ -431,6 +744,7 @@ pub fn query_tables_formatted(
                 if cols.len() < 6 {
                     continue;
                 }
+                let score = score_caption_or_id_hit(cols[0], cols[1], &q_lower);
                 hits.push(TableHit {
                     bundle_dir: bundle_dir.clone(),
                     bundle_name: bundle_name.clone(),
@@ -440,13 +754,16 @@ pub fn query_tables_formatted(
                     rows_count: cols[3].to_string(),
                     location: cols[4].to_string(),
                     pages: cols[5].to_string(),
+                    score,
                 });
             }
             hits
         })
         .collect();
 
-    let all_hits: Vec<TableHit> = hits_per_bundle.into_iter().flatten().collect();
+    let mut all_hits: Vec<TableHit> = hits_per_bundle.into_iter().flatten().collect();
+    all_hits.sort_by_key(|a| std::cmp::Reverse(a.score));
+
     if all_hits.is_empty() {
         return Ok(format!(
             "No tables matched '{query}'. Try `chipdoc search \"{query}\"` to search inside table cells.\n"
@@ -535,6 +852,26 @@ fn extract_markdown_table_at_location(
     Some(out)
 }
 
+fn contains_word_bounded(haystack: &str, needle: &str) -> bool {
+    if needle.is_empty() || needle.len() > haystack.len() {
+        return false;
+    }
+    for (idx, _) in haystack.match_indices(needle) {
+        let prev_ok = haystack[..idx]
+            .chars()
+            .next_back()
+            .is_none_or(|c| !c.is_ascii_alphanumeric());
+        let next_ok = haystack[idx + needle.len()..]
+            .chars()
+            .next()
+            .is_none_or(|c| !c.is_ascii_alphanumeric());
+        if prev_ok && next_ok {
+            return true;
+        }
+    }
+    false
+}
+
 /// Queries section shards by ID, slug, or title keyword and prints either the section summary or content.
 pub fn query_sections_formatted(
     bundles: &[PathBuf],
@@ -569,12 +906,30 @@ pub fn query_sections_formatted(
             let tables = cols[5];
             let regs = cols[6];
 
-            if q_lower.is_empty()
-                || sec_id.eq_ignore_ascii_case(&q_lower)
-                || title.to_ascii_lowercase().contains(&q_lower)
-                || file_path.to_ascii_lowercase().contains(&q_lower)
+            let title_lower = title.to_ascii_lowercase();
+            let fpath_lower = file_path.to_ascii_lowercase();
+
+            let score: u8 = if q_lower.is_empty() {
+                1
+            } else if title_lower.starts_with(&format!("{q_lower} "))
+                || title_lower.starts_with(&format!("{q_lower}. "))
             {
+                4
+            } else if sec_id.eq_ignore_ascii_case(&q_lower) || title_lower == q_lower {
+                3
+            } else if contains_word_bounded(&title_lower, &q_lower)
+                || contains_word_bounded(&fpath_lower, &q_lower)
+            {
+                2
+            } else if title_lower.contains(&q_lower) || fpath_lower.contains(&q_lower) {
+                1
+            } else {
+                0
+            };
+
+            if score > 0 {
                 matches.push((
+                    score,
                     bundle_dir.clone(),
                     bundle_name.clone(),
                     sec_id.to_string(),
@@ -589,21 +944,98 @@ pub fn query_sections_formatted(
         }
     }
 
+    matches.sort_by_key(|a| std::cmp::Reverse(a.0));
+
+    // Dotted sub-section lookup (`10.3`, `3.7`, `6.4.1`) inside `sections/*.md`
+    static RE_DOTTED_SEC: OnceLock<Regex> = OnceLock::new();
+    let re_dotted =
+        RE_DOTTED_SEC.get_or_init(|| Regex::new(r"^(\d+(?:\.\d+)+)").expect("valid regex"));
+
     if matches.is_empty() {
+        if let Some(caps) = re_dotted.captures(&q_lower) {
+            let dotted_num = caps.get(1).expect("group 1").as_str();
+            for bundle_dir in bundles {
+                let bundle_name = bundle_dir
+                    .file_name()
+                    .and_then(|s| s.to_str())
+                    .unwrap_or("bundle")
+                    .to_string();
+                let sec_tsv = bundle_dir.join("index").join("sections.tsv");
+                let Ok(content) = fs::read_to_string(&sec_tsv) else {
+                    continue;
+                };
+                for line in content.lines().skip(1) {
+                    let cols: Vec<&str> = line.split('\t').collect();
+                    if cols.len() < 8 {
+                        continue;
+                    }
+                    let sec_id = cols[0];
+                    let title = cols[1];
+                    let file_path = cols[2];
+                    let lines_cnt = cols[3];
+                    let pages = cols[4];
+                    let tables = cols[5];
+                    let regs = cols[6];
+
+                    let Ok(md) = fs::read_to_string(bundle_dir.join(file_path)) else {
+                        continue;
+                    };
+                    let all_lines: Vec<&str> = md.lines().collect();
+                    let found_idx = all_lines.iter().position(|l| {
+                        let trimmed = l.trim_start();
+                        if !trimmed.starts_with("##") {
+                            return false;
+                        }
+                        let after_hashes = trimmed.trim_start_matches('#').trim_start();
+                        let after_lower = after_hashes.to_ascii_lowercase();
+                        if let Some(rest) = after_lower.strip_prefix(dotted_num) {
+                            rest.chars()
+                                .next()
+                                .is_none_or(|c| !c.is_ascii_alphanumeric() && c != '.')
+                        } else {
+                            false
+                        }
+                    });
+
+                    if let Some(start_idx) = found_idx {
+                        out.push_str(&format!(
+                            "[{bundle_name}] Section {sec_id}: {title} | pp. {pages} | {lines_cnt} lines, {tables} tables, {regs} regs | `{file_path}:{}`\n",
+                            start_idx + 1
+                        ));
+                        if max_lines > 0 {
+                            out.push_str("---\n");
+                            for l in all_lines.iter().skip(start_idx).take(max_lines) {
+                                out.push_str(l);
+                                out.push('\n');
+                            }
+                            if all_lines.len() > start_idx + max_lines {
+                                out.push_str(&format!(
+                                    "\n... (+{} more lines in `{file_path}`; pass `--max-lines` or Read with offset={})\n",
+                                    all_lines.len() - (start_idx + max_lines),
+                                    start_idx + max_lines + 1
+                                ));
+                            }
+                        }
+                        return Ok(out);
+                    }
+                }
+            }
+        }
+
         return Ok(format!(
             "No sections matched '{query}'. Run `chipdoc section \"\"` to list all sections.\n"
         ));
     }
 
-    for (idx, (bdir, bname, sid, title, fpath, lcnt, pages, tabs, regs)) in
+    for (idx, (score, bdir, bname, sid, title, fpath, lcnt, pages, tabs, regs)) in
         matches.iter().enumerate()
     {
         out.push_str(&format!(
             "[{bname}] Section {sid}: {title} | pp. {pages} | {lcnt} lines, {tabs} tables, {regs} regs | `{fpath}`\n"
         ));
 
-        // If 1 or 2 sections matched and max_lines > 0, print the section content preview
-        if matches.len() <= 2 && max_lines > 0 && idx == 0 {
+        // If 1 or 2 sections matched (or top match is an exact chapter/ID hit) and max_lines > 0, print the section content preview
+        if (matches.len() <= 2 || *score >= 3) && max_lines > 0 && idx == 0 {
             if let Ok(md) = fs::read_to_string(bdir.join(fpath)) {
                 let total_lines = md.lines().count();
                 out.push_str("---\n");
@@ -725,53 +1157,82 @@ pub fn query_xref_formatted(bundles: &[PathBuf], symbol: &str, limit: usize) -> 
                 .unwrap_or("bundle")
                 .to_string();
             let xref_tsv = bundle_dir.join("index").join("xref.tsv");
-            let mut hits = Vec::new();
+            let mut scored_hits: Vec<(u8, XrefRow)> = Vec::new();
 
             if let Ok(content) = fs::read_to_string(&xref_tsv) {
                 let mut seen_loc: std::collections::HashSet<(String, String)> =
                     std::collections::HashSet::new();
-                // Pass 1: exact or substring match on `symbol` or `peripheral`
+                // Pass 1: exact, template, or bounded token match on `symbol` or `peripheral`
                 for line in content.lines().skip(1) {
                     let cols: Vec<&str> = line.split('\t').collect();
                     if cols.len() < 6 {
                         continue;
                     }
-                    let xsym = cols[0].to_ascii_uppercase();
-                    let xperiph = cols[2].to_ascii_uppercase();
-                    if xsym.contains(&sym_upper)
-                        || xsym.contains(&raw_upper)
-                        || xperiph == raw_upper
-                    {
+                    let xsym = cols[0];
+                    let xsym_u = xsym.to_ascii_uppercase();
+                    let xperiph = cols[2];
+                    let xperiph_u = xperiph.to_ascii_uppercase();
+
+                    let periph_hint_ok = q.peripheral_hint.as_ref().is_none_or(|ph| {
+                        hw_tokens_compatible(xperiph, ph).is_some()
+                            || contains_hw_token_bounded(&xsym_u, ph)
+                    });
+
+                    let score: u8 =
+                        if xsym_u == raw_upper || (!q.explicit_sep && xsym_u == sym_upper) {
+                            4
+                        } else if hw_tokens_compatible(xsym, &q.raw).is_some()
+                            || (q.peripheral_hint.is_none()
+                                && (xperiph_u == raw_upper
+                                    || hw_tokens_compatible(xperiph, &q.raw).is_some()))
+                            || (periph_hint_ok && hw_tokens_compatible(xsym, &q.symbol).is_some())
+                        {
+                            3
+                        } else if contains_hw_token_bounded(&xsym_u, &raw_upper)
+                            || (periph_hint_ok && contains_hw_token_bounded(&xsym_u, &sym_upper))
+                        {
+                            2
+                        } else {
+                            0
+                        };
+
+                    if score > 0 {
                         let loc_key = (cols[1].to_string(), cols[4].to_string());
                         if seen_loc.insert(loc_key) {
-                            hits.push((
-                                cols[0].to_string(),
-                                cols[1].to_string(),
-                                cols[2].to_string(),
-                                cols[3].to_string(),
-                                cols[4].to_string(),
-                                cols[5].to_string(),
+                            scored_hits.push((
+                                score,
+                                (
+                                    cols[0].to_string(),
+                                    cols[1].to_string(),
+                                    cols[2].to_string(),
+                                    cols[3].to_string(),
+                                    cols[4].to_string(),
+                                    cols[5].to_string(),
+                                ),
                             ));
                         }
                     }
                 }
-                // Pass 2: also include summary matches whose location was not yet emitted
+                // Pass 2: also include bounded summary matches whose location was not yet emitted
                 for line in content.lines().skip(1) {
                     let cols: Vec<&str> = line.split('\t').collect();
                     if cols.len() < 6 {
                         continue;
                     }
                     let xsum = cols[3].to_ascii_uppercase();
-                    if xsum.contains(&raw_upper) {
+                    if contains_hw_token_bounded(&xsum, &raw_upper) {
                         let loc_key = (cols[1].to_string(), cols[4].to_string());
                         if seen_loc.insert(loc_key) {
-                            hits.push((
-                                q.symbol.to_ascii_uppercase(),
-                                cols[1].to_string(),
-                                cols[2].to_string(),
-                                cols[3].to_string(),
-                                cols[4].to_string(),
-                                cols[5].to_string(),
+                            scored_hits.push((
+                                1,
+                                (
+                                    cols[0].to_string(),
+                                    cols[1].to_string(),
+                                    cols[2].to_string(),
+                                    cols[3].to_string(),
+                                    cols[4].to_string(),
+                                    cols[5].to_string(),
+                                ),
                             ));
                         }
                     }
@@ -787,14 +1248,17 @@ pub fn query_xref_formatted(bundles: &[PathBuf], symbol: &str, limit: usize) -> 
                     let p = bundle_dir.join("index").join(file);
                     if let Ok(c) = fs::read_to_string(p) {
                         for line in c.lines().skip(1) {
-                            if line.to_ascii_uppercase().contains(&sym_upper) {
-                                hits.push((
-                                    q.symbol.clone(),
-                                    kind.to_string(),
-                                    "-".to_string(),
-                                    line.replace('\t', " | "),
-                                    "-".to_string(),
-                                    "-".to_string(),
+                            if contains_hw_token_bounded(&line.to_ascii_uppercase(), &sym_upper) {
+                                scored_hits.push((
+                                    1,
+                                    (
+                                        q.symbol.clone(),
+                                        kind.to_string(),
+                                        "-".to_string(),
+                                        line.replace('\t', " | "),
+                                        "-".to_string(),
+                                        "-".to_string(),
+                                    ),
                                 ));
                             }
                         }
@@ -802,6 +1266,8 @@ pub fn query_xref_formatted(bundles: &[PathBuf], symbol: &str, limit: usize) -> 
                 }
             }
 
+            scored_hits.sort_by_key(|a| std::cmp::Reverse(a.0));
+            let hits: Vec<XrefRow> = scored_hits.into_iter().map(|(_, row)| row).collect();
             (bundle_name, hits)
         })
         .collect();
@@ -851,8 +1317,20 @@ pub fn query_figures_formatted(
     limit: usize,
 ) -> Result<String> {
     let q_lower = query.trim().to_ascii_lowercase();
-    let mut out = String::new();
-    let mut count = 0usize;
+
+    struct FigureHit {
+        bundle_dir: PathBuf,
+        bundle_name: String,
+        fig_id: String,
+        caption: String,
+        img_rel: String,
+        loc: String,
+        page_str: String,
+        bbox_str: String,
+        score: u8,
+    }
+
+    let mut hits: Vec<FigureHit> = Vec::new();
 
     for bundle_dir in bundles {
         let fig_tsv = bundle_dir.join("index").join("figures.tsv");
@@ -862,7 +1340,8 @@ pub fn query_figures_formatted(
         let bundle_name = bundle_dir
             .file_name()
             .and_then(|s| s.to_str())
-            .unwrap_or("bundle");
+            .unwrap_or("bundle")
+            .to_string();
 
         for line in content.lines().skip(1) {
             if !q_lower.is_empty() && !line.to_ascii_lowercase().contains(&q_lower) {
@@ -872,47 +1351,60 @@ pub fn query_figures_formatted(
             if cols.len() < 5 {
                 continue;
             }
-            let fig_id = cols[0];
-            let caption = cols[1];
-            let img_rel = cols[2];
-            let loc = cols[3];
-            let page_str = cols[4];
-            let bbox_str = cols.get(5).copied().unwrap_or("");
-
-            let img_full = bundle_dir.join(img_rel);
-            let mut status_tag = if !img_rel.is_empty() && img_full.exists() {
-                "rendered".to_string()
-            } else {
-                "lazy (not yet rendered)".to_string()
-            };
-
-            if let Some(pdf_path) = render_pdf {
-                if !img_rel.is_empty() && !img_full.exists() {
-                    if let (Ok(page_num), Some(bbox)) =
-                        (page_str.parse::<usize>(), parse_bbox_csv(bbox_str))
-                    {
-                        render_single_figure_crop(
-                            pdf_path, pdfium_dir, page_num, bbox, &img_full, dpi,
-                        )?;
-                        status_tag = "rendered on-demand".to_string();
-                    }
-                }
-            }
-
-            out.push_str(&format!(
-                "[{bundle_name}] {fig_id} | {caption} | p. {page_str} ({loc}) | PNG: `{}` [{status_tag}]\n",
-                img_full.display()
-            ));
-            count += 1;
-            if count >= limit {
-                break;
-            }
+            let score = score_caption_or_id_hit(cols[0], cols[1], &q_lower);
+            hits.push(FigureHit {
+                bundle_dir: bundle_dir.clone(),
+                bundle_name: bundle_name.clone(),
+                fig_id: cols[0].to_string(),
+                caption: cols[1].to_string(),
+                img_rel: cols[2].to_string(),
+                loc: cols[3].to_string(),
+                page_str: cols[4].to_string(),
+                bbox_str: cols.get(5).copied().unwrap_or("").to_string(),
+                score,
+            });
         }
     }
 
-    if count == 0 {
+    if hits.is_empty() {
         return Ok(format!("No figures matched '{query}'.\n"));
     }
+
+    hits.sort_by_key(|a| std::cmp::Reverse(a.score));
+
+    let mut out = String::new();
+    for hit in hits.into_iter().take(limit) {
+        let img_full = hit.bundle_dir.join(&hit.img_rel);
+        let mut status_tag = if !hit.img_rel.is_empty() && img_full.exists() {
+            "rendered".to_string()
+        } else {
+            "lazy (not yet rendered)".to_string()
+        };
+
+        if let Some(pdf_path) = render_pdf {
+            if !hit.img_rel.is_empty() && !img_full.exists() {
+                if let (Ok(page_num), Some(bbox)) =
+                    (hit.page_str.parse::<usize>(), parse_bbox_csv(&hit.bbox_str))
+                {
+                    render_single_figure_crop(
+                        pdf_path, pdfium_dir, page_num, bbox, &img_full, dpi,
+                    )?;
+                    status_tag = "rendered on-demand".to_string();
+                }
+            }
+        }
+
+        out.push_str(&format!(
+            "[{bundle_name}] {fig_id} | {caption} | p. {page_str} ({loc}) | PNG: `{}` [{status_tag}]\n",
+            img_full.display(),
+            bundle_name = hit.bundle_name,
+            fig_id = hit.fig_id,
+            caption = hit.caption,
+            page_str = hit.page_str,
+            loc = hit.loc,
+        ));
+    }
+
     Ok(out)
 }
 
@@ -1111,12 +1603,70 @@ mod tests {
         let q1 = NormalizedHwQuery::parse("GPIO.FSUB_0");
         assert_eq!(q1.peripheral_hint.as_deref(), Some("GPIO"));
         assert_eq!(q1.symbol, "FSUB_0");
+        assert!(q1.explicit_sep);
 
         let q2 = NormalizedHwQuery::parse("GPIO_FSUB_0");
         assert_eq!(q2.peripheral_hint.as_deref(), Some("GPIO"));
         assert_eq!(q2.symbol, "FSUB_0");
+        assert!(!q2.explicit_sep);
 
         let q3 = NormalizedHwQuery::parse("0x400");
         assert_eq!(q3.hex_value, Some(0x400));
+    }
+
+    #[test]
+    fn test_hw_template_vs_concrete_instance_matching() {
+        assert_eq!(hw_tokens_compatible("GPIOx_MODER", "GPIOA_MODER"), Some(3));
+        assert_eq!(hw_tokens_compatible("GPIOx_MODER", "GPIO_MODER"), Some(3));
+        assert_eq!(hw_tokens_compatible("USART_CR1", "USART1_CR1"), Some(3));
+        assert_eq!(hw_tokens_compatible("DMA_CCRx", "DMA1_CCR1"), Some(3));
+        assert_eq!(hw_tokens_compatible("TIM1", "TIM14"), None);
+        assert_eq!(hw_tokens_compatible("TIM1_CR1", "TIM14_CR1"), None);
+        assert_eq!(hw_tokens_compatible("CCR1", "CCR2"), None);
+    }
+
+    #[test]
+    fn test_bounded_pin_and_underscore_bitfield_queries() {
+        assert!(contains_hw_token_bounded("PA1", "PA1"));
+        assert!(contains_hw_token_bounded("PA1_TX", "PA1"));
+        assert!(!contains_hw_token_bounded("PA10", "PA1"));
+        assert!(!contains_hw_token_bounded(
+            "[Table 4-1] PA10 | TIM1_CH3",
+            "PA1"
+        ));
+
+        let tmp = std::env::temp_dir().join(format!("chipdoc_query_test_{}", std::process::id()));
+        let idx_dir = tmp.join("index");
+        let _ = fs::create_dir_all(&idx_dir);
+
+        let regs_tsv = "peripheral\tregister\toffset\treset\tbits\tfield\taccess\tfield_reset\tdescription\tlocation\tpage\n\
+SYSCTL\tSWDCFG\t0x1040\t0x0\t1-0\tSWDP_MODE\tR/W\t0h\tSWD port mode\tsections/02-sysctl.md:40\t223\n\
+FLASH\tFLASH_CR\t0x0014\t0xC0000000\t27\tOBL_LAUNCH\tR/W\t0\tOption byte launch\tsections/03-flash.md:80\t95\n\
+FLASH\tFLASH_CR\t0x0014\t0xC0000000\t31\tLOCK\tR/W\t1\tFLASH_CR lock\tsections/03-flash.md:92\t96\n";
+        fs::write(idx_dir.join("registers.tsv"), regs_tsv).expect("write registers.tsv");
+
+        let xref_tsv = "symbol\tkind\tperipheral\tsummary\tlocation\tpage\n\
+PA10\ttable_row\tIOMUX\t[Table 12] PA10 | USART1_RX\tsections/04-pin.md:20\t25\n\
+PA1\ttable_row\tIOMUX\t[Table 12] PA1 | TIM2_CH2\tsections/04-pin.md:11\t25\n";
+        fs::write(idx_dir.join("xref.tsv"), xref_tsv).expect("write xref.tsv");
+
+        let bundles = vec![tmp.clone()];
+        let out_swdp =
+            query_registers_formatted(&bundles, "SWDP_MODE", 10, false).expect("query SWDP_MODE");
+        assert!(out_swdp.contains("SYSCTL.SWDCFG"));
+        assert!(out_swdp.contains("SWDP_MODE"));
+
+        let out_obl =
+            query_registers_formatted(&bundles, "OBL_LAUNCH", 10, false).expect("query OBL_LAUNCH");
+        assert!(out_obl.contains("FLASH.FLASH_CR"));
+        assert!(out_obl.contains("p. 95-96"));
+        assert!(out_obl.contains("OBL_LAUNCH"));
+        assert!(out_obl.contains("LOCK"));
+
+        let out_pa1 = query_xref_formatted(&bundles, "PA1", 10).expect("query xref PA1");
+        assert!(out_pa1.contains("PA1"));
+        assert!(!out_pa1.contains("PA10"));
+
+        let _ = fs::remove_dir_all(&tmp);
     }
 }

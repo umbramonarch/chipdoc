@@ -1,0 +1,11 @@
+section_id	title	file_path	lines	pages	tables	registers	figures
+00	Frontmatter and Overview	sections/00-frontmatter-and-overview.md	152	1-7	2	0	0
+01	1 Introduction	sections/01-1-introduction.md	21	8-8	0	0	0
+02	2 Description	sections/02-2-description.md	58	9-11	1	0	1
+03	3 Functional overview	sections/03-3-functional-overview.md	551	12-28	8	0	1
+04	4 Pinouts, pin description and alternate functions	sections/04-4-pinouts-pin-description-and-alternate-functions.md	120	29-37	4	0	4
+05	5 Electrical characteristics	sections/05-5-electrical-characteristics.md	1270	38-82	53	0	20
+06	6 Package information	sections/06-6-package-information.md	232	83-95	5	0	8
+07	7 Ordering information	sections/07-7-ordering-information.md	31	96-96	0	0	0
+08	8 Important security notice	sections/08-8-important-security-notice.md	23	97-97	0	0	0
+09	9 Revision history	sections/09-9-revision-history.md	52	98-100	2	0	0

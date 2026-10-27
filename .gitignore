@@ -13,8 +13,7 @@
 # Local PDF test corpus (keep README.md tracked)
 /samples/*.pdf
 
-# Generated Agent Documentation Bundles
-/output/
+# Temporary output directory (`output/` is tracked in git; `.claudeignore` excludes `output/` from prompt context)
 /out/
 
 # Environment & IDE

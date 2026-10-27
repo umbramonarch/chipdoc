@@ -1,0 +1,958 @@
+table_id	caption	columns	rows	location	pages
+table-1-1	Table 1-1. Top Level Memory Map	Memory Region | Start Address | End Address | Description	5	sections/03-1-architecture.md:73	13
+table-1-2	Table 1-2. SRAM Region Memory Map	Subregion | Start | End (Maximum) | Description	4	sections/03-1-architecture.md:115	14
+table-1-3	Table 1-3. Peripheral Region Memory Map	Type | Start | End | Description	2	sections/03-1-architecture.md:142	15
+table-1-4	Table 1-4. Generic Security Levels	Level | Scenario | SW-DP Policy | App Debug Policy | Mass Erase Policy | Factory Reset Policy | TI FA Policy	3	sections/03-1-architecture.md:223	17
+table-1-5	Table 1-5. Examples of Level 1 Configurations	Col 1 | Col 2 | Configuration | Configuration | Col 5	4	sections/03-1-architecture.md:253	18
+table-1-6	Table 1-6. NONMAIN Layout Types	NONMAIN Layout Type | Col 2 | Overview | Col 4 | Supported Devices	2	sections/03-1-architecture.md:360	21
+table-1-7	Table 1-7. NONMAIN_TYPEB Registers	Offset | Acronym | Register Name | Group	5	sections/03-1-architecture.md:371	22
+table-1-8	Table 1-8. NONMAIN_TYPEB Access Type Codes	Access Type | Code | Description	6	sections/03-1-architecture.md:383	22
+table-1-9	Table 1-9. BCRCONFIGID Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:402	23
+table-1-10	Table 1-10. BOOTCFG0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:416	24
+table-1-11	Table 1-11. BOOTCFG3 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:431	25
+table-1-12	Table 1-12. FLASHSWP0 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/03-1-architecture.md:446	26
+table-1-13	Table 1-13. FLASHSWP1 Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/03-1-architecture.md:463	27
+table-1-14	Table 1-14. NONMAIN_TYPED Registers	Offset | Acronym | Register Name | Group	23	sections/03-1-architecture.md:477	28-29
+table-1-15	Table 1-15. NONMAIN_TYPED Access Type Codes	Access Type | Code | Description	9	sections/03-1-architecture.md:507	29
+table-1-16	Table 1-16. BCRCONFIGID Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:529	30
+table-1-17	Table 1-17. BOOTCFG0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:543	31
+table-1-18	Table 1-18. BOOTCFG1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:558	32
+table-1-19	Table 1-19. FLASHSWP0 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/03-1-architecture.md:573	33
+table-1-20	Table 1-20. FLASHSWP1 Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/03-1-architecture.md:590	34
+table-1-21	Table 1-21. BOOTCFG4 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:608	35
+table-1-22	Table 1-22. BOOTCFG5 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:623	36
+table-1-23	Table 1-23. BOOTCFG2 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:638	37
+table-1-24	Table 1-24. BOOTCFG3 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:653	38
+table-1-25	Table 1-25. PWDMASSERASE[y] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:670	39
+table-1-26	Table 1-26. PWDFACTORYRESET[y] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:686	40
+table-1-27	Table 1-27. PWDDEBUGLOCK[y] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:702	41
+table-1-28	Table 1-28. BOOTCFG6 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:716	42
+table-1-29	Table 1-29. APPDIGESTSTART Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:731	43
+table-1-30	Table 1-30. APPDIGESTLENGTH Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:745	44
+table-1-31	Table 1-31. APPDIGEST[y] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:761	45
+table-1-32	Table 1-32. FLASHSWP2 Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/03-1-architecture.md:775	46
+table-1-33	Table 1-33. BOOTCRC Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/03-1-architecture.md:794	47
+table-1-34	Table 1-34. BSLCONFIGID Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:813	48
+table-1-35	Table 1-35. BSLCONFIG0 Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/03-1-architecture.md:827	49
+table-1-36	Table 1-36. BSLCONFIG1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/03-1-architecture.md:845	50
+table-1-37	Table 1-37. SBLADDRESS Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:860	51
+table-1-38	Table 1-38. BSLCRC Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/03-1-architecture.md:874	52
+table-1-39	Table 1-39. FACTORYREGION Registers	Offset | Acronym | Register Name	5	sections/03-1-architecture.md:907	53
+table-1-40	Table 1-40. FACTORYREGION Access Type Codes	Access Type | Code | Description	4	sections/03-1-architecture.md:919	53
+table-1-41	Table 1-41. TRACEID Register Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:936	54
+table-1-42	Table 1-42. DEVICEID Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/03-1-architecture.md:950	55
+table-1-43	Table 1-43. USERID Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/03-1-architecture.md:967	56
+table-1-44	Table 1-44. SRAMFLASH Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/03-1-architecture.md:985	57
+table-1-45	Table 1-45. TEMP_SENSE0 Register Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/03-1-architecture.md:1003	58
+table-2-1	Table 2-1. Forcing VBOOST Enable With ANACPUMPCFG	Col 1 | VBOOST Control (ANACPUMPCFG) | Col 3 | Behavior	5	sections/04-2-pmcu.md:308	67-68
+table-2-2	Table 2-2. VBOOST Clock Requirements	Col 1 | VBOOST Request | VBOOST Circuit Clock Requirement | MCLK and ULPCLK Source Requirement (1) | Supported Operating Modes or Policies	9	sections/04-2-pmcu.md:341	69
+p076-table-1	p076-table-1	Desired Source | MCLKCFG.USEHSCLK | MCLKCFG.USELFCLK | HSCLKCFG.HSCLKSEL	3	sections/04-2-pmcu.md:579	76
+table-2-3	Table 2-3. Typical MCLK Configurations for Operation Between 4MHz and	MCLK Source | MDIV | MCLK Frequency	5	sections/04-2-pmcu.md:621	78
+table-2-4	Table 2-4. MSPM0Cxx ULPCLK by Operating Mode	Selected Power Mode | Configuration | Register Settings | ULPCLK Frequency	7	sections/04-2-pmcu.md:669	79
+table-2-5	Table 2-5. FCC Error	Use Case (Source Clock Frequency) | FCC Trigger Time | FCC Count Result | FCC Count Uncertainty | Approximate FCC Intrinsic Uncertainty Error	8	sections/04-2-pmcu.md:967	90
+table-2-6	Table 2-6. Software Generated SYSCTL Reset Commands	LEVEL | Action	4	sections/04-2-pmcu.md:1179	94
+table-2-7	Table 2-7. Reset Cause Encoding	Col 1 | Col 2 | Col 3 | Reset | Col 5 | Col 6 | Col 7 | Col 8 | Col 9 | Device Modules Reset | Col 11 | Col 12 | Col 13 | Col 14 | Col 15	37	sections/04-2-pmcu.md:1198	95-96
+p098-table-2	p098-table-2	SYSOSCCFG | USE4MHZSTOP | - | - | - | - | - | - | 0 | 1 | 0 | - | - | -	5	sections/04-2-pmcu.md:1312	98
+table-2-9	Table 2-9. Peripheral Support for Asynchronous Fast Clock Requests	Peripheral | Purpose | Request Source | Configuration	8	sections/04-2-pmcu.md:1374	100
+table-2-10	Table 2-10. Error Sources and Handling Mechanisms	Error Source | Error | Col 3 | Handling Mechanism	19	sections/04-2-pmcu.md:1492	104-105
+table-2-11	Table 2-11. SYSCTL Events	Event | Type | Source | Destination | Route | Configuration | Functionality	2	sections/04-2-pmcu.md:1526	105
+table-2-12	Table 2-12. SYSCTL CPU Interrupt Event Sources	Index (IIDX) | Name | Description	6	sections/04-2-pmcu.md:1537	105-106
+table-2-13	Table 2-13. Nonmaskable Interrupt Event Table	Index (IIDX) | Name | Description	4	sections/04-2-pmcu.md:1554	106
+table-2-14	Table 2-14. SYSCTL_C1103_C1104 Registers	Offset | Acronym | Register Name | Section	39	sections/04-2-pmcu.md:1639	109
+table-2-15	Table 2-15. SYSCTL_C1103_C1104 Access Type	Access Type | Code | Description	9	sections/04-2-pmcu.md:1687	110
+table-2-16	Table 2-16. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:1709	111
+table-2-17	Table 2-17. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1724	112
+table-2-18	Table 2-18. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1740	113
+table-2-19	Table 2-19. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1756	114
+table-2-20	Table 2-20. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1772	115
+table-2-21	Table 2-21. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1788	116
+table-2-22	Table 2-22. NMIIIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:1804	117
+table-2-23	Table 2-23. NMIRIS Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1819	118
+table-2-24	Table 2-24. NMIISET Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1835	119
+table-2-25	Table 2-25. NMIICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1851	120
+table-2-26	Table 2-26. SYSOSCCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/04-2-pmcu.md:1867	121
+table-2-27	Table 2-27. MCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	10	sections/04-2-pmcu.md:1888	122-123
+table-2-28	Table 2-28. HSCLKEN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:1911	124
+table-2-29	Table 2-29. GENCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/04-2-pmcu.md:1927	125-126
+table-2-30	Table 2-30. GENCLKEN Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:1954	127
+table-2-31	Table 2-31. PMODECFG Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:1971	128
+table-2-32	Table 2-32. FCC Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:1986	129
+table-2-33	Table 2-33. SRAMBOUNDARY Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2001	130
+table-2-34	Table 2-34. SYSTEMCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2017	131
+table-2-35	Table 2-35. BEEPCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2033	132
+table-2-36	Table 2-36. WRITELOCK Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2050	133
+table-2-37	Table 2-37. CLKSTATUS Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/04-2-pmcu.md:2065	134-135
+table-2-38	Table 2-38. SYSSTATUS Register Field Descriptions	Bit | Field | Type | Reset | Description	11	sections/04-2-pmcu.md:2091	136-137
+table-2-39	Table 2-39. RSTCAUSE Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2115	138
+table-2-40	Table 2-40. RESETLEVEL Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2130	139
+table-2-41	Table 2-41. RESETCMD Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2145	140
+table-2-42	Table 2-42. BORTHRESHOLD Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2161	141
+table-2-43	Table 2-43. BORCLRCMD Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2176	142
+table-2-44	Table 2-44. SYSOSCFCLCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2192	143
+table-2-45	Table 2-45. EXLFCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2208	144
+table-2-46	Table 2-46. SHDNIOREL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2224	145
+table-2-47	Table 2-47. EXRSTPIN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2240	146
+table-2-48	Table 2-48. SYSSTATUSCLR Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2256	147
+table-2-49	Table 2-49. SWDCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2272	148
+table-2-50	Table 2-50. FCCCMD Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2288	149
+table-2-51	Table 2-51. SHUTDNSTORE0 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2304	150
+table-2-52	Table 2-52. SHUTDNSTORE1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2319	151
+table-2-53	Table 2-53. SHUTDNSTORE2 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2334	152
+table-2-54	Table 2-54. SHUTDNSTORE3 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2349	153
+table-2-55	Table 2-55. SYSCTL_C1105_C1106 Registers	Offset | Acronym | Register Name | Section	42	sections/04-2-pmcu.md:2360	154-155
+table-2-56	Table 2-56. SYSCTL_C1105_C1106 Access Type	Access Type | Code | Description	9	sections/04-2-pmcu.md:2411	155
+table-2-57	Table 2-57. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2433	156
+table-2-58	Table 2-58. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2448	157
+table-2-59	Table 2-59. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2467	158
+table-2-60	Table 2-60. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2486	159
+table-2-61	Table 2-61. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2505	160
+table-2-62	Table 2-62. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2524	161
+table-2-63	Table 2-63. NMIIIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2543	162
+table-2-64	Table 2-64. NMIRIS Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2558	163
+table-2-65	Table 2-65. NMIISET Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2575	164
+table-2-66	Table 2-66. NMIICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2592	165
+table-2-67	Table 2-67. SYSOSCCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/04-2-pmcu.md:2609	166
+table-2-68	Table 2-68. MCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	11	sections/04-2-pmcu.md:2630	167-168
+table-2-69	Table 2-69. HSCLKEN Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2654	169
+table-2-70	Table 2-70. HSCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2671	170
+table-2-71	Table 2-71. HFCLKCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2686	171
+table-2-72	Table 2-72. LFCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/04-2-pmcu.md:2705	172
+table-2-73	Table 2-73. GENCLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	15	sections/04-2-pmcu.md:2724	173-174
+table-2-74	Table 2-74. GENCLKEN Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2752	175
+table-2-75	Table 2-75. PMODECFG Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2769	176
+table-2-76	Table 2-76. FCC Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2784	177
+table-2-77	Table 2-77. SRAMBOUNDARY Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2799	178
+table-2-78	Table 2-78. SYSTEMCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2815	179
+table-2-79	Table 2-79. BEEPCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:2831	180
+table-2-80	Table 2-80. WRITELOCK Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2848	181
+table-2-81	Table 2-81. CLKSTATUS Register Field Descriptions	Bit | Field | Type | Reset | Description	29	sections/04-2-pmcu.md:2863	182-184
+table-2-82	Table 2-82. SYSSTATUS Register Field Descriptions	Bit | Field | Type | Reset | Description	11	sections/04-2-pmcu.md:2905	185-186
+table-2-83	Table 2-83. RSTCAUSE Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2929	187
+table-2-84	Table 2-84. RESETLEVEL Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2944	188
+table-2-85	Table 2-85. RESETCMD Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2959	189
+table-2-86	Table 2-86. BORTHRESHOLD Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:2975	190
+table-2-87	Table 2-87. BORCLRCMD Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:2990	191
+table-2-88	Table 2-88. SYSOSCFCLCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3006	192
+table-2-89	Table 2-89. LFXTCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/04-2-pmcu.md:3022	193
+table-2-90	Table 2-90. EXLFCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3039	194
+table-2-91	Table 2-91. SHDNIOREL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3055	195
+table-2-92	Table 2-92. EXRSTPIN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3071	196
+table-2-93	Table 2-93. SYSSTATUSCLR Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3087	197
+table-2-94	Table 2-94. SWDCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3103	198
+table-2-95	Table 2-95. FCCCMD Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/04-2-pmcu.md:3119	199
+table-2-96	Table 2-96. SHUTDNSTORE0 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:3135	200
+table-2-97	Table 2-97. SHUTDNSTORE1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:3150	201
+table-2-98	Table 2-98. SHUTDNSTORE2 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:3165	202
+table-2-99	Table 2-99. SHUTDNSTORE3 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/04-2-pmcu.md:3180	203
+p204-table-1	p204-table-1	Chapter 3 | 3	3	sections/04-2-pmcu.md:3187	204
+table-3-1	Table 3-1. Program Status Register (PSR) Access Mnemonics	Mnemonic | Subregisters Included	7	sections/05-3-cpu.md:110	208
+table-3-2	Table 3-2. Arm Cortex-M0+ NVIC Registers	Address | Register | CMSIS | Description	12	sections/05-3-cpu.md:267	212
+table-3-3	Table 3-3. MSPM0 Platform Processor Interrupt and Exception Table	Exception Number | NVIC Number (1) | Priority Group | Exception or Interrupt | Vector Table Address | Vector Description	47	sections/05-3-cpu.md:316	214-215
+table-3-4	Table 3-4. INT_GROUP0 Interrupts	Priority | IIDX Index | Interrupt | Description	8	sections/05-3-cpu.md:380	215
+table-3-5	Table 3-5. INT_GROUP1 Interrupts	Priority | IIDX Index | Interrupt | Description	8	sections/05-3-cpu.md:399	216
+table-3-6	Table 3-6. Arm Cortex-M0+ System Control Block Registers	Address | Register | CMSIS | Description	8	sections/05-3-cpu.md:444	216-217
+table-3-7	Table 3-7. SysTick Registers	Address | Register | CMSIS | Description	4	sections/05-3-cpu.md:479	217
+table-3-8	Table 3-8. CPUSS Registers	Offset | Acronym | Register Name | Section	8	sections/05-3-cpu.md:500	219
+table-3-9	Table 3-9. CPUSS Access Type Codes	Access Type | Code | Description	4	sections/05-3-cpu.md:515	219
+table-3-10	Table 3-10. EVT_MODE Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:532	220
+table-3-11	Table 3-11. DESC Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/05-3-cpu.md:547	221
+table-3-12	Table 3-12. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:565	222
+table-3-13	Table 3-13. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:580	223
+table-3-14	Table 3-14. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:595	224
+table-3-15	Table 3-15. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:610	225
+table-3-16	Table 3-16. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:625	226
+table-3-17	Table 3-17. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:640	227
+table-3-18	Table 3-18. WUC Registers	Offset | Acronym | Register Name | Section	2	sections/05-3-cpu.md:651	227
+table-3-19	Table 3-19. FSUB_0 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:666	228
+table-3-20	Table 3-20. FSUB_1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/05-3-cpu.md:681	228
+p231-table-1	p231-table-1	configuration are set to "CSC does not exist" state. | Col 4	5	sections/06-4-security.md:105	231
+table-4-1	Table 4-1. SECURITY Registers	Offset | Acronym | Register Name | Group	10	sections/06-4-security.md:215	235
+table-4-2	Table 4-2. SECURITY Access Type Codes	Access Type | Code | Description	6	sections/06-4-security.md:232	235
+table-4-3	Table 4-3. FWEPROTMAIN Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/06-4-security.md:251	236
+table-4-4	Table 4-4. FRXPROTMAINSTART Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:265	237
+table-4-5	Table 4-5. FRXPROTMAINEND Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:281	238
+table-4-6	Table 4-6. FIPPROTMAINSTART Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:297	239
+table-4-7	Table 4-7. FIPPROTMAINEND Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:313	240
+table-4-8	Table 4-8. FLBANKSWPPOLICY Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:329	241
+table-4-9	Table 4-9. FLBANKSWP Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:345	242
+table-4-10	Table 4-10. FWENABLE Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/06-4-security.md:361	243
+table-4-11	Table 4-11. SECSTATUS Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/06-4-security.md:382	244
+table-4-12	Table 4-12. INITDONE Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/06-4-security.md:409	245
+p246-table-1	p246-table-1	Chapter 5 | 5	3	sections/06-4-security.md:417	246
+table-5-1	Table 5-1. Feature Comparison of DMA_A and DMA_B Channels	DMA Feature | DMA_A | DMA_A | DMA_B | DMA_B	9	sections/07-5-direct-memory-access-dma.md:78	251
+table-5-2	Table 5-2. DMA Transfer Modes	DMATM | Transfer Mode | Description | Channel Type	4	sections/07-5-direct-memory-access-dma.md:100	251
+table-5-3	Table 5-3. DMA Extended Modes	DMAEM | Extended Mode | Description	4	sections/07-5-direct-memory-access-dma.md:155	253-254
+table-5-4	Table 5-4. DMASRCWDTH in Fill Mode	DMASRCWDTH | FILL Mode Data Increment Value	4	sections/07-5-direct-memory-access-dma.md:173	255
+table-5-5	Table 5-5. Example of an Incremental Table Compatible with DMA Table Mode	Table Address | Table Data	4	sections/07-5-direct-memory-access-dma.md:192	255
+table-5-6	Table 5-6. Round-Robin DMA Priority Example	Current DMA Priority | Transfer Occurs | New DMA Priority	3	sections/07-5-direct-memory-access-dma.md:230	256
+table-5-7	Table 5-7. DMA Events	Event | Type | Source | Destination | Route | Configuration | Functionality	10	sections/07-5-direct-memory-access-dma.md:318	258-259
+table-5-8	Table 5-8. DMA Registers	Offset | Acronym | Register Name | Group	24	sections/07-5-direct-memory-access-dma.md:337	260
+table-5-9	Table 5-9. DMA Access Type Codes	Access Type | Code | Description	9	sections/07-5-direct-memory-access-dma.md:368	260-261
+table-5-10	Table 5-10. FSUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/07-5-direct-memory-access-dma.md:390	262
+table-5-11	Table 5-11. FSUB_1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/07-5-direct-memory-access-dma.md:405	263
+table-5-12	Table 5-12. FPUB_1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/07-5-direct-memory-access-dma.md:420	264
+table-5-13	Table 5-13. PDBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/07-5-direct-memory-access-dma.md:435	265
+table-5-14	Table 5-14. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/07-5-direct-memory-access-dma.md:451	266
+table-5-15	Table 5-15. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:466	267-269
+table-5-16	Table 5-16. RIS Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:506	270-272
+table-5-17	Table 5-17. MIS Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:546	273-275
+table-5-18	Table 5-18. ISET Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:586	276-278
+table-5-19	Table 5-19. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:626	279-281
+table-5-20	Table 5-20. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/07-5-direct-memory-access-dma.md:666	282
+table-5-21	Table 5-21. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:681	283-285
+table-5-22	Table 5-22. RIS Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:721	286-288
+table-5-23	Table 5-23. MIS Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:761	289-291
+table-5-24	Table 5-24. ISET Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:801	292-294
+table-5-25	Table 5-25. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	27	sections/07-5-direct-memory-access-dma.md:841	295-297
+table-5-26	Table 5-26. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/07-5-direct-memory-access-dma.md:881	298
+table-5-27	Table 5-27. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/07-5-direct-memory-access-dma.md:897	299
+table-5-28	Table 5-28. DMAPRIO Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/07-5-direct-memory-access-dma.md:915	300
+table-5-29	Table 5-29. DMATCTL[j] Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/07-5-direct-memory-access-dma.md:934	301
+table-5-30	Table 5-30. DMACTL[j] Field Descriptions	Bit | Field | Type | Reset | Description	15	sections/07-5-direct-memory-access-dma.md:953	302-304
+table-5-31	Table 5-31. DMASA[j] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/07-5-direct-memory-access-dma.md:983	305
+table-5-32	Table 5-32. DMADA[j] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/07-5-direct-memory-access-dma.md:999	306
+table-5-33	Table 5-33. DMASZ[j] Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/07-5-direct-memory-access-dma.md:1015	307
+table-6-1	Table 6-1. NVM System Terminology	Term | Col 5 | Col 6 | Definition | Size	5	sections/08-6-nvm-flash.md:73	309-310
+table-6-2	Table 6-2. Flash Memory Regions	Flash Memory Region | Region Contents | Executable | Used by | Programmed by	4	sections/08-6-nvm-flash.md:101	310
+table-6-3	Table 6-3. Flash Controller Commands	Col 1 | Command | Description	5	sections/08-6-nvm-flash.md:164	313
+table-6-4	Table 6-4. Data Load Alignment for Devices Supporting Programming of 2 Flash Words	CMDDATA1:0 / CMDECC0 | CMDINDEX = 0 | Target data word 0 if the target address ends in 0b0000 | Target data word 0 | Not supported | Not supported	1	sections/08-6-nvm-flash.md:264	315
+table-6-5	Table 6-5. Data Load Alignment for Devices Supporting Programming of 4 Flash Words	CMDDATA1:0 / CMDECC0 | CMDINDEX= 0 | Target data word 0 if the target address ends in 0b0.0000 | Target data word 0 if the target address ends in 0b0.0000 | Target data word 0 | Col 6	3	sections/08-6-nvm-flash.md:276	316
+table-6-6	Table 6-6. Data Load Alignment for Devices Supporting Programming of 8 Flash Words	Direct Load Registers | Indexed Load Index | 1 Word Aligned to 0b000 | 2 Words Aligned to 0b0000 | 4 Words Aligned to 0b0.0000 | 8 Words Aligned to 0b00.0000	8	sections/08-6-nvm-flash.md:284	316
+table-6-7	Table 6-7. FLASHCTL Events	Event | Type | Source | Destination | Route | Configuration | Functionality	1	sections/08-6-nvm-flash.md:411	321
+table-6-8	Table 6-8. FLASHCTL CPU Interrupt Conditions	Index (IIDX) | Name | Description	1	sections/08-6-nvm-flash.md:421	321
+table-6-9	Table 6-9. Write Protection Resolution by Region	Flash Bank | Memory Region | Write Protection Resolution	4	sections/08-6-nvm-flash.md:439	322
+table-6-10	Table 6-10. Bank Address Swap Translation	Bank and Region | Address Space Before Swap | Address Space After Swap	2	sections/08-6-nvm-flash.md:486	323
+table-6-11	Table 6-11. FLASHCTL Registers	Offset | Acronym | Register Name | Group	77	sections/08-6-nvm-flash.md:503	325-326
+table-6-12	Table 6-12. FLASHCTL Access Type Codes	Access Type | Code | Description	6	sections/08-6-nvm-flash.md:587	327
+table-6-13	Table 6-13. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:606	328
+table-6-14	Table 6-14. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:621	329
+table-6-15	Table 6-15. RIS Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:636	330
+table-6-16	Table 6-16. MIS Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:651	331
+table-6-17	Table 6-17. ISET Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:666	332
+table-6-18	Table 6-18. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:681	333
+table-6-19	Table 6-19. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:696	334
+table-6-20	Table 6-20. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/08-6-nvm-flash.md:711	335
+table-6-21	Table 6-21. CMDEXEC Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:729	336
+table-6-22	Table 6-22. CMDTYPE Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:744	337
+table-6-23	Table 6-23. CMDCTL Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/08-6-nvm-flash.md:761	338-339
+table-6-24	Table 6-24. CMDADDR Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:788	340
+table-6-25	Table 6-25. CMDBYTEN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:802	341
+table-6-26	Table 6-26. CMDDATAINDEX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:818	342
+table-6-27	Table 6-27. CMDDATA0 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:833	343
+table-6-28	Table 6-28. CMDDATA1 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:847	344
+table-6-29	Table 6-29. CMDDATA2 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:861	345
+table-6-30	Table 6-30. CMDDATA3 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:875	346
+table-6-31	Table 6-31. CMDDATA4 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:889	347
+table-6-32	Table 6-32. CMDDATA5 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:903	348
+table-6-33	Table 6-33. CMDDATA6 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:917	349
+table-6-34	Table 6-34. CMDDATA7 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:931	350
+table-6-35	Table 6-35. CMDDATA8 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:945	351
+table-6-36	Table 6-36. CMDDATA9 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:959	352
+table-6-37	Table 6-37. CMDDATA10 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:973	353
+table-6-38	Table 6-38. CMDDATA11 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:987	354
+table-6-39	Table 6-39. CMDDATA12 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1001	355
+table-6-40	Table 6-40. CMDDATA13 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1015	356
+table-6-41	Table 6-41. CMDDATA14 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1029	357
+table-6-42	Table 6-42. CMDDATA15 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1043	358
+table-6-43	Table 6-43. CMDDATA16 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1057	359
+table-6-44	Table 6-44. CMDDATA17 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1071	360
+table-6-45	Table 6-45. CMDDATA18 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1085	361
+table-6-46	Table 6-46. CMDDATA19 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1099	362
+table-6-47	Table 6-47. CMDDATA20 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1113	363
+table-6-48	Table 6-48. CMDDATA21 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1127	364
+table-6-49	Table 6-49. CMDDATA22 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1141	365
+table-6-50	Table 6-50. CMDDATA23 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1155	366
+table-6-51	Table 6-51. CMDDATA24 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1169	367
+table-6-52	Table 6-52. CMDDATA25 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1183	368
+table-6-53	Table 6-53. CMDDATA26 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1197	369
+table-6-54	Table 6-54. CMDDATA27 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1211	370
+table-6-55	Table 6-55. CMDDATA28 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1225	371
+table-6-56	Table 6-56. CMDDATA29 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1239	372
+table-6-57	Table 6-57. CMDDATA30 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1253	373
+table-6-58	Table 6-58. CMDDATA31 Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/08-6-nvm-flash.md:1267	374
+table-6-59	Table 6-59. CMDDATAECC0 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1281	375
+table-6-60	Table 6-60. CMDDATAECC1 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1297	376
+table-6-61	Table 6-61. CMDDATAECC2 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1313	377
+table-6-62	Table 6-62. CMDDATAECC3 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1329	378
+table-6-63	Table 6-63. CMDDATAECC4 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1345	379
+table-6-64	Table 6-64. CMDDATAECC5 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1361	380
+table-6-65	Table 6-65. CMDDATAECC6 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1377	381
+table-6-66	Table 6-66. CMDDATAECC7 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1393	382
+table-6-67	Table 6-67. CMDWEPROTA Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/08-6-nvm-flash.md:1409	383
+table-6-68	Table 6-68. CMDWEPROTB Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/08-6-nvm-flash.md:1429	384
+table-6-69	Table 6-69. CMDWEPROTC Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/08-6-nvm-flash.md:1447	385
+table-6-70	Table 6-70. CMDWEPROTNM Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/08-6-nvm-flash.md:1467	386
+table-6-71	Table 6-71. CMDWEPROTTR Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/08-6-nvm-flash.md:1487	387
+table-6-72	Table 6-72. CMDWEPROTEN Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/08-6-nvm-flash.md:1507	388
+table-6-73	Table 6-73. CFGCMD Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/08-6-nvm-flash.md:1527	389
+table-6-74	Table 6-74. CFGPCNT Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/08-6-nvm-flash.md:1545	390-391
+table-6-75	Table 6-75. STATCMD Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/08-6-nvm-flash.md:1570	392-393
+table-6-76	Table 6-76. STATADDR Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:1595	394
+table-6-77	Table 6-77. STATPCNT Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1612	395
+table-6-78	Table 6-78. STATMODE Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/08-6-nvm-flash.md:1627	396-397
+table-6-79	Table 6-79. GBLINFO0 Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/08-6-nvm-flash.md:1654	398
+table-6-80	Table 6-80. GBLINFO1 Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/08-6-nvm-flash.md:1670	399
+table-6-81	Table 6-81. GBLINFO2 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1688	400
+table-6-82	Table 6-82. BANK0INFO0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1703	401
+table-6-83	Table 6-83. BANK0INFO1 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:1718	402
+table-6-84	Table 6-84. BANK1INFO0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1735	403
+table-6-85	Table 6-85. BANK1INFO1 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:1750	404
+table-6-86	Table 6-86. BANK2INFO0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1767	405
+table-6-87	Table 6-87. BANK2INFO1 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:1782	406
+table-6-88	Table 6-88. BANK3INFO0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1799	407
+table-6-89	Table 6-89. BANK3INFO1 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:1814	408
+table-6-90	Table 6-90. BANK4INFO0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/08-6-nvm-flash.md:1831	409
+table-6-91	Table 6-91. BANK4INFO1 Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/08-6-nvm-flash.md:1846	410
+p411-table-1	p411-table-1	Chapter 7 | 7	3	sections/08-6-nvm-flash.md:1855	411
+p415-table-1	p415-table-1	1. 2. | Request from publisher to subscriber	1	sections/09-7-events.md:97	415
+p415-table-4	p415-table-4	CPU Interrupt | Col 6	1	sections/09-7-events.md:109	415
+table-7-1	Table 7-1. Event Management Group Functionality and Mapping	Group Name (in Registers) | Functionality	3	sections/09-7-events.md:175	418
+table-7-2	Table 7-2. Standardized Event Management Registers (Used for CPU_INT, DMA_TRIGx, GEN_EVENTx	Register | Description | R/W | Functionality	6	sections/09-7-events.md:198	418-419
+table-8-1	Table 8-1. LFSS Registers	Offset | Acronym | Register Name | Group	85	sections/10-8-low-frequency-subsystem-lfss-b.md:117	425-427
+table-8-2	Table 8-2. LFSS Access Type Codes	Access Type | Code | Description	12	sections/10-8-low-frequency-subsystem-lfss-b.md:209	427-428
+table-8-3	Table 8-3. FSUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:234	429
+table-8-4	Table 8-4. FPUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:249	430
+table-8-5	Table 8-5. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:264	431
+table-8-6	Table 8-6. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:280	432
+table-8-7	Table 8-7. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:295	433-434
+table-8-8	Table 8-8. RIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:333	435-436
+table-8-9	Table 8-9. MIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:371	437-438
+table-8-10	Table 8-10. ISET Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:409	439-440
+table-8-11	Table 8-11. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:447	441-442
+table-8-12	Table 8-12. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:485	443
+table-8-13	Table 8-13. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:500	444-445
+table-8-14	Table 8-14. RIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:538	446-447
+table-8-15	Table 8-15. MIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:576	448-449
+table-8-16	Table 8-16. ISET Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:614	450-451
+table-8-17	Table 8-17. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/10-8-low-frequency-subsystem-lfss-b.md:652	452-453
+table-8-18	Table 8-18. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:690	454
+table-8-19	Table 8-19. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:706	455
+table-8-20	Table 8-20. CLKCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:724	456
+table-8-21	Table 8-21. DBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:739	457
+table-8-22	Table 8-22. CTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/10-8-low-frequency-subsystem-lfss-b.md:755	458
+table-8-23	Table 8-23. STA Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/10-8-low-frequency-subsystem-lfss-b.md:772	459
+table-8-24	Table 8-24. CAL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:789	460
+table-8-25	Table 8-25. TCMP Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/10-8-low-frequency-subsystem-lfss-b.md:807	461
+table-8-26	Table 8-26. SEC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:824	462
+table-8-27	Table 8-27. MIN Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:842	463
+table-8-28	Table 8-28. HOUR Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:860	464
+table-8-29	Table 8-29. DAY Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/10-8-low-frequency-subsystem-lfss-b.md:878	465
+table-8-30	Table 8-30. MON Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:898	466
+table-8-31	Table 8-31. YEAR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:916	467
+table-8-32	Table 8-32. A1MIN Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/10-8-low-frequency-subsystem-lfss-b.md:937	468
+table-8-33	Table 8-33. A1HOUR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:957	469
+table-8-34	Table 8-34. A1DAY Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/10-8-low-frequency-subsystem-lfss-b.md:978	470-471
+table-8-35	Table 8-35. A2MIN Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/10-8-low-frequency-subsystem-lfss-b.md:1005	472
+table-8-36	Table 8-36. A2HOUR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1025	473
+table-8-37	Table 8-37. A2DAY Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/10-8-low-frequency-subsystem-lfss-b.md:1046	474-475
+table-8-38	Table 8-38. PSCTL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1073	476
+table-8-39	Table 8-39. EXTPSCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1091	477
+table-8-40	Table 8-40. TSSEC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1107	478
+table-8-41	Table 8-41. TSMIN Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1125	479
+table-8-42	Table 8-42. TSHOUR Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1143	480
+table-8-43	Table 8-43. TSDAY Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/10-8-low-frequency-subsystem-lfss-b.md:1161	481
+table-8-44	Table 8-44. TSMON Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1181	482
+table-8-45	Table 8-45. TSYEAR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1199	483
+table-8-46	Table 8-46. TSSTAT Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1220	484-485
+table-8-47	Table 8-47. TSCTL Field Descriptions	Bit | Field | Type | Reset | Description	21	sections/10-8-low-frequency-subsystem-lfss-b.md:1251	486-487
+table-8-48	Table 8-48. TSCLR Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1285	488
+table-8-49	Table 8-49. LFSSRST Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1301	489
+table-8-50	Table 8-50. RTCLOCK Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1317	490
+table-8-51	Table 8-51. TIOCTL[y] Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/10-8-low-frequency-subsystem-lfss-b.md:1335	491-492
+table-8-52	Table 8-52. TOUT3_0 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1361	493
+table-8-53	Table 8-53. TOUT7_4 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1382	494
+table-8-54	Table 8-54. TOUT11_8 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1403	495
+table-8-55	Table 8-55. TOUT15_12 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1424	496
+table-8-56	Table 8-56. TOE3_0 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1445	497
+table-8-57	Table 8-57. TOE7_4 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1466	498
+table-8-58	Table 8-58. TOE11_8 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1487	499
+table-8-59	Table 8-59. TOE15_12 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1508	500
+table-8-60	Table 8-60. TIN3_0 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1529	501
+table-8-61	Table 8-61. TIN7_4 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1550	502
+table-8-62	Table 8-62. TIN11_8 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1571	503
+table-8-63	Table 8-63. TIN15_12 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/10-8-low-frequency-subsystem-lfss-b.md:1592	504
+table-8-64	Table 8-64. HEARTBEAT Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/10-8-low-frequency-subsystem-lfss-b.md:1613	505
+table-8-65	Table 8-65. TIOLOCK Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1632	506
+table-8-66	Table 8-66. WDTEN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1648	507
+table-8-67	Table 8-67. WDTDBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:1664	508
+table-8-68	Table 8-68. WDTCTL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1679	509
+table-8-69	Table 8-69. WDTCNTRST Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/10-8-low-frequency-subsystem-lfss-b.md:1697	510
+table-8-70	Table 8-70. WDTSTAT Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/10-8-low-frequency-subsystem-lfss-b.md:1715	511
+table-8-71	Table 8-71. WDTLOCK Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/10-8-low-frequency-subsystem-lfss-b.md:1730	512
+table-8-72	Table 8-72. SPMEM[y] Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/10-8-low-frequency-subsystem-lfss-b.md:1748	513
+table-8-73	Table 8-73. SPMWPROT0 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1765	514-515
+table-8-74	Table 8-74. SPMWPROT1 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1796	516-517
+table-8-75	Table 8-75. SPMWPROT2 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1827	518-519
+table-8-76	Table 8-76. SPMWPROT3 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1858	520-521
+table-8-77	Table 8-77. SPMWPROT4 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1889	522-523
+table-8-78	Table 8-78. SPMWPROT5 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1920	524-525
+table-8-79	Table 8-79. SPMWPROT6 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1951	526-527
+table-8-80	Table 8-80. SPMWPROT7 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:1982	528-529
+table-8-81	Table 8-81. SPMTERASE0 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2013	530-531
+table-8-82	Table 8-82. SPMTERASE1 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2044	532-533
+table-8-83	Table 8-83. SPMTERASE2 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2075	534-535
+table-8-84	Table 8-84. SPMTERASE3 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2106	536-537
+table-8-85	Table 8-85. SPMTERASE4 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2137	538-539
+table-8-86	Table 8-86. SPMTERASE5 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2168	540-541
+table-8-87	Table 8-87. SPMTERASE6 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2199	542-543
+table-8-88	Table 8-88. SPMTERASE7 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/10-8-low-frequency-subsystem-lfss-b.md:2230	544-545
+table-9-1	Table 9-1. Digital IO Features by IO Type	IO Structure | Inversion Control | Drive Strength Control | Hysteresis Control | Pullup Resistor | Pulldown Resistor | Wakeup Logic	5	sections/11-9-iomux.md:42	547
+table-9-2	Table 9-2. Logic High to Hi-Z Truth Table	Connected Peripheral Output | IO Pin State (Z1 = 0x0) | IO Pin State (Z1 = 0x1)	2	sections/11-9-iomux.md:109	551
+p552-table-1	p552-table-1	Col 1 | b. Test the WAKESTATE bit in the PINCMx register corresponding to the IO to be tested to determine	6	sections/11-9-iomux.md:146	552
+table-9-3	Table 9-3. IOMUX Registers	Offset | Acronym | Register Name | Group	1	sections/11-9-iomux.md:188	554
+table-9-4	Table 9-4. IOMUX Access Type Codes	Access Type | Code | Description	6	sections/11-9-iomux.md:196	554
+table-9-5	Table 9-5. PINCM Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/11-9-iomux.md:215	555-556
+table-10-1	Table 10-1. GPIO Port and Device Pin Mapping	GPIO Port and Bit Name | Device Pin Signal Name	5	sections/12-10-general-purpose-input-output-gpio.md:57	559
+table-10-2	Table 10-2. GPIO Registers	Offset | Acronym | Register Name | Group	61	sections/12-10-general-purpose-input-output-gpio.md:169	562-563
+table-10-3	Table 10-3. GPIO Access Type Codes	Access Type | Code | Description	8	sections/12-10-general-purpose-input-output-gpio.md:237	563
+table-10-4	Table 10-4. FSUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:258	564
+table-10-5	Table 10-5. FSUB_1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:273	565
+table-10-6	Table 10-6. FPUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:288	566
+table-10-7	Table 10-7. FPUB_1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:303	567
+table-10-8	Table 10-8. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/12-10-general-purpose-input-output-gpio.md:318	568
+table-10-9	Table 10-9. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/12-10-general-purpose-input-output-gpio.md:334	569
+table-10-10	Table 10-10. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/12-10-general-purpose-input-output-gpio.md:351	570
+table-10-11	Table 10-11. CLKOVR Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/12-10-general-purpose-input-output-gpio.md:367	571
+table-10-12	Table 10-12. PDBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:383	572
+table-10-13	Table 10-13. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:398	573
+table-10-14	Table 10-14. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:413	574-576
+table-10-15	Table 10-15. RIS Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:458	577-579
+table-10-16	Table 10-16. MIS Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:503	580-582
+table-10-17	Table 10-17. ISET Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:548	583-585
+table-10-18	Table 10-18. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:593	586-588
+table-10-19	Table 10-19. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:638	589
+table-10-20	Table 10-20. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:653	590-591
+table-10-21	Table 10-21. RIS Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:683	592-593
+table-10-22	Table 10-22. MIS Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:713	594-595
+table-10-23	Table 10-23. ISET Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:743	596-597
+table-10-24	Table 10-24. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:773	598-599
+table-10-25	Table 10-25. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:803	600
+table-10-26	Table 10-26. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:818	601-602
+table-10-27	Table 10-27. RIS Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:848	603-604
+table-10-28	Table 10-28. MIS Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:878	605-606
+table-10-29	Table 10-29. ISET Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:908	607-608
+table-10-30	Table 10-30. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/12-10-general-purpose-input-output-gpio.md:938	609-610
+table-10-31	Table 10-31. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/12-10-general-purpose-input-output-gpio.md:968	611
+table-10-32	Table 10-32. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/12-10-general-purpose-input-output-gpio.md:985	612
+table-10-33	Table 10-33. DOUT3_0 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1003	613
+table-10-34	Table 10-34. DOUT7_4 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1024	614
+table-10-35	Table 10-35. DOUT11_8 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1045	615
+table-10-36	Table 10-36. DOUT15_12 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1066	616
+table-10-37	Table 10-37. DOUT19_16 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1087	617
+table-10-38	Table 10-38. DOUT23_20 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1108	618
+table-10-39	Table 10-39. DOUT27_24 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1129	619
+table-10-40	Table 10-40. DOUT31_28 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1150	620
+table-10-41	Table 10-41. DOUT31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1171	621-623
+table-10-42	Table 10-42. DOUTSET31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1216	624-626
+table-10-43	Table 10-43. DOUTCLR31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1261	627-629
+table-10-44	Table 10-44. DOUTTGL31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1306	630-632
+table-10-45	Table 10-45. DOE31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1351	633-635
+table-10-46	Table 10-46. DOESET31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1396	636-638
+table-10-47	Table 10-47. DOECLR31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1441	639-641
+table-10-48	Table 10-48. DIN3_0 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1486	642
+table-10-49	Table 10-49. DIN7_4 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1507	643
+table-10-50	Table 10-50. DIN11_8 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1528	644
+table-10-51	Table 10-51. DIN15_12 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1549	645
+table-10-52	Table 10-52. DIN19_16 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1570	646
+table-10-53	Table 10-53. DIN23_20 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1591	647
+table-10-54	Table 10-54. DIN27_24 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1612	648
+table-10-55	Table 10-55. DIN31_28 Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/12-10-general-purpose-input-output-gpio.md:1633	649
+table-10-56	Table 10-56. DIN31_0 Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1654	650-652
+table-10-57	Table 10-57. POLARITY15_0 Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/12-10-general-purpose-input-output-gpio.md:1699	653-654
+table-10-58	Table 10-58. POLARITY31_16 Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/12-10-general-purpose-input-output-gpio.md:1728	655-656
+table-10-59	Table 10-59. CTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/12-10-general-purpose-input-output-gpio.md:1757	657
+table-10-60	Table 10-60. FASTWAKE Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1772	658-660
+table-10-61	Table 10-61. SUB0CFG Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/12-10-general-purpose-input-output-gpio.md:1817	661
+table-10-62	Table 10-62. FILTEREN15_0 Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/12-10-general-purpose-input-output-gpio.md:1836	662-663
+table-10-63	Table 10-63. FILTEREN31_16 Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/12-10-general-purpose-input-output-gpio.md:1865	664-665
+table-10-64	Table 10-64. DMAMASK Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/12-10-general-purpose-input-output-gpio.md:1894	666-668
+table-10-65	Table 10-65. SUB1CFG Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/12-10-general-purpose-input-output-gpio.md:1939	669
+p670-table-1	p670-table-1	Chapter 11 | 11	3	sections/12-10-general-purpose-input-output-gpio.md:1950	670
+p673-table-1	p673-table-1	Given that V R- | Col 2 | Col 3 | is 0V in this ADC, the equation for N | ADC becomes:	4	sections/13-11-adc.md:88	673
+table-11-1	Table 11-1. Available Hardware Averaging Settings	Bit Field Value | AVGN Settings (number of samples accumulated) | AVGD Settings (number of bits to right shift)	8	sections/13-11-adc.md:129	674
+table-11-2	Table 11-2. CLKFREQ Register Configuration	CLKFREQ.FRANGE Values | Col 2 | ADCCLK Frequency Range (MHz)	4	sections/13-11-adc.md:156	674-675
+p678-table-1	p678-table-1	Col 2 | the sample timer, which applies to AUTO sampling mode. The internal clock divider is configured using the | the sample timer, which applies to AUTO sampling mode. The internal clock divider is configured using the	1	sections/13-11-adc.md:265	678
+table-11-3	Table 11-3. Trigger and Sample Mode ADC Usage Matrix	Trigger Mode | Trigger Mode	1	sections/13-11-adc.md:315	679
+p680-table-1	p680-table-1	Mode | Col 2 | • | Set SC bit to start the sample phase (SC bit is | Col 5	8	sections/13-11-adc.md:333	680
+table-11-4	Table 11-4. ADC Data Formats	Data Format | Resolution | Result Range (decimal) | Result Range (hex)	6	sections/13-11-adc.md:352	680
+table-11-5	Table 11-5. ADC-DMA/CPU Operation Summary Matrix	Conversion Mode | FIFO Disabled (FIFOEN=0) Samples not compacted Read from MEMRESx registers directly | Col 3 | FIFO Enabled (FIFOEN=1) Samples always compacted Read from FIFODAT register only | Col 5	5	sections/13-11-adc.md:448	683
+table-11-6	Table 11-6. ADC Events	Event | Type | Source | Destination | Route | Configuration | Functionality	4	sections/13-11-adc.md:490	684-685
+table-11-7	Table 11-7. ADC CPU Interrupt Event Conditions (CPU_INT)	Index (IIDX) | Name | Description	9	sections/13-11-adc.md:503	685
+table-11-8	Table 11-8. ADC Generic Event Publisher Conditions (GEN_EVENT)	Index | Name | Description	5	sections/13-11-adc.md:525	685
+table-11-9	Table 11-9. ADC DMA Trigger Event Conditions (DMA_TRIG)	Index (IIDX) | Name | Description	2	sections/13-11-adc.md:545	686
+table-11-10	Table 11-10. ADC0 Registers	Offset | Acronym | Register Name | Section	35	sections/13-11-adc.md:568	687
+table-11-11	Table 11-11. ADC0 Access Type Codes	Access Type | Code | Description	11	sections/13-11-adc.md:610	688
+table-11-12	Table 11-12. FSUB_0 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:634	689
+table-11-13	Table 11-13. FPUB_1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:649	690
+table-11-14	Table 11-14. PWREN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/13-11-adc.md:664	691
+table-11-15	Table 11-15. RSTCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/13-11-adc.md:680	692
+table-11-16	Table 11-16. CLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:697	693
+table-11-17	Table 11-17. STAT Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/13-11-adc.md:716	694
+table-11-18	Table 11-18. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/13-11-adc.md:732	695-696
+table-11-19	Table 11-19. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/13-11-adc.md:758	697-698
+table-11-20	Table 11-20. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/13-11-adc.md:784	699-700
+table-11-21	Table 11-21. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/13-11-adc.md:810	701-702
+table-11-22	Table 11-22. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/13-11-adc.md:836	703-704
+table-11-23	Table 11-23. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/13-11-adc.md:862	705
+table-11-24	Table 11-24. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/13-11-adc.md:882	706
+table-11-25	Table 11-25. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/13-11-adc.md:902	707
+table-11-26	Table 11-26. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/13-11-adc.md:922	708
+table-11-27	Table 11-27. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/13-11-adc.md:942	709
+table-11-28	Table 11-28. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:962	710
+table-11-29	Table 11-29. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:981	711
+table-11-30	Table 11-30. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:1000	712
+table-11-31	Table 11-31. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:1019	713
+table-11-32	Table 11-32. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:1038	714
+table-11-33	Table 11-33. CTL0 Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/13-11-adc.md:1057	715
+table-11-34	Table 11-34. CTL1 Register Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/13-11-adc.md:1076	716-717
+table-11-35	Table 11-35. CTL2 Register Field Descriptions	Bit | Field | Type | Reset | Description	11	sections/13-11-adc.md:1101	718-719
+table-11-36	Table 11-36. CTL3 Register Field Descriptions	Bit | Field | Type | Reset | Description	38	sections/13-11-adc.md:1125	720-721
+table-11-37	Table 11-37. SCOMP0 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:1176	722
+table-11-38	Table 11-38. SCOMP1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:1191	723
+table-11-39	Table 11-39. REFCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/13-11-adc.md:1206	724
+table-11-40	Table 11-40. WCLOW Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:1224	725
+table-11-41	Table 11-41. WCHIGH Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:1239	726
+table-11-42	Table 11-42. FIFODATA Register Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/13-11-adc.md:1254	727
+table-11-43	Table 11-43. ASCRES Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:1268	728
+table-11-44	Table 11-44. MEMCTL_y Register Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/13-11-adc.md:1285	729-730
+table-11-45	Table 11-45. MEMRES_y Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/13-11-adc.md:1314	731
+table-11-46	Table 11-46. STATUS Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/13-11-adc.md:1329	732
+table-12-1	Table 12-1. Typical Output Filter Delay Settings	FLTDLY bit in COMPx.CTL1 | Typical filter delay	4	sections/14-12-comp.md:99	736
+table-12-2	Table 12-2. Comparator Events	Event | Type | Source | Destination | Route | Configuration | Functionality	4	sections/14-12-comp.md:203	740
+table-12-3	Table 12-3. Comparator CPU Interrupt Event Conditions (CPU_INT)	IIDX STAT | Name | Description	3	sections/14-12-comp.md:216	740-741
+table-12-4	Table 12-4. Comparator Generic Event Conditions (GEN_EVENT)	IIDX STAT | Name | Description	3	sections/14-12-comp.md:234	741
+table-12-5	Table 12-5. COMP0 Registers	Offset | Acronym | Register Name | Section	26	sections/14-12-comp.md:258	742
+table-12-6	Table 12-6. COMP0 Access Type Codes	Access Type | Code | Description	7	sections/14-12-comp.md:291	742
+table-12-7	Table 12-7. FSUB_0 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/14-12-comp.md:311	743
+table-12-8	Table 12-8. FSUB_1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/14-12-comp.md:326	744
+table-12-9	Table 12-9. FPUB_1 Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/14-12-comp.md:341	745
+table-12-10	Table 12-10. PWREN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/14-12-comp.md:356	746
+table-12-11	Table 12-11. RSTCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/14-12-comp.md:372	747
+table-12-12	Table 12-12. CLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/14-12-comp.md:389	748
+table-12-13	Table 12-13. STAT Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/14-12-comp.md:406	749
+table-12-14	Table 12-14. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/14-12-comp.md:422	750
+table-12-15	Table 12-15. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:437	751
+table-12-16	Table 12-16. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:455	752
+table-12-17	Table 12-17. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:473	753
+table-12-18	Table 12-18. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:491	754
+table-12-19	Table 12-19. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:509	755
+table-12-20	Table 12-20. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/14-12-comp.md:527	756
+table-12-21	Table 12-21. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:542	757
+table-12-22	Table 12-22. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:560	758
+table-12-23	Table 12-23. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:578	759
+table-12-24	Table 12-24. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:596	760
+table-12-25	Table 12-25. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:614	761
+table-12-26	Table 12-26. EVT_MODE Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/14-12-comp.md:632	762
+table-12-27	Table 12-27. DESC Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/14-12-comp.md:648	763
+table-12-28	Table 12-28. CTL0 Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/14-12-comp.md:666	764
+table-12-29	Table 12-29. CTL1 Register Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/14-12-comp.md:685	765-766
+table-12-30	Table 12-30. CTL2 Register Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/14-12-comp.md:710	767-768
+table-12-31	Table 12-31. CTL3 Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/14-12-comp.md:735	769
+table-12-32	Table 12-32. STAT Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/14-12-comp.md:752	770
+table-13-1	Table 13-1. VREF Registers	Offset | Acronym | Register Name | Group	8	sections/15-13-vref.md:77	775
+table-13-2	Table 13-2. VREF Access Type Codes	Access Type | Code | Description	7	sections/15-13-vref.md:92	775
+table-13-3	Table 13-3. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/15-13-vref.md:112	776
+table-13-4	Table 13-4. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/15-13-vref.md:128	777
+table-13-5	Table 13-5. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/15-13-vref.md:145	778
+table-13-6	Table 13-6. CLKDIV Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/15-13-vref.md:161	779
+table-13-7	Table 13-7. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/15-13-vref.md:176	780
+table-13-8	Table 13-8. CTL0 Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/15-13-vref.md:194	781
+table-13-9	Table 13-9. CTL1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/15-13-vref.md:214	782
+table-13-10	Table 13-10. CTL2 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/15-13-vref.md:229	783
+table-14-1	Table 14-1. UART Error and Conditions	Error Condition (1) | Bit Field | Description	4	sections/16-14-uart.md:175	791
+table-14-2	Table 14-2. UART Flag Status	Bit Field | Description	7	sections/16-14-uart.md:188	791
+table-14-3	Table 14-3. Flow Control Enable	CTSEN | RTSEN | Description	4	sections/16-14-uart.md:308	794
+table-14-4	Table 14-4. 9th Bit Handling	PEN | SPS | EPS | 9 th Bit (Transmitted or Verified)	2	sections/16-14-uart.md:380	796-797
+table-14-5	Table 14-5. Address Detection	Condition | DALI Mode | Idle Line Mode | 9-Bit Mode	2	sections/16-14-uart.md:499	800
+p801-table-1	p801-table-1	Col 2 | suppression value is in terms of functional clocks. All signals are delayed internally when glitch suppression is | suppression value is in terms of functional clocks. All signals are delayed internally when glitch suppression is	5	sections/16-14-uart.md:541	801
+p801-table-2	p801-table-2	Software Reset Considerations | Col 2 | Col 3	4	sections/16-14-uart.md:557	801
+table-14-6	Table 14-6. UART Events	Event | Type | Source | Destination | Route | Configuration | Functionality	3	sections/16-14-uart.md:580	802
+table-14-7	Table 14-7. UART CPU Interrupt Event Conditions (CPU_INT)	IIDX STAT | Name | Description	16	sections/16-14-uart.md:592	802-803
+table-14-8	Table 14-8. UART DMA Trigger Condition (DMA_TRIG_RX)	IIDX STAT | Name | Description	2	sections/16-14-uart.md:635	804
+table-14-9	Table 14-9. UART DMA Trigger Condition (DMA_TRIG_TX)	IIDX STAT | Name | Description	1	sections/16-14-uart.md:650	804
+table-14-10	Table 14-10. Debug Mode Peripheral Behavior	PDBGCTL.FREE | PDBGCTL.SOFT | Function	3	sections/16-14-uart.md:670	804
+table-14-11	Table 14-11. UART Registers	Offset | Acronym | Register Name | Group	43	sections/16-14-uart.md:682	805-806
+table-14-12	Table 14-12. UART Access Type Codes	Access Type | Code | Description	7	sections/16-14-uart.md:732	806
+table-14-13	Table 14-13. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:752	807
+table-14-14	Table 14-14. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:768	808
+table-14-15	Table 14-15. CLKCFG Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:785	809
+table-14-16	Table 14-16. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:802	810
+table-14-17	Table 14-17. CLKDIV Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:818	811
+table-14-18	Table 14-18. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/16-14-uart.md:833	812
+table-14-19	Table 14-19. PDBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:851	813
+table-14-20	Table 14-20. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:867	814
+table-14-21	Table 14-21. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	19	sections/16-14-uart.md:882	815-816
+table-14-22	Table 14-22. RIS Field Descriptions	Bit | Field | Type | Reset | Description	19	sections/16-14-uart.md:914	817-818
+table-14-23	Table 14-23. MIS Field Descriptions	Bit | Field | Type | Reset | Description	19	sections/16-14-uart.md:946	819-820
+table-14-24	Table 14-24. ISET Field Descriptions	Bit | Field | Type | Reset | Description	19	sections/16-14-uart.md:978	821-822
+table-14-25	Table 14-25. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	19	sections/16-14-uart.md:1010	823-824
+table-14-26	Table 14-26. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1042	825
+table-14-27	Table 14-27. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:1057	826
+table-14-28	Table 14-28. RIS Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:1074	827
+table-14-29	Table 14-29. MIS Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:1091	828
+table-14-30	Table 14-30. ISET Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:1108	829
+table-14-31	Table 14-31. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:1125	830
+table-14-32	Table 14-32. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1142	831
+table-14-33	Table 14-33. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:1157	832
+table-14-34	Table 14-34. RIS Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:1173	833
+table-14-35	Table 14-35. MIS Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:1189	834
+table-14-36	Table 14-36. ISET Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:1205	835
+table-14-37	Table 14-37. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/16-14-uart.md:1221	836
+table-14-38	Table 14-38. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/16-14-uart.md:1237	837
+table-14-39	Table 14-39. INTCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1254	838
+table-14-40	Table 14-40. CTL0 Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/16-14-uart.md:1269	839-841
+table-14-41	Table 14-41. LCRH Field Descriptions	Bit | Field | Type | Reset | Description	11	sections/16-14-uart.md:1300	842-843
+table-14-42	Table 14-42. STAT Field Descriptions	Bit | Field | Type | Reset | Description	10	sections/16-14-uart.md:1324	844-845
+table-14-43	Table 14-43. IFLS Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/16-14-uart.md:1347	846-847
+table-14-44	Table 14-44. IBRD Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1374	848
+table-14-45	Table 14-45. FBRD Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1389	849
+table-14-46	Table 14-46. GFCTL Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/16-14-uart.md:1404	850
+table-14-47	Table 14-47. TXDATA Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1423	851
+table-14-48	Table 14-48. RXDATA Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/16-14-uart.md:1438	852-853
+table-14-49	Table 14-49. LINCNT Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1458	854
+table-14-50	Table 14-50. LINCTL Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/16-14-uart.md:1473	855
+table-14-51	Table 14-51. LINC0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1494	856
+table-14-52	Table 14-52. LINC1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1509	857
+table-14-53	Table 14-53. IRCTL Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/16-14-uart.md:1524	858
+table-14-54	Table 14-54. AMASK Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1543	859
+table-14-55	Table 14-55. ADDR Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1558	860
+table-14-56	Table 14-56. CLKDIV2 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/16-14-uart.md:1573	861
+table-15-1	Table 15-1. Pin Function Overview	Standard SPI | Col 2 | Feature	7	sections/17-15-spi.md:60	866
+p870-table-1	p870-table-1	Col 1 | operation of the SPI is enabled through the SPI Event and DMA register. When DMA operation is enabled, the SPI asserts a DMA request on the receive or transmit channel when the associated FIFO can transfer data.	2	sections/17-15-spi.md:205	870
+table-15-2	Table 15-2. SPI Events	Event | Type | Source | Destination | Route | Configuration | Functionality	3	sections/17-15-spi.md:387	877
+table-15-3	Table 15-3. SPI CPU_INT Trigger Condition	IIDX STAT | Name | Description	9	sections/17-15-spi.md:399	877
+table-15-4	Table 15-4. SPI DMA_TRIG_RX DMA Trigger Condition	IIDX STAT | Name | Description	2	sections/17-15-spi.md:421	877
+table-15-5	Table 15-5. SPI DMA_TRIG_TX DMA Trigger Condition	IIDX STAT | Name | Description	1	sections/17-15-spi.md:428	878
+table-15-6	Table 15-6. Debug Mode Peripheral Behavior	PDBGCTL.FREE | PDBGCTL.SOFT | Function	3	sections/17-15-spi.md:442	878
+table-15-7	Table 15-7. SPI Registers	Offset | Acronym | Register Name | Group	33	sections/17-15-spi.md:454	879-880
+table-15-8	Table 15-8. SPI Access Type Codes	Access Type | Code | Description	7	sections/17-15-spi.md:494	880
+table-15-9	Table 15-9. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:514	881
+table-15-10	Table 15-10. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:530	882
+table-15-11	Table 15-11. CLKCFG Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:547	883
+table-15-12	Table 15-12. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:564	884
+table-15-13	Table 15-13. CLKDIV Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/17-15-spi.md:580	885
+table-15-14	Table 15-14. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/17-15-spi.md:595	886
+table-15-15	Table 15-15. PDBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:613	887
+table-15-16	Table 15-16. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/17-15-spi.md:629	888
+table-15-17	Table 15-17. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/17-15-spi.md:644	889-890
+table-15-18	Table 15-18. RIS Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/17-15-spi.md:669	891-892
+table-15-19	Table 15-19. MIS Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/17-15-spi.md:694	893-894
+table-15-20	Table 15-20. ISET Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/17-15-spi.md:719	895-896
+table-15-21	Table 15-21. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/17-15-spi.md:744	897-898
+table-15-22	Table 15-22. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/17-15-spi.md:769	899
+table-15-23	Table 15-23. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:784	900
+table-15-24	Table 15-24. RIS Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:801	901
+table-15-25	Table 15-25. MIS Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:818	902
+table-15-26	Table 15-26. ISET Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:835	903
+table-15-27	Table 15-27. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:852	904
+table-15-28	Table 15-28. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/17-15-spi.md:869	905
+table-15-29	Table 15-29. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:884	906
+table-15-30	Table 15-30. RIS Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:900	907
+table-15-31	Table 15-31. MIS Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:916	908
+table-15-32	Table 15-32. ISET Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:932	909
+table-15-33	Table 15-33. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:948	910
+table-15-34	Table 15-34. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/17-15-spi.md:964	911
+table-15-35	Table 15-35. INTCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/17-15-spi.md:981	912
+table-15-36	Table 15-36. CTL0 Field Descriptions	Bit | Field | Type | Reset | Description	9	sections/17-15-spi.md:996	913-914
+table-15-37	Table 15-37. CTL1 Field Descriptions	Bit | Field | Type | Reset | Description	15	sections/17-15-spi.md:1018	915-916
+table-15-38	Table 15-38. CLKCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:1046	917
+table-15-39	Table 15-39. IFLS Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/17-15-spi.md:1062	918
+table-15-40	Table 15-40. STAT Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/17-15-spi.md:1078	919
+table-15-41	Table 15-41. RXDATA Field Descriptions	Bit | Field | Type | Reset | Description	10	sections/17-15-spi.md:1097	920
+table-15-42	Table 15-42. TXDATA Field Descriptions	Bit | Field | Type | Reset | Description	15	sections/17-15-spi.md:1120	921
+p922-table-1	p922-table-1	Chapter 16 | Col 3	3	sections/17-15-spi.md:1140	922
+table-16-1	Table 16-1. Examples of Controller Clock Setting for Typical Clock Configurations	Functional Clock | TPR Bits Standard Mode 100kHz SCL | TPR Bits Fast Mode 400kHz SCL | TPR Bits Fast Mode Plus 1000kHz SCL	5	sections/18-16-i2c.md:99	925
+table-16-2	Table 16-2. I2C signal descriptions	Device Pin | Function	2	sections/18-16-i2c.md:129	926
+table-16-3	Table 16-3. Glitch Suppression Filter	Col 1 | Analog Glitch Filter | Digital Glitch Filter	4	sections/18-16-i2c.md:283	932
+table-16-4	Table 16-4. Start Transmit From Idle Mode	Length | Direction | ACK | STOP | START | RUN | Format | Comments	1	sections/18-16-i2c.md:377	935
+table-16-5	Table 16-5. Continue Transmit When Last Transmission Finished Without stop	Length | Direction | ACK | STOP | START | RUN | Format | Comments	1	sections/18-16-i2c.md:383	935
+table-16-6	Table 16-6. Start Receive From Idle Mode	Length | Direction | ACK | STOP | START | RUN | Format | Comments	5	sections/18-16-i2c.md:393	935
+table-16-7	Table 16-7. Continue Receive When Last Receive Finished Without STOP or NACK	Length | Direction | ACK | STOP | START | RUN | Format | Comments	7	sections/18-16-i2c.md:403	935
+table-16-8	Table 16-8. Repeated Start Transmit	Length | Direction | ACK | STOP | START | RUN | Format | Comments	1	sections/18-16-i2c.md:421	936
+table-16-9	Table 16-9. Repeated Start Receive	Length | Direction | ACK | STOP | START | RUN | Format | Comments	5	sections/18-16-i2c.md:429	936
+table-16-10	Table 16-10. Send STOP only	Length | Direction | ACK | STOP | START | RUN | Format | Comments	1	sections/18-16-i2c.md:443	936
+table-16-11	Table 16-11. Controller quick command	Length | Direction | ACK | STOP | START | RUN | Format | Comments	1	sections/18-16-i2c.md:455	936
+table-16-12	Table 16-12. Controller Status Register	Bit Field | Description	9	sections/18-16-i2c.md:473	937
+table-16-13	Table 16-13. Target Status Register	Bit Field | Description	5	sections/18-16-i2c.md:539	941
+table-16-14	Table 16-14. Status Bits When Controller is Disabled	Register | Col 5 | Bit | Behavior When Controller Disabled | Col 10 | Behavior When Target Disabled | Behavior After Controller/Target Enabled	13	sections/18-16-i2c.md:599	945-946
+table-16-15	Table 16-15. Status Bits When Target is Disabled	Register | Bit | Behavior When Controller Disabled | Behavior When Target Disabled | Behavior After Controller/Target Enabled	7	sections/18-16-i2c.md:617	946
+table-16-16	Table 16-16. I2C Events	Event | Type | Source | Destination | Route | Configuration | Functionality	3	sections/18-16-i2c.md:641	946
+table-16-17	Table 16-17. I2C CPU Interrupt Event Conditions for Controller (CPU_INT)	IIDX STAT | Name | Description	13	sections/18-16-i2c.md:653	947
+table-16-18	Table 16-18. I2C CPU Interrupt Event Conditions for Target (CPU_INT)	IIDX STAT | Name | Description	11	sections/18-16-i2c.md:671	947
+table-16-19	Table 16-19. I2C DMA Trigger Condition (DMA_TRIG1 and DMA_TRIG0)	IIDX STAT | Name | Description	4	sections/18-16-i2c.md:693	947
+table-16-20	Table 16-20. Debug Mode Peripheral Behavior	PDBGCTL.FREE | PDBGCTL.SOFT | Function	3	sections/18-16-i2c.md:717	948
+table-16-21	Table 16-21. I2C Registers	Offset | Acronym | Register Name | Section	53	sections/18-16-i2c.md:729	949-950
+table-16-22	Table 16-22. I2C Access Type Codes	Access Type | Code | Description	7	sections/18-16-i2c.md:789	950
+table-16-23	Table 16-23. PWREN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/18-16-i2c.md:809	951
+table-16-24	Table 16-24. RSTCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:825	952
+table-16-25	Table 16-25. CLKCFG Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:842	953
+table-16-26	Table 16-26. STAT Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/18-16-i2c.md:859	954
+table-16-27	Table 16-27. CLKDIV Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:875	955
+table-16-28	Table 16-28. CLKSEL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:890	956
+table-16-29	Table 16-29. PDBGCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/18-16-i2c.md:907	957
+table-16-30	Table 16-30. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:923	958
+table-16-31	Table 16-31. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/18-16-i2c.md:938	959-960
+table-16-32	Table 16-32. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/18-16-i2c.md:983	961-962
+table-16-33	Table 16-33. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/18-16-i2c.md:1028	963-964
+table-16-34	Table 16-34. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/18-16-i2c.md:1073	965-966
+table-16-35	Table 16-35. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	32	sections/18-16-i2c.md:1118	967-968
+table-16-36	Table 16-36. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1163	969
+table-16-37	Table 16-37. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1178	970
+table-16-38	Table 16-38. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1196	971
+table-16-39	Table 16-39. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1214	972
+table-16-40	Table 16-40. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1232	973
+table-16-41	Table 16-41. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1250	974
+table-16-42	Table 16-42. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1268	975
+table-16-43	Table 16-43. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1283	976
+table-16-44	Table 16-44. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1301	977
+table-16-45	Table 16-45. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1319	978
+table-16-46	Table 16-46. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1337	979
+table-16-47	Table 16-47. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1355	980
+table-16-48	Table 16-48. EVT_MODE Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:1373	981
+table-16-49	Table 16-49. INTCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1390	982
+table-16-50	Table 16-50. DESC Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1405	983
+table-16-51	Table 16-51. GFCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/18-16-i2c.md:1423	984
+table-16-52	Table 16-52. TIMEOUT_CTL Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/18-16-i2c.md:1442	985
+table-16-53	Table 16-53. TIMEOUT_CNT Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:1461	986
+table-16-54	Table 16-54. CSA Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1478	987
+table-16-55	Table 16-55. CCTR Register Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/18-16-i2c.md:1496	988-989
+table-16-56	Table 16-56. CSR Register Field Descriptions	Bit | Field | Type | Reset | Description	10	sections/18-16-i2c.md:1522	990
+table-16-57	Table 16-57. CRXDATA Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1545	991
+table-16-58	Table 16-58. CTXDATA Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1560	992
+table-16-59	Table 16-59. CTPR Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1575	993
+table-16-60	Table 16-60. CCR Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/18-16-i2c.md:1590	994
+table-16-61	Table 16-61. CBMON Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/18-16-i2c.md:1609	995
+table-16-62	Table 16-62. CFIFOCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/18-16-i2c.md:1625	996
+table-16-63	Table 16-63. CFIFOSR Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/18-16-i2c.md:1645	997
+table-16-64	Table 16-64. _I2CPECCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:1665	998
+table-16-65	Table 16-65. _PECSR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1682	999
+table-16-66	Table 16-66. TOAR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1700	1000
+table-16-67	Table 16-67. TOAR2 Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1718	1001
+table-16-68	Table 16-68. TCTR Register Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/18-16-i2c.md:1736	1002-1003
+table-16-69	Table 16-69. TSR Register Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/18-16-i2c.md:1761	1004-1005
+table-16-70	Table 16-70. TRXDATA Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1790	1006
+table-16-71	Table 16-71. TTXDATA Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/18-16-i2c.md:1805	1007
+table-16-72	Table 16-72. TACKCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/18-16-i2c.md:1820	1008
+table-16-73	Table 16-73. TFIFOCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/18-16-i2c.md:1839	1009
+table-16-74	Table 16-74. TFIFOSR Register Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/18-16-i2c.md:1859	1010
+table-16-75	Table 16-75. _PECCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/18-16-i2c.md:1879	1011
+table-16-76	Table 16-76. _PECSR Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/18-16-i2c.md:1896	1012
+table-17-1	Table 17-1. CRCIN Byte Order Translation	Endianness | Data Written to CRCIN | Data Applied to CRC Logic	4	sections/19-17-crc.md:101	1016
+table-17-2	Table 17-2. CRCP0 Registers	Offset | Acronym | Register Name | Group	11	sections/19-17-crc.md:120	1017
+table-17-3	Table 17-3. CRCP0 Access Type Codes	Access Type | Code | Description	11	sections/19-17-crc.md:138	1017
+table-17-4	Table 17-4. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/19-17-crc.md:162	1018
+table-17-5	Table 17-5. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/19-17-crc.md:178	1019
+table-17-6	Table 17-6. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/19-17-crc.md:195	1020
+table-17-7	Table 17-7. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/19-17-crc.md:211	1021
+table-17-8	Table 17-8. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/19-17-crc.md:226	1022
+table-17-9	Table 17-9. CRCCTRL Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/19-17-crc.md:244	1023-1024
+table-17-10	Table 17-10. CRCSEED Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/19-17-crc.md:263	1025
+table-17-11	Table 17-11. CRCIN Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/19-17-crc.md:277	1026
+table-17-12	Table 17-12. CRCOUT Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/19-17-crc.md:291	1027
+table-17-13	Table 17-13. CRCPOLY Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/19-17-crc.md:305	1028
+table-17-14	Table 17-14. CRCIN_IDX[y] Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/19-17-crc.md:321	1029
+table-18-1	Table 18-1. TIMx Instance Configuration	Instance | Counter Resolution | Prescaler | Repeat Counter | CCP Channels (External/ Internal) | External PWM Channels | Phase Load | Shadow Load | Shadow CCs | Deadband | Fault Handler | QEI / Hall Input Mode	17	sections/20-18-timers-timx.md:102	1034
+p1036-table-1	p1036-table-1	3. | Col 2 | In TIMx instances with prescalers, optionally set a prescaler using CPS.PCNT. | Col 4	3	sections/20-18-timers-timx.md:182	1036
+table-18-2	Table 18-2. Repeat Counter Behavior	TIMA.CTR is Advancing (+1) | Counter value | TIMA.RC = TIMA.RCLD | Repeat Counter Behavior | Suppress Load and Zero Events (SLZERCNEZ = 1) | Suppress Compare Events (SCERCNEZ = 1)	4	sections/20-18-timers-timx.md:212	1036
+table-18-3	Table 18-3. TIMx Counting Modes (CM)	TIMx.CTRCTL.CM | Counting Mode | Counting Mode	3	sections/20-18-timers-timx.md:236	1037
+table-18-4	Table 18-4. TIMx Counter Value after Enable (CVAE)	Count Value After Enable (CVAE) | Description | Supported Counting Modes	4	sections/20-18-timers-timx.md:244	1037
+table-18-5	Table 18-5. Counter Value after Enable Initialization	TIMx.CTRCTL.CVAE Value | Counter Value After Enable	3	sections/20-18-timers-timx.md:296	1040
+p1043-table-1	p1043-table-1	Col 1 | Key registers for configuring capture mode:	1	sections/20-18-timers-timx.md:353	1043
+table-18-6	Table 18-6. Advance pulse condition settings (ACOND)	ACOND | Col 2 | Condition	5	sections/20-18-timers-timx.md:400	1045
+table-18-7	Table 18-7. Load, zero, and capture condition settings (LCOND, ZCOND, CCOND)	LCOND | ZCOND | CCOND | Condition	4	sections/20-18-timers-timx.md:414	1045
+table-18-8	Table 18-8. Counter Zero Control (CZC) settings	TIMx.CTRCTL.CZC | Setting	6	sections/20-18-timers-timx.md:429	1045
+table-18-9	Table 18-9. Counter Load Control (CLC) settings	TIMx.CTRCTL.CLC | Setting	6	sections/20-18-timers-timx.md:442	1045
+table-18-10	Table 18-10. Counter Advance Control (CAC) settings	TIMx.CTRCTL.CAC | Setting	6	sections/20-18-timers-timx.md:455	1046
+table-18-11	Table 18-11. Input Selection Options for TIMx CC Instances	Input selection (TIMx.IFCTL_xy[0/1].ISEL) | Source	10	sections/20-18-timers-timx.md:485	1047
+p1048-table-1	p1048-table-1	TIMx Channel 0 is an input, set CCPD.C0CCP0 = 0. | Col 3 | Col 4 | Col 5 | Col 6	4	sections/20-18-timers-timx.md:533	1048
+p1049-table-1	p1049-table-1	Col 2 | In the CTRCTL register, set the desired counter control settings for: | Col 5 | Col 6 | Col 7	3	sections/20-18-timers-timx.md:563	1049
+p1050-table-1	p1050-table-1	Pulse-Width and Period Capture Configuration | Figure 18-17 | . | . | Col 6 | Col 7	2	sections/20-18-timers-timx.md:590	1050
+table-18-12	Table 18-12. PHA/PHB State Table and Counter Actions	Current State (PHA, PHB) | Next State (PHA, PHB) | Direction (DIR) | Counter Action	8	sections/20-18-timers-timx.md:647	1052
+table-18-13	Table 18-13. Relation of IDX Input and Counter Value	Direction (DIR) | IDX | Col 7 | Counter Action	2	sections/20-18-timers-timx.md:677	1053
+table-18-14	Table 18-14. Hall Input and TIMx Input Signal Mapping	Hall input signal | Hall input signal | TIMx input	3	sections/20-18-timers-timx.md:703	1054
+table-18-15	Table 18-15. Compare Mode Events	Event | Name | Event Condition	4	sections/20-18-timers-timx.md:743	1056
+table-18-16	Table 18-16. Shadow Compare and Action Update Behavior	Bit Field | Value | Description/Comment	7	sections/20-18-timers-timx.md:810	1059
+table-18-17	Table 18-17. Signal Generator Actions from Compare Event	Value | Action	4	sections/20-18-timers-timx.md:847	1061
+p1063-table-1	p1063-table-1	– – | CCP1 output generates: | High pulse-width from zero to TIMx.CC0 value (ZACT = 1h) Low pulse-width from TIMx.CC0 value to TIMx.LOAD (CUACT = 2h)	1	sections/20-18-timers-timx.md:963	1063
+p1064-table-1	p1064-table-1	Col 2 | In TIMx.OCTL_xy[0/1], set CCPO = 0 to select the signal generator output.	2	sections/20-18-timers-timx.md:984	1064
+table-18-18	Table 18-18. Deadband Modes and Delay Timing Configuration in DBCTL register	Col 1 | Deadband Mode | Bitfield | Col 8 | Description | Counting Mode	6	sections/20-18-timers-timx.md:1023	1066-1067
+table-18-19	Table 18-19. Force Output Action Configuration	Bit Field | Value | Description/Comment	3	sections/20-18-timers-timx.md:1069	1069
+table-18-20	Table 18-20. Fault Input Sources and Configuration	Signal name | Input source | Fault type | Polarity Bit | Enable Bit	8	sections/20-18-timers-timx.md:1160	1073
+table-18-21	Table 18-21. Counter Behavior in Fault Condition With TIMA.CTRCTL Register	Col 1 | Col 2 | Bit Fields | Col 4 | Counter Behavior	7	sections/20-18-timers-timx.md:1179	1073
+table-18-22	Table 18-22. CCP Output Behavior in Fault Condition With TIMA.CCACT Register	Bit Fields | Bit Fields | Output Behavior	6	sections/20-18-timers-timx.md:1198	1075
+table-18-23	Table 18-23. TIMx Events	Event | Type | Source | Destination | Route | Configuration | Functionality	5	sections/20-18-timers-timx.md:1278	1078
+table-18-24	Table 18-24. TIMx CPU Interrupt Event Conditions (CPU_INT)	IIDX STAT | Name | Description | Timer Module	19	sections/20-18-timers-timx.md:1292	1078-1079
+table-18-25	Table 18-25. TIMx Generic Event Conditions (GEN_EVENT0 and GEN_EVENT1)	IIDX STAT | Name | Description | Timer Module	19	sections/20-18-timers-timx.md:1326	1079-1080
+table-18-26	Table 18-26. TIMX Registers	Offset | Acronym | Register Name | Group	60	sections/20-18-timers-timx.md:1386	1082-1083
+table-18-27	Table 18-27. TIMx Access Type Codes	Access Type | Code | Description	10	sections/20-18-timers-timx.md:1453	1083-1084
+table-18-28	Table 18-28. FSUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1476	1085
+table-18-29	Table 18-29. FSUB_1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1491	1086
+table-18-30	Table 18-30. FPUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1506	1087
+table-18-31	Table 18-31. FPUB_1 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1521	1088
+table-18-32	Table 18-32. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/20-18-timers-timx.md:1536	1089
+table-18-33	Table 18-33. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/20-18-timers-timx.md:1552	1090
+table-18-34	Table 18-34. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/20-18-timers-timx.md:1569	1091
+table-18-35	Table 18-35. CLKDIV Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1585	1092
+table-18-36	Table 18-36. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/20-18-timers-timx.md:1600	1093
+table-18-37	Table 18-37. PDBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/20-18-timers-timx.md:1619	1094
+table-18-38	Table 18-38. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1635	1095
+table-18-39	Table 18-39. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1650	1096-1097
+table-18-40	Table 18-40. RIS Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1685	1098-1099
+table-18-41	Table 18-41. MIS Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1720	1100-1101
+table-18-42	Table 18-42. ISET Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1755	1102-1103
+table-18-43	Table 18-43. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1790	1104-1105
+table-18-44	Table 18-44. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:1825	1106
+table-18-45	Table 18-45. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1840	1107-1108
+table-18-46	Table 18-46. RIS Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1875	1109-1110
+table-18-47	Table 18-47. MIS Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1910	1111-1112
+table-18-48	Table 18-48. ISET Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1945	1113-1114
+table-18-49	Table 18-49. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:1980	1115-1116
+table-18-50	Table 18-50. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2015	1117
+table-18-51	Table 18-51. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:2030	1118-1119
+table-18-52	Table 18-52. RIS Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:2065	1120-1121
+table-18-53	Table 18-53. MIS Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:2100	1122-1123
+table-18-54	Table 18-54. ISET Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:2135	1124-1125
+table-18-55	Table 18-55. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	22	sections/20-18-timers-timx.md:2170	1126-1127
+table-18-56	Table 18-56. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/20-18-timers-timx.md:2205	1128
+table-18-57	Table 18-57. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2222	1129
+table-18-58	Table 18-58. CCPD Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2240	1130
+table-18-59	Table 18-59. ODIS Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2258	1131
+table-18-60	Table 18-60. CCLKCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2276	1132
+table-18-61	Table 18-61. CPS Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2291	1133
+table-18-62	Table 18-62. CPSV Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2306	1134
+table-18-63	Table 18-63. CTTRIGCTL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2321	1135
+table-18-64	Table 18-64. CTTRIG Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2339	1136
+table-18-65	Table 18-65. FSCTL Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/20-18-timers-timx.md:2354	1137
+table-18-66	Table 18-66. GCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2375	1138
+table-18-67	Table 18-67. CTR Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2390	1139
+table-18-68	Table 18-68. CTRCTL Field Descriptions	Bit | Field | Type | Reset | Description	17	sections/20-18-timers-timx.md:2405	1140-1142
+table-18-69	Table 18-69. LOAD Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2435	1143
+table-18-70	Table 18-70. CC_01[y] Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2452	1144
+table-18-71	Table 18-71. CC_23[y] Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2469	1145
+table-18-72	Table 18-72. CC_45[y] Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2486	1146
+table-18-73	Table 18-73. CCCTL_01[y] Field Descriptions	Bit | Field | Type | Reset | Description	21	sections/20-18-timers-timx.md:2503	1147-1150
+table-18-74	Table 18-74. CCCTL_23[y] Field Descriptions	Bit | Field | Type | Reset | Description	21	sections/20-18-timers-timx.md:2539	1151-1154
+table-18-75	Table 18-75. CCCTL_45[y] Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2575	1155-1156
+table-18-76	Table 18-76. OCTL_01[y] Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/20-18-timers-timx.md:2595	1157
+table-18-77	Table 18-77. OCTL_23[y] Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/20-18-timers-timx.md:2614	1158
+table-18-78	Table 18-78. CCACT_01[y] Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/20-18-timers-timx.md:2633	1159-1160
+table-18-79	Table 18-79. CCACT_23[y] Field Descriptions	Bit | Field | Type | Reset | Description	16	sections/20-18-timers-timx.md:2664	1161-1162
+table-18-80	Table 18-80. IFCTL_01[y] Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/20-18-timers-timx.md:2695	1163-1164
+table-18-81	Table 18-81. IFCTL_23[y] Field Descriptions	Bit | Field | Type | Reset | Description	20	sections/20-18-timers-timx.md:2718	1165-1166
+table-18-82	Table 18-82. PL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2751	1167
+table-18-83	Table 18-83. DBCTL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2766	1168
+table-18-84	Table 18-84. TSEL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/20-18-timers-timx.md:2784	1169
+table-18-85	Table 18-85. RC Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2801	1170
+table-18-86	Table 18-86. RCLD Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2816	1171
+table-18-87	Table 18-87. QDIR Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/20-18-timers-timx.md:2831	1172
+table-18-88	Table 18-88. FCTL Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/20-18-timers-timx.md:2846	1173-1174
+table-18-89	Table 18-89. FIFCTL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/20-18-timers-timx.md:2871	1175
+table-19-1	Table 19-1. RTC Instances and Key Features	RTC Feature | RTC | RTC_A | RTC_B	17	sections/21-19-rtc.md:58	1177-1178
+table-19-2	Table 19-2. RTC Events	Event | Type | Source | Destination | Route | Configuration | Functionality	2	sections/21-19-rtc.md:312	1189
+table-19-3	Table 19-3. RTC CPU Interrupt Event Conditions (CPU_INT)	Index (IIDX) | Name | Description	6	sections/21-19-rtc.md:323	1189
+table-19-4	Table 19-4. RTC Generic Event Publisher Conditions (GEN_EVENT)	Index | Name | Description	6	sections/21-19-rtc.md:340	1189-1190
+table-19-5	Table 19-5. RTC Registers	Offset | Acronym | Register Name | Group	51	sections/21-19-rtc.md:361	1191-1192
+table-19-6	Table 19-6. RTC Access Type Codes	Access Type | Code | Description	8	sections/21-19-rtc.md:419	1192
+table-19-7	Table 19-7. FPUB_0 Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/21-19-rtc.md:440	1193
+table-19-8	Table 19-8. PWREN Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:455	1194
+table-19-9	Table 19-9. RSTCTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/21-19-rtc.md:471	1195
+table-19-10	Table 19-10. CLKCFG Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/21-19-rtc.md:488	1196
+table-19-11	Table 19-11. STAT Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:505	1197
+table-19-12	Table 19-12. CLKSEL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:521	1198
+table-19-13	Table 19-13. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/21-19-rtc.md:537	1199
+table-19-14	Table 19-14. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:552	1200-1201
+table-19-15	Table 19-15. RIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:590	1202-1203
+table-19-16	Table 19-16. MIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:628	1204-1205
+table-19-17	Table 19-17. ISET Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:666	1206-1207
+table-19-18	Table 19-18. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:704	1208-1209
+table-19-19	Table 19-19. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/21-19-rtc.md:742	1210
+table-19-20	Table 19-20. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:757	1211-1212
+table-19-21	Table 19-21. RIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:795	1213-1214
+table-19-22	Table 19-22. MIS Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:833	1215-1216
+table-19-23	Table 19-23. ISET Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:871	1217-1218
+table-19-24	Table 19-24. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	25	sections/21-19-rtc.md:909	1219-1220
+table-19-25	Table 19-25. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:947	1221
+table-19-26	Table 19-26. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:963	1222
+table-19-27	Table 19-27. CLKCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/21-19-rtc.md:981	1223
+table-19-28	Table 19-28. DBGCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:996	1224
+table-19-29	Table 19-29. CTL Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/21-19-rtc.md:1012	1225
+table-19-30	Table 19-30. STA Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/21-19-rtc.md:1029	1226
+table-19-31	Table 19-31. CAL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1046	1227
+table-19-32	Table 19-32. TCMP Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/21-19-rtc.md:1064	1228
+table-19-33	Table 19-33. SEC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1081	1229
+table-19-34	Table 19-34. MIN Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1099	1230
+table-19-35	Table 19-35. HOUR Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1117	1231
+table-19-36	Table 19-36. DAY Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/21-19-rtc.md:1135	1232
+table-19-37	Table 19-37. MON Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1155	1233
+table-19-38	Table 19-38. YEAR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/21-19-rtc.md:1173	1234
+table-19-39	Table 19-39. A1MIN Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/21-19-rtc.md:1194	1235
+table-19-40	Table 19-40. A1HOUR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/21-19-rtc.md:1214	1236
+table-19-41	Table 19-41. A1DAY Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/21-19-rtc.md:1235	1237-1238
+table-19-42	Table 19-42. A2MIN Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/21-19-rtc.md:1262	1239
+table-19-43	Table 19-43. A2HOUR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/21-19-rtc.md:1282	1240
+table-19-44	Table 19-44. A2DAY Field Descriptions	Bit | Field | Type | Reset | Description	14	sections/21-19-rtc.md:1303	1241-1242
+table-19-45	Table 19-45. PSCTL Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1330	1243
+table-19-46	Table 19-46. EXTPSCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:1348	1244
+table-19-47	Table 19-47. TSSEC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1364	1245
+table-19-48	Table 19-48. TSMIN Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1382	1246
+table-19-49	Table 19-49. TSHOUR Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1400	1247
+table-19-50	Table 19-50. TSDAY Field Descriptions	Bit | Field | Type | Reset | Description	7	sections/21-19-rtc.md:1418	1248
+table-19-51	Table 19-51. TSMON Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/21-19-rtc.md:1438	1249
+table-19-52	Table 19-52. TSYEAR Field Descriptions	Bit | Field | Type | Reset | Description	8	sections/21-19-rtc.md:1456	1250
+table-19-53	Table 19-53. TSSTAT Field Descriptions	Bit | Field | Type | Reset | Description	18	sections/21-19-rtc.md:1477	1251-1252
+table-19-54	Table 19-54. TSCTL Field Descriptions	Bit | Field | Type | Reset | Description	21	sections/21-19-rtc.md:1508	1253-1254
+table-19-55	Table 19-55. TSCLR Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:1542	1255
+table-19-56	Table 19-56. LFSSRST Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:1558	1256
+table-19-57	Table 19-57. RTCLOCK Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/21-19-rtc.md:1574	1257
+table-20-1	Table 20-1. IWDT Period and Period Count Settings	Period (PER) | 0x0 | 0x1 | 0x2 | 0x3 | 0x4 | 0x5 | 0x6 | 0x7	1	sections/22-20-iwdt.md:53	1259
+table-20-2	Table 20-2. IWDT Period Timing Options	Col 1 | Col 2 | Col 3 | Col 4 | PER | PER | Col 7 | Col 8 | Col 9	10	sections/22-20-iwdt.md:63	1259
+table-21-1	Table 21-1. WWDT Period Total Timer Count	PER | 0x0 | 0x1 | 0x2 | 0x3 | 0x4 | 0x5 | 0x6 | 0x7	1	sections/23-21-window-watchdog-timer-wwdt.md:95	1263
+table-21-2	Table 21-2. WWDT Period Timing Options	Col 4 | Col 7 | Col 8 | Col 9 | PER | Col 12 | Col 13 | Col 14 | Col 15	11	sections/23-21-window-watchdog-timer-wwdt.md:103	1263-1264
+table-21-3	Table 21-3. WWDT Window Options	WINDOW | 0x0 | 0x1 | 0x2 | 0x3 | 0x4 | 0x5 | 0x6 | 0x7	1	sections/23-21-window-watchdog-timer-wwdt.md:127	1264
+table-21-4	Table 21-4. WWDT Events	Event | Type | Source | Destination | Route | Configuration | Functionality	1	sections/23-21-window-watchdog-timer-wwdt.md:153	1265
+table-21-5	Table 21-5. WWDT CPU Interrupt Conditions (CPU_INT)	Index (IIDX) | Name | Description	1	sections/23-21-window-watchdog-timer-wwdt.md:163	1265
+table-21-6	Table 21-6. WWDT Registers	Offset | Acronym | Register Name | Section	16	sections/23-21-window-watchdog-timer-wwdt.md:175	1266
+table-21-7	Table 21-7. WWDT Access Type Codes	Access Type | Code | Description	8	sections/23-21-window-watchdog-timer-wwdt.md:198	1266
+table-21-8	Table 21-8. PWREN Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/23-21-window-watchdog-timer-wwdt.md:219	1267
+table-21-9	Table 21-9. RSTCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	4	sections/23-21-window-watchdog-timer-wwdt.md:235	1268
+table-21-10	Table 21-10. STAT Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/23-21-window-watchdog-timer-wwdt.md:252	1269
+table-21-11	Table 21-11. PDBGCTL Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:268	1270
+table-21-12	Table 21-12. IIDX Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:283	1271
+table-21-13	Table 21-13. IMASK Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:298	1272
+table-21-14	Table 21-14. RIS Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:313	1273
+table-21-15	Table 21-15. MIS Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:328	1274
+table-21-16	Table 21-16. ISET Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:343	1275
+table-21-17	Table 21-17. ICLR Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:358	1276
+table-21-18	Table 21-18. EVT_MODE Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:373	1277
+table-21-19	Table 21-19. DESC Register Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/23-21-window-watchdog-timer-wwdt.md:388	1278
+table-21-20	Table 21-20. WWDTCTL0 Register Field Descriptions	Bit | Field | Type | Reset | Description	12	sections/23-21-window-watchdog-timer-wwdt.md:406	1279-1280
+table-21-21	Table 21-21. WWDTCTL1 Register Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/23-21-window-watchdog-timer-wwdt.md:431	1281
+table-21-22	Table 21-22. WWDTCNTRST Register Field Descriptions	Bit | Field | Type | Reset | Description	6	sections/23-21-window-watchdog-timer-wwdt.md:447	1282
+table-21-23	Table 21-23. WWDTSTAT Register Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/23-21-window-watchdog-timer-wwdt.md:466	1283
+p1286-table-1	p1286-table-1	10MHz is supported by the DEBUGSS. | A bidirectional data line (SWDIO) used to send data to, and receive data from, the device A unidirectional clock line (SWCLK) driven by the debug probe connecting to the device | Debug connections to the device are supported through an Arm serial wire debug (SWD) compliant interface. The SWD interface uses the standard logic levels of the device for SWD communication. See the device-specific data sheet for input and output logic levels for a given supply voltage (VDD). A SWCLK frequency of up to	2	sections/24-22-debug.md:55	1286
+table-22-1	Table 22-1. DEBUGSS Access Port Listing	APSEL | AP | Port Description | Purpose	5	sections/24-22-debug.md:82	1287
+table-22-2	Table 22-2. DEBUGSS Functionality by Operating Mode	Capability | RUN | SLEEP | STOP | STANDBY | SHUTDOWN | NRST HOLD	5	sections/24-22-debug.md:178	1289-1290
+table-22-3	Table 22-3. Debug Access Control	DEBUGSS Function | Col 2 | Debug Configuration | Debug Configuration | Col 5	6	sections/24-22-debug.md:194	1290
+table-22-4	Table 22-4. Debug Access Control Settings for BOOTCFG0	Debug Configuration | SWDP_MODE | DEBUGACCESS	4	sections/24-22-debug.md:207	1290
+table-22-5	Table 22-5. Debug related password registers	Debug Function | Debug Access Control | Factory Reset | Mass Erase	1	sections/24-22-debug.md:222	1290
+table-22-6	Table 22-6. DSSM Register Functions	DSSM Register | Description | Debug Probe | Target Device | Actions	4	sections/24-22-debug.md:276	1292
+table-22-7	Table 22-7. DEBUGSS SEC-AP Register Definition	AP SEL | ADDR | BANK | INDEX | REGISTER NAME | BIT 31 - 8 | BIT 7 - 1 | BIT 0	5	sections/24-22-debug.md:295	1293
+table-22-8	Table 22-8. DSSM Events	Event | Type | Source | Destination | Route | Configuration | Functionality	1	sections/24-22-debug.md:311	1293
+table-22-9	Table 22-9. DSSM CPU Interrupt Event Conditions (CPU_INT)	Index (IIDX) | Name | Description	4	sections/24-22-debug.md:321	1293
+table-22-10	Table 22-10. DSSM Commands	DSSM Command | DSSM Value	5	sections/24-22-debug.md:336	1293-1294
+table-22-11	Table 22-11. DEBUGSS Registers	Offset | Acronym | Register Name | Group	14	sections/24-22-debug.md:386	1295
+table-22-12	Table 22-12. DEBUGSS Access Type Codes	Access Type | Code | Description	8	sections/24-22-debug.md:407	1295
+table-22-13	Table 22-13. IIDX Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/24-22-debug.md:428	1296
+table-22-14	Table 22-14. IMASK Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:443	1297
+table-22-15	Table 22-15. RIS Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:461	1298
+table-22-16	Table 22-16. MIS Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:479	1299
+table-22-17	Table 22-17. ISET Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:497	1300
+table-22-18	Table 22-18. ICLR Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:515	1301
+table-22-19	Table 22-19. EVT_MODE Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/24-22-debug.md:533	1302
+table-22-20	Table 22-20. DESC Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:548	1303
+table-22-21	Table 22-21. TXD Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/24-22-debug.md:566	1304
+table-22-22	Table 22-22. TXCTL Field Descriptions	Bit | Field | Type | Reset | Description	2	sections/24-22-debug.md:580	1305
+table-22-23	Table 22-23. RXD Field Descriptions	Bit | Field | Type | Reset | Description	1	sections/24-22-debug.md:595	1306
+table-22-24	Table 22-24. RXCTL Field Descriptions	Bit | Field | Type | Reset | Description	3	sections/24-22-debug.md:609	1307
+table-22-25	Table 22-25. SPECIAL_AUTH Field Descriptions	Bit | Field | Type | Reset | Description	13	sections/24-22-debug.md:625	1308-1309
+table-22-26	Table 22-26. APP_AUTH Field Descriptions	Bit | Field | Type | Reset | Description	5	sections/24-22-debug.md:651	1310

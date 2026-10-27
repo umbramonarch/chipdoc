@@ -1,0 +1,33 @@
+section_id	title	file_path	lines	pages	tables	registers	figures
+00	Frontmatter and Overview	sections/00-frontmatter-and-overview.md	781	1-38	0	0	0
+01	1 Documentation conventions	sections/01-1-documentation-conventions.md	99	39-41	1	0	0
+02	2 Memory and bus architecture	sections/02-2-memory-and-bus-architecture.md	280	42-52	6	0	2
+03	3 Embedded Flash memory (FLASH)	sections/03-3-embedded-flash-memory-flash.md	958	53-85	12	12	1
+04	4 Power control (PWR)	sections/04-4-power-control-pwr.md	793	86-118	10	19	3
+05	5 Reset and clock control (RCC)	sections/05-5-reset-and-clock-control-rcc.md	1353	119-172	5	21	6
+06	6 General-purpose I/Os (GPIO)	sections/06-6-general-purpose-i-os-gpio.md	468	173-188	2	11	4
+07	7 System configuration controller (SYSCFG)	sections/07-7-system-configuration-controller-syscfg.md	619	189-207	7	30	0
+08	8 Interconnect matrix	sections/08-8-interconnect-matrix.md	211	208-212	1	0	0
+09	9 Direct memory access controller (DMA)	sections/09-9-direct-memory-access-controller-dma.md	500	213-233	10	5	1
+10	10 DMA request multiplexer (DMAMUX)	sections/10-10-dma-request-multiplexer-dmamux.md	432	234-249	11	6	3
+11	11 Nested vectored interrupt controller (NVIC)	sections/11-11-nested-vectored-interrupt-controller-nvic.md	84	250-252	1	0	0
+12	12 Extended interrupt and event controller (EXTI)	sections/12-12-extended-interrupt-and-event-controller-exti.md	440	253-266	8	8	4
+13	13 Cyclic redundancy check calculation unit (CRC)	sections/13-13-cyclic-redundancy-check-calculation-unit-crc.md	176	267-273	1	5	1
+14	14 Analog-to-digital converter (ADC)	sections/14-14-analog-to-digital-converter-adc.md	1364	274-334	9	14	23
+15	15 Advanced-control timer (TIM1)	sections/15-15-advanced-control-timer-tim1.md	1766	335-433	9	28	60
+16	16 General-purpose timers (TIM3/TIM4)	sections/16-16-general-purpose-timers-tim3-tim4.md	1373	434-507	5	20	50
+17	17 Basic timers (TIM6/TIM7)	sections/17-17-basic-timers-tim6-tim7.md	275	508-520	3	7	10
+18	18 General-purpose timers (TIM14)	sections/18-18-general-purpose-timers-tim14.md	497	521-546	5	12	15
+19	19 General-purpose timers (TIM15/TIM16/TIM17)	sections/19-19-general-purpose-timers-tim15-tim16-tim17.md	1650	547-633	8	36	33
+20	20 Infrared interface (IRTIM)	sections/20-20-infrared-interface-irtim.md	34	634-634	0	0	1
+21	21 Independent watchdog (IWDG)	sections/21-21-independent-watchdog-iwdg.md	170	635-643	1	5	1
+22	22 System window watchdog (WWDG)	sections/22-22-system-window-watchdog-wwdg.md	149	644-649	1	3	2
+23	23 Real-time clock (RTC)	sections/23-23-real-time-clock-rtc.md	1095	650-688	9	20	1
+24	24 Tamper and backup registers (TAMP)	sections/24-24-tamper-and-backup-registers-tamp.md	442	689-703	6	8	1
+25	25 Inter-integrated circuit (I2C) interface	sections/25-25-inter-integrated-circuit-i2c-interface.md	1578	704-774	19	11	23
+26	26 Universal synchonous receiver transmitter (USART)	sections/26-26-universal-synchonous-receiver-transmitter-usart.md	1872	775-862	9	12	20
+27	27 Serial peripheral interface / integrated interchip sound (SPI/I2S)	sections/27-27-serial-peripheral-interface-integrated-interchip-sound-spi-i2.md	1302	863-919	6	9	34
+28	28 Universal serial bus full-speed host/device interface (USB)	sections/28-28-universal-serial-bus-full-speed-host-device-interface-usb.md	826	920-965	15	8	2
+29	29 Debug support (DBG)	sections/29-29-debug-support-dbg.md	426	966-979	9	4	1
+30	30 Device electronic signature	sections/30-30-device-electronic-signature.md	35	980-981	0	2	0
+31	31 Revision history	sections/31-31-revision-history.md	54	982-989	1	0	0

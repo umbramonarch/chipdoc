@@ -1,4 +1,4 @@
-use crate::cleaner::slugify;
+use crate::cleaner::{clean_metadata_text, slugify};
 use crate::error::{ChipdocError, Result};
 use crate::model::{
     BBox, ConvertConfig, DocMetadata, FigureRegion, GridSegment, RawPageData, TextSpan, TocEntry,
@@ -7,9 +7,11 @@ use image::codecs::png::{CompressionType, FilterType, PngEncoder};
 use image::{DynamicImage, ImageEncoder};
 use pdfium_render::prelude::*;
 use rayon::prelude::*;
+use regex::Regex;
 use std::fs::File;
 use std::io::{BufWriter, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 /// Computes a fast, deterministic 64-bit FNV-1a fingerprint and byte size for a PDF file
 /// by hashing up to three 128 KiB windows (head, middle, tail) plus the exact file length.
@@ -145,7 +147,7 @@ pub fn load_pdf_document<'a>(
     let get_tag = |tag_type: PdfDocumentMetadataTagType| -> Option<String> {
         meta_tags
             .get(tag_type)
-            .map(|t| t.value().split_whitespace().collect::<Vec<_>>().join(" "))
+            .map(|t| clean_metadata_text(t.value()))
             .filter(|s| !s.is_empty())
     };
 
@@ -193,12 +195,21 @@ pub fn load_pdf_document<'a>(
     Ok((doc, metadata, toc, raw_pages))
 }
 
+fn is_caption_bookmark(title: &str) -> bool {
+    static RE_CAPTION_BM: OnceLock<Regex> = OnceLock::new();
+    let re = RE_CAPTION_BM.get_or_init(|| {
+        Regex::new(r"^(?i)(?:table|figure|fig\.)\s+\d+(?:[-\.]\d+)*(?:\b|[\.:])")
+            .expect("valid regex")
+    });
+    re.is_match(title.trim())
+}
+
 fn extract_bookmarks(doc: &PdfDocument<'_>, total_pages: usize) -> Vec<TocEntry> {
     let mut entries: Vec<TocEntry> = Vec::new();
 
-    for (idx, bookmark) in doc.bookmarks().iter().enumerate() {
-        let title = bookmark.title().unwrap_or_default().trim().to_string();
-        if title.is_empty() {
+    for bookmark in doc.bookmarks().iter() {
+        let title = clean_metadata_text(bookmark.title().unwrap_or_default().trim());
+        if title.is_empty() || is_caption_bookmark(&title) {
             continue;
         }
         let start_page = bookmark
@@ -217,9 +228,10 @@ fn extract_bookmarks(doc: &PdfDocument<'_>, total_pages: usize) -> Vec<TocEntry>
 
         // Infer hierarchy level from section numbering ("1.2.3 Title" -> level 2) or bookmark parent chain
         let level = infer_bookmark_level(&bookmark, &title);
+        let toc_idx = entries.len() + 1;
 
         entries.push(TocEntry {
-            id: format!("toc-{}", idx + 1),
+            id: format!("toc-{toc_idx}"),
             level,
             slug: slugify(&title),
             title,
@@ -309,6 +321,24 @@ fn extract_single_page(page: &PdfPage<'_>, page_number: usize) -> RawPageData {
                     continue;
                 }
                 let font_size = text_obj.scaled_font_size().value.max(1.0);
+                let lead_spaces = raw_text
+                    .chars()
+                    .take_while(|&c| c == ' ' || c == '\t')
+                    .count();
+                let trail_spaces = raw_text
+                    .chars()
+                    .rev()
+                    .take_while(|&c| c == ' ' || c == '\t')
+                    .count();
+                let mut adj_bbox = bbox;
+                if lead_spaces > 0 || trail_spaces > 0 {
+                    let new_x0 = adj_bbox.x0 + (font_size * 0.22) * (lead_spaces as f32);
+                    let new_x1 = adj_bbox.x1 - (font_size * 0.22) * (trail_spaces as f32);
+                    if new_x0 + 0.5 < new_x1 {
+                        adj_bbox.x0 = new_x0;
+                        adj_bbox.x1 = new_x1;
+                    }
+                }
                 let font = text_obj.font();
                 let font_name = font.name().to_ascii_lowercase();
                 let weight_bold = matches!(
@@ -331,52 +361,26 @@ fn extract_single_page(page: &PdfPage<'_>, page_number: usize) -> RawPageData {
                     || font_name.contains("consol");
 
                 spans.push(TextSpan {
-                    text: raw_text,
-                    bbox,
+                    text: raw_text.trim().to_string(),
+                    bbox: adj_bbox,
                     font_size,
                     is_bold,
                     is_mono,
                     consumed: false,
                 });
             }
-            PdfPageObject::Path(path_obj) => {
-                extract_path_geometry(
-                    path_obj,
+            _ => {
+                extract_object_geometry(
+                    &obj,
                     bbox,
                     width,
                     height,
+                    0,
                     &mut grid_segments,
                     &mut graphic_bboxes,
+                    &mut image_bboxes,
                 );
             }
-            PdfPageObject::Image(_) => {
-                if bbox.width() >= 8.0 && bbox.height() >= 8.0 {
-                    image_bboxes.push(bbox);
-                }
-            }
-            PdfPageObject::XObjectForm(form_obj) => {
-                for child in form_obj.iter() {
-                    if let Ok(c_quad) = child.bounds() {
-                        let cr = c_quad.to_rect();
-                        let cy0 = (height - cr.top().value).clamp(0.0, height);
-                        let cy1 = (height - cr.bottom().value).clamp(0.0, height);
-                        let cx0 = cr.left().value.clamp(0.0, width);
-                        let cx1 = cr.right().value.clamp(0.0, width);
-                        let cb = BBox::new(cx0, cy0, cx1, cy1);
-                        if let PdfPageObject::Path(p) = &child {
-                            extract_path_geometry(
-                                p,
-                                cb,
-                                width,
-                                height,
-                                &mut grid_segments,
-                                &mut graphic_bboxes,
-                            );
-                        }
-                    }
-                }
-            }
-            _ => {}
         }
     }
 
@@ -388,6 +392,66 @@ fn extract_single_page(page: &PdfPage<'_>, page_number: usize) -> RawPageData {
         grid_segments,
         graphic_bboxes,
         image_bboxes,
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn extract_object_geometry(
+    obj: &PdfPageObject<'_>,
+    bbox: BBox,
+    page_w: f32,
+    page_h: f32,
+    depth: usize,
+    grid_segments: &mut Vec<GridSegment>,
+    graphic_bboxes: &mut Vec<BBox>,
+    image_bboxes: &mut Vec<BBox>,
+) {
+    if depth > 4 {
+        return;
+    }
+    match obj {
+        PdfPageObject::Path(path_obj) => {
+            extract_path_geometry(
+                path_obj,
+                bbox,
+                page_w,
+                page_h,
+                grid_segments,
+                graphic_bboxes,
+            );
+        }
+        PdfPageObject::Image(_) => {
+            if bbox.width() >= 8.0 && bbox.height() >= 8.0 {
+                image_bboxes.push(bbox);
+            }
+        }
+        PdfPageObject::XObjectForm(form_obj) => {
+            if bbox.width() >= 24.0 && bbox.height() >= 20.0 && bbox.area() < page_w * page_h * 0.85
+            {
+                graphic_bboxes.push(bbox);
+            }
+            for child in form_obj.iter() {
+                if let Ok(c_quad) = child.bounds() {
+                    let cr = c_quad.to_rect();
+                    let cy0 = (page_h - cr.top().value).clamp(0.0, page_h);
+                    let cy1 = (page_h - cr.bottom().value).clamp(0.0, page_h);
+                    let cx0 = cr.left().value.clamp(0.0, page_w);
+                    let cx1 = cr.right().value.clamp(0.0, page_w);
+                    let cb = BBox::new(cx0, cy0, cx1, cy1);
+                    extract_object_geometry(
+                        &child,
+                        cb,
+                        page_w,
+                        page_h,
+                        depth + 1,
+                        grid_segments,
+                        graphic_bboxes,
+                        image_bboxes,
+                    );
+                }
+            }
+        }
+        _ => {}
     }
 }
 
@@ -412,6 +476,9 @@ fn extract_path_geometry(
             y1: mid_y,
             is_horizontal: true,
         });
+        if w <= page_w * 0.65 {
+            graphic_bboxes.push(bbox);
+        }
         return;
     }
 
@@ -425,6 +492,9 @@ fn extract_path_geometry(
             y1: bbox.y1,
             is_horizontal: false,
         });
+        if w <= page_w * 0.65 {
+            graphic_bboxes.push(bbox);
+        }
         return;
     }
 
@@ -721,5 +791,14 @@ mod tests {
     fn test_parse_page_range_expr() {
         let parsed = parse_page_range_expr("1-3, 7, 14-16").expect("valid range");
         assert_eq!(parsed, vec![1, 2, 3, 7, 14, 15, 16]);
+    }
+
+    #[test]
+    fn test_is_caption_bookmark() {
+        assert!(is_caption_bookmark("Table 1-1. Device Summary"));
+        assert!(is_caption_bookmark("Figure 3. Block diagram"));
+        assert!(is_caption_bookmark("Fig. 2-4: Timing diagram"));
+        assert!(!is_caption_bookmark("Table of Contents"));
+        assert!(!is_caption_bookmark("1.2 Configuration Tables"));
     }
 }

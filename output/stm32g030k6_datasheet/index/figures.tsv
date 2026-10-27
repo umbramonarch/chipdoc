@@ -1,0 +1,35 @@
+figure_id	caption	image_path	location	page	bbox
+fig-1	Figure 1. Block diagram	assets/figures/p011-figure-1-block-diagram.png	sections/02-2-description.md:48	11	85.7,86.0,457.1,170.9
+fig-2	Figure 2. Power supply overview	assets/figures/p015-figure-2-power-supply-overview.png	sections/03-3-functional-overview.md:130	15	115.7,251.0,536.1,562.4
+fig-3	Figure 3. STM32G030Jx SO8N pinout	assets/figures/p029-figure-3-stm32g030jx-so8n-pinout.png	sections/04-4-pinouts-pin-description-and-alternate-functions.md:12	29	116.0,125.8,535.9,279.4
+fig-4	Figure 4. STM32G030Fx TSSOP20 pinout	assets/figures/p029-figure-4-stm32g030fx-tssop20-pinout.png	sections/04-4-pinouts-pin-description-and-alternate-functions.md:15	29	115.7,282.8,536.1,477.7
+fig-5	Figure 5. STM32G030KxT LQFP32 pinout	assets/figures/p029-figure-5-stm32g030kxt-lqfp32-pinout.png	sections/04-4-pinouts-pin-description-and-alternate-functions.md:18	29	116.0,480.9,535.9,696.1
+fig-6	Figure 6. STM32G030CxT LQFP48 pinout	assets/figures/p030-figure-6-stm32g030cxt-lqfp48-pinout.png	sections/04-4-pinouts-pin-description-and-alternate-functions.md:21	30	116.0,85.9,535.9,339.5
+fig-7	Figure 7. Pin loading conditions Figure 8. Pin input voltage	assets/figures/p038-figure-7-pin-loading-conditions-figure-8-pin-inp.png	sections/05-5-electrical-characteristics.md:44	38	117.2,620.2,534.7,758.1
+fig-9	Figure 9. Power supply scheme	assets/figures/p039-figure-9-power-supply-scheme.png	sections/05-5-electrical-characteristics.md:49	39	150.3,111.9,511.8,279.1
+fig-10	Figure 10. Current consum ption measurement scheme	assets/figures/p040-figure-10-current-consum-ption-measurement-schem.png	sections/05-5-electrical-characteristics.md:68	40	115.7,111.8,536.1,276.4
+fig-11	Figure 11. V REFINT vs. temperature	assets/figures/p043-figure-11-v-refint-vs-temperature.png	sections/05-5-electrical-characteristics.md:179	43	115.7,267.3,536.1,528.3
+fig-12	Figure 12. High-speed external clock source AC timing diagram	assets/figures/p051-figure-12-high-speed-external-clock-source-ac-ti.png	sections/05-5-electrical-characteristics.md:440	51	116.0,395.5,535.9,558.8
+fig-13	Figure 13. Low-speed external cl ock source AC timing diagram	assets/figures/p052-figure-13-low-speed-external-cl-ock-source-ac-ti.png	sections/05-5-electrical-characteristics.md:460	52	116.0,196.5,535.9,360.8
+fig-14	Figure 14. Typical application with an 8 MHz crystal	assets/figures/p054-figure-14-typical-application-with-an-8-mhz-crys.png	sections/05-5-electrical-characteristics.md:488	54	115.7,86.0,536.1,278.8
+fig-15	Figure 15. Typical application with a 32.768 kHz crystal	assets/figures/p055-figure-15-typical-application-with-a-32-768-khz-.png	sections/05-5-electrical-characteristics.md:517	55	115.7,163.6,536.1,356.4
+fig-16	Figure 16. I/O input characteristics	assets/figures/p062-figure-16-i-o-input-characteristics.png	sections/05-5-electrical-characteristics.md:746	62	128.1,133.9,468.6,203.0
+fig-17	Figure 17. Current injection into FT_e input with diode active	assets/figures/p063-figure-17-current-injection-into-ft-e-input-with.png	sections/05-5-electrical-characteristics.md:769	63	59.0,85.9,535.9,386.7
+fig-18	Figure 18. I/O AC characteristics definition	assets/figures/p066-figure-18-i-o-ac-characteristics-definition.png	sections/05-5-electrical-characteristics.md:865	66	186.8,230.2,477.8,358.6
+fig-19	Figure 19. Recommended NRST pin protection	assets/figures/p067-figure-19-recommended-nrst-pin-protection.png	sections/05-5-electrical-characteristics.md:891	67	115.7,229.2,536.1,410.3
+fig-20	Figure 20. ADC accuracy characteristics	assets/figures/p072-figure-20-adc-accuracy-characteristics.png	sections/05-5-electrical-characteristics.md:1026	72	146.2,85.9,507.8,255.9
+fig-21	Figure 21. ADC typical connection diagram	assets/figures/p072-figure-21-adc-typical-connection-diagram.png	sections/05-5-electrical-characteristics.md:1031	72	115.7,323.4,536.1,507.8
+fig-22	Figure 22. SPI timing diagram - slave mode and CPHA = 0	assets/figures/p077-figure-22-spi-timing-diagram-slave-mode-and-cpha.png	sections/05-5-electrical-characteristics.md:1183	77	58.8,207.5,536.0,462.3
+fig-23	Figure 23. SPI timing diagram - slave mode and CPHA = 1	assets/figures/p077-figure-23-spi-timing-diagram-slave-mode-and-cpha.png	sections/05-5-electrical-characteristics.md:1186	77	58.8,461.0,536.0,758.1
+fig-24	Figure 24. SPI timing diagram - master mode	assets/figures/p078-figure-24-spi-timing-diagram-master-mode.png	sections/05-5-electrical-characteristics.md:1189	78	59.3,85.9,535.9,364.6
+fig-26	Figure 26. I S master timing diagram (Philips protocol)	assets/figures/p080-figure-26-i-s-master-timing-diagram-philips-prot.png	sections/05-5-electrical-characteristics.md:1223	80	89.0,85.9,503.3,328.6
+fig-27	Figure 27. USART timing diagram in SPI master mode	assets/figures/p081-figure-27-usart-timing-diagram-in-spi-master-mod.png	sections/05-5-electrical-characteristics.md:1265	81	115.7,321.5,536.1,560.5
+fig-28	Figure 28. USART timing diagram in SPI slave mode	assets/figures/p082-figure-28-usart-timing-diagram-in-spi-slave-mode.png	sections/05-5-electrical-characteristics.md:1268	82	116.0,85.9,535.9,305.8
+fig-29	Figure 29. SO8N -Outline	assets/figures/p083-figure-29-so8n-outline.png	sections/06-6-package-information.md:26	83	115.7,435.8,536.1,614.7
+fig-30	Figure 30. SO8N - Footprint example	assets/figures/p085-figure-30-so8n-footprint-example.png	sections/06-6-package-information.md:56	85	115.7,85.9,536.1,324.0
+fig-31	Figure 31. TSSOP20 – Outline	assets/figures/p086-figure-31-tssop20-outline.png	sections/06-6-package-information.md:65	86	116.0,132.8,535.9,369.8
+fig-32	Figure 32. TSSOP20 – Footprint example	assets/figures/p087-figure-32-tssop20-footprint-example.png	sections/06-6-package-information.md:91	87	116.0,97.9,535.9,366.7
+fig-33	Figure 33. LQFP32 - Outline	assets/figures/p088-figure-33-lqfp32-outline.png	sections/06-6-package-information.md:102	88	59.3,166.9,535.9,633.2
+fig-34	Figure 34. LQFP32 – Footprint example	assets/figures/p091-figure-34-lqfp32-footprint-example.png	sections/06-6-package-information.md:141	91	115.7,85.9,536.2,465.6
+fig-35	Figure 35. LQFP48 - Outline (15)	assets/figures/p092-figure-35-lqfp48-outline-15.png	sections/06-6-package-information.md:152	92	59.3,148.3,535.9,577.1
+fig-36	Figure 36. LQFP48 - Footprint example	assets/figures/p094-figure-36-lqfp48-footprint-example.png	sections/06-6-package-information.md:191	94	116.0,435.8,535.9,678.7

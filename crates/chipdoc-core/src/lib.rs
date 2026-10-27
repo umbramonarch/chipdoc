@@ -20,7 +20,10 @@ use crate::pdf_loader::{
     bind_pdfium, compute_pdf_fingerprint, load_pdf_document, render_detected_figures,
 };
 use crate::query::load_bundle_status;
-use crate::registers::suppress_visual_register_bitboxes;
+use crate::registers::{
+    infer_peripheral_from_registers_heading, infer_peripheral_name,
+    suppress_visual_register_bitboxes,
+};
 use crate::sanity::{compute_sanity_report, SanityInputs};
 use crate::stitcher::{assemble_page_blocks, compute_section_shards, stitch_multipage_tables};
 use crate::tables::extract_page_tables;
@@ -142,6 +145,19 @@ pub fn convert_pdf(config: &ConvertConfig) -> Result<ConversionBundle> {
         figures_detected += fig_stats.figures_detected;
         figure_text_spans_suppressed += fig_stats.spans_suppressed;
         all_figures.extend(figures.clone());
+
+        for entry in toc.iter().filter(|e| e.start_page == page.page_number) {
+            if entry.level <= 1 {
+                let inferred = infer_peripheral_name(&entry.title);
+                if inferred != "SYS" {
+                    current_peripheral = inferred;
+                }
+            } else if entry.level == 2 {
+                if let Some(inferred) = infer_peripheral_from_registers_heading(&entry.title) {
+                    current_peripheral = inferred;
+                }
+            }
+        }
 
         let page_blocks = assemble_page_blocks(page, tables, figures, &mut current_peripheral);
         all_blocks.extend(page_blocks);

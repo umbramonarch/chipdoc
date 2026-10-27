@@ -501,11 +501,29 @@ fn main() -> Result<()> {
         } => {
             let (bundles, page_expr) =
                 resolve_target_and_query(&arg1, arg2.as_deref(), bundle.as_deref())?;
-            let target_bundle = bundles
-                .first()
-                .context("No converted bundle found for page lookup")?;
-            let out = query_pages_formatted(target_bundle, &page_expr, max_lines)?;
-            print!("{out}");
+            if bundles.is_empty() {
+                anyhow::bail!("No converted bundle found for page lookup");
+            }
+            let multi = bundles.len() > 1;
+            let mut matched_outputs = Vec::new();
+            for b in &bundles {
+                let out = query_pages_formatted(b, &page_expr, max_lines)?;
+                if !out.starts_with("No converted section covers page(s)") {
+                    if multi {
+                        let bname = b.file_name().and_then(|s| s.to_str()).unwrap_or("bundle");
+                        matched_outputs.push(format!("=== Bundle: {bname} ===\n{out}"));
+                    } else {
+                        matched_outputs.push(out);
+                    }
+                }
+            }
+            if matched_outputs.is_empty() {
+                println!("No converted section covers page(s) '{page_expr}'.");
+            } else {
+                for out in matched_outputs {
+                    print!("{out}");
+                }
+            }
         }
 
         Commands::Xref {

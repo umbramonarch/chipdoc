@@ -1,0 +1,27 @@
+section_id	title	file_path	lines	pages	tables	registers	figures
+00	Frontmatter and Overview	sections/00-frontmatter-and-overview.md	15	1-2	0	0	0
+01	Table of Contents	sections/01-table-of-contents.md	107	3-9	0	0	0
+02	Read This First	sections/02-read-this-first.md	47	9-10	0	0	0
+03	1 Architecture	sections/03-1-architecture.md	1010	10-59	45	33	1
+04	2 PMCU	sections/04-2-pmcu.md	3192	59-204	101	82	9
+05	3 CPU	sections/05-3-cpu.md	689	204-229	20	10	3
+06	4 SECURITY	sections/06-4-security.md	422	229-246	14	10	1
+07	5 Direct Memory Access (DMA)	sections/07-5-direct-memory-access-dma.md	1023	246-308	33	24	4
+08	6 NVM (Flash)	sections/08-6-nvm-flash.md	1860	308-411	92	79	3
+09	7 Events	sections/09-7-events.md	240	411-421	4	0	6
+10	8 Low Frequency Subsystem (LFSS_B)	sections/10-8-low-frequency-subsystem-lfss-b.md	2254	421-546	88	86	1
+11	9 IOMUX	sections/11-9-iomux.md	238	546-557	6	1	2
+12	10 General-Purpose Input/Output (GPIO)	sections/12-10-general-purpose-input-output-gpio.md	1955	557-670	66	62	3
+13	11 ADC	sections/13-11-adc.md	1339	670-733	49	35	3
+14	12 COMP	sections/14-12-comp.md	760	733-771	32	26	4
+15	13 VREF	sections/15-13-vref.md	237	771-784	10	8	1
+16	14 UART	sections/16-14-uart.md	1585	784-862	58	44	15
+17	15 SPI	sections/17-15-spi.md	1145	862-922	44	34	8
+18	16 I2C	sections/18-16-i2c.md	1911	922-1013	76	54	16
+19	17 CRC	sections/19-17-crc.md	328	1013-1030	14	11	1
+20	18 Timers (TIMx)	sections/20-18-timers-timx.md	2886	1030-1176	96	62	39
+21	19 RTC	sections/21-19-rtc.md	1583	1176-1258	57	51	4
+22	20 IWDT	sections/22-20-iwdt.md	87	1258-1260	2	0	1
+23	21 Window Watchdog Timer (WWDT)	sections/23-21-window-watchdog-timer-wwdt.md	474	1260-1284	23	16	3
+24	22 Debug	sections/24-22-debug.md	660	1284-1310	27	14	1
+25	23 Revision History	sections/25-23-revision-history.md	47	1311-1313	0	0	0

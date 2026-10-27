@@ -1,0 +1,76 @@
+table_id	caption	columns	rows	location	pages
+p001-table-1	p001-table-1	Col 1 | Col 2 | Col 3 | STM32G030x6/x8	3	sections/00-frontmatter-and-overview.md:10	1
+p001-table-2	p001-table-2	Col 1 | Reference Part number	2	sections/00-frontmatter-and-overview.md:28	1
+table-2	Table 2. STM32G030x6/x8 family device features and peripheral counts	Col 1 | Peripheral | Col 3 | Col 4 | STM32G030__J6 _F6 _K6 _K8 _C6 _C8 | Col 6	21	sections/02-2-description.md:22	10
+table-3	Table 3. Access status versus readout protection level and execution modes	Area | Protection level | Col 3 | User execution | Col 5 | Col 6 | Debug, boot from RAM or boot from system memory (loader) | Col 8	11	sections/03-3-functional-overview.md:52	13
+table-4	Table 4. Interconnect of peripherals	Interconnect source | Interconnect destination | Interconnect action | Run Low-power run | Sleep Low-power sleep | Stop	10	sections/03-3-functional-overview.md:201	17-18
+table-5	Table 5. Temperature sensor calibration values	Col 1 | Calibration value name Description Memory address | Col 3	3	sections/03-3-functional-overview.md:336	22
+table-6	Table 6. Internal voltage reference calibration values	Col 2 | Calibration value name Description Memory address | Col 4	1	sections/03-3-functional-overview.md:348	22
+table-7	Table 7. Timer feature comparison	Timer type Timer | Col 2 | Counter resolution | Counter type | Maximum operating frequency | Prescaler factor | DMA request generation | Capture/ compare channels | Comple-mentary outputs	4	sections/03-3-functional-overview.md:362	23
+table-8	Table 8. I C implementation	I2C features (1) | I2C1 I2C2 | I2C1 I2C2	8	sections/03-3-functional-overview.md:477	26
+table-9	Table 9. USART implementation	USART modes/features (1) | USART1 USART2 | USART1 USART2	13	sections/03-3-functional-overview.md:506	27
+table-10	Table 10. SPI/I2S implementation	SPI features (1) | SPI1 SPI2 | SPI1 SPI2	5	sections/03-3-functional-overview.md:534	28
+table-11	Table 11. Terms and symbols used in Pin assignment and description table	Col 1 | Col 2 | Column Symbol Definition | Col 4	13	sections/04-4-pinouts-pin-description-and-alternate-functions.md:24	30
+table-12	Table 12. Pin assignment and description	SO8N | Pin TSSOP20 | Pin LQFP32 | LQFP48 | Pin name (function upon reset) | Pin type | I/O structure | Note | Alternate functions | Additional functions	53	sections/04-4-pinouts-pin-description-and-alternate-functions.md:42	31-34
+p035-table-1	p035-table-1	- - - - I2C1_SMBA EVENTOUT | Col 4 | Col 6 | Col 7 | Col 8 | Col 9 | Col 13 | TIM1_ETR - - I2S_CKIN I2C2_SDA - | Col 17	1	sections/04-4-pinouts-pin-description-and-alternate-functions.md:108	35
+p035-table-2	p035-table-2	USART2_RTS _DE_CK | Col 5 | Col 7 | Col 8 | Col 9 | TIM3_CH2 TIM1_CH1N | Col 14 | USART1_RTS _DE_CK | Col 18	2	sections/04-4-pinouts-pin-description-and-alternate-functions.md:112	35
+table-18	Table 18. Voltage characteristics	Col 1 | Symbol Ratings Min Max Unit | Col 3 | Col 4 | Col 5	5	sections/05-5-electrical-characteristics.md:77	40
+table-19	Table 19. Current characteristics	Col 1 | Symbol Ratings Max Unit | Col 3 | Col 4	9	sections/05-5-electrical-characteristics.md:89	40-41
+table-20	Table 20. Thermal characteristics	Col 1 | Symbol Ratings Value Unit	2	sections/05-5-electrical-characteristics.md:105	41
+table-21	Table 21. General operating conditions	Col 1 | Col 2 | Symbol Parameter Conditions Min Max Unit | Col 4 | Col 5 | Col 6	7	sections/05-5-electrical-characteristics.md:116	41
+table-22	Table 22. Operating conditions at power-up / power-down	Col 1 | Col 2 | Symbol Parameter Conditions Min Max Unit | Col 5 | Col 6	2	sections/05-5-electrical-characteristics.md:134	42
+table-23	Table 23. Embedded reset and power control block characteristics	Col 1 | Symbol Parameter Conditions | (1) | Col 4 | Min Typ Max Unit | Min Typ Max Unit | Col 7	5	sections/05-5-electrical-characteristics.md:145	42
+table-24	Table 24. Embedded internal voltage reference	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 5 | Col 6 | Col 8	11	sections/05-5-electrical-characteristics.md:161	42-43
+table-25	Table 25. Current consumption in Run and Low-power run modes	Col 1 | Col 2 | Col 3 | Col 4 | Conditions Typ Max | Col 6 | Col 7 | Col 8 | (1) | Col 10	30	sections/05-5-electrical-characteristics.md:206	44-45
+table-26	Table 26. Current consumption in Sleep and Low-power sleep modes	Col 1 | Col 2 | Col 3 | Col 4 | Col 5 | Col 6 | Conditions Typ Max | Col 9 | Col 10 | (1) | Col 12	15	sections/05-5-electrical-characteristics.md:243	45
+table-27	Table 27. Current consumption in Stop 0 mode	Col 1 | Symbol Parameter | Col 3 | Conditions Typ Max | Col 6 | Col 7 | (1) | Unit	7	sections/05-5-electrical-characteristics.md:265	46
+table-28	Table 28. Current consumption in Stop 1 mode	Symbol Parameter | Symbol Parameter | Col 3 | Col 4 | Col 5 | Conditions Typ Max | Col 7 | Col 8 | (1) | Unit	7	sections/05-5-electrical-characteristics.md:279	46
+table-29	Table 29. Current consumption in Standby mode	Col 1 | Symbol Parameter | Col 3 | Col 4 | Conditions Typ Max | Col 6 | Col 7 | (1) | Unit	8	sections/05-5-electrical-characteristics.md:293	46
+table-30	Table 30. Current consumption in VBAT mode	Symbol Parameter | Symbol Parameter | Col 3 | Conditions Typ | Col 5 | Col 6 | Unit	7	sections/05-5-electrical-characteristics.md:306	47
+table-31	Table 31. Current consumption of peripherals	Col 1 | Col 3 | Consumption in µA/MHz | Col 5	30	sections/05-5-electrical-characteristics.md:352	48-49
+table-32	Table 32. Low-power mode wakeup times (1)	Col 1 | Col 2 | Col 4 | Symbol Parameter Conditions Typ Max Unit | Col 6 | Col 7 | Col 8	10	sections/05-5-electrical-characteristics.md:395	49-50
+table-33	Table 33. Regulator mode transition times (1)	Col 1 | Col 2 | Symbol Parameter Conditions Typ Max Unit	2	sections/05-5-electrical-characteristics.md:412	50
+table-34	Table 34. High-speed external user clock characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 5 | Col 6 | Col 7	6	sections/05-5-electrical-characteristics.md:427	51
+table-35	Table 35. Low-speed external user clock characteristics (1)	Col 1 | Col 2 | Col 3 | Symbol Parameter Conditions Min Typ Max Unit | Col 5 | Col 6 | Col 7 | Col 8	4	sections/05-5-electrical-characteristics.md:449	51-52
+table-36	Table 36. HSE oscillator characteristics (1)	Col 1 | Symbol Parameter Conditions | (2) | Min Typ Max Unit | Col 8	10	sections/05-5-electrical-characteristics.md:467	52-53
+table-37	Table 37. LSE oscillator characteristics (f LSE = 32.768 kHz) (1)	Col 1 | Symbol Parameter Conditions | (2) | Min Typ Max Unit | Min Typ Max Unit | Col 7	9	sections/05-5-electrical-characteristics.md:497	54
+table-38	Table 38. HSI16 oscillator characteristics (1)	Col 2 | Col 3 | Symbol Parameter Condi | Col 5 | Col 6 | tions Min Typ Max Unit | Col 9	11	sections/05-5-electrical-characteristics.md:528	55-56
+table-39	Table 39. LSI oscillator characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 5 | Col 7	5	sections/05-5-electrical-characteristics.md:548	56
+table-40	Table 40. PLL characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 5 | Col 7	14	sections/05-5-electrical-characteristics.md:564	56-57
+table-41	Table 41. Flash memory characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Typ Max Unit | Col 4 | Col 5 | Col 6	14	sections/05-5-electrical-characteristics.md:587	57
+table-42	Table 42. Flash memory endurance and data retention	Col 2 | Col 3 | Col 4 | Symbol Parameter Conditions Min | (1) | Unit	3	sections/05-5-electrical-characteristics.md:608	57
+table-43	Table 43. EMS characteristics	Col 1 | Symbol Parameter Conditions | Col 3 | Level/ Class	3	sections/05-5-electrical-characteristics.md:632	58
+table-44	Table 44. EMI characteristics	Col 1 | Col 2 | Col 3 | Symbol Parameter Conditions Monitored frequency band Value Unit | Col 6	5	sections/05-5-electrical-characteristics.md:650	59
+table-45	Table 45. ESD absolute maximum ratings	Col 1 | Col 2 | Col 3 | Symbol Ratings Conditions Class | Col 5 | Maximum value (1) | Unit	3	sections/05-5-electrical-characteristics.md:670	59
+table-46	Table 46. Electrical sensitivity	Col 2 | Symbol Parameter Conditions Class	1	sections/05-5-electrical-characteristics.md:688	60
+table-47	Table 47. I/O current injection susceptibility (1)	Col 1 | Col 2 | Col 3 | Functional susceptibility | Functional susceptibility | Col 6	5	sections/05-5-electrical-characteristics.md:706	60
+table-48	Table 48. I/O static characteristics	Col 1 | Col 2 | Col 3 | Symbol Parameter Conditions Min Typ Max Unit | Col 5 | Col 6 | Col 7 | Col 8	11	sections/05-5-electrical-characteristics.md:726	61
+p062-table-1	p062-table-1	Col 2 | 2.5 2 | Col 4 | Col 5 | Col 6 | Col 7 | Col 8 | Col 9 | logic level 1 zone | (CMOS standard requirement) | Col 12 | Col 13 | Col 15 | Col 16 | TTL standard requirement | TTL standard requirement | Col 20	5	sections/05-5-electrical-characteristics.md:749	62
+table-49	Table 49. Input characteristics of FT_e I/Os	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 5 | Col 7	3	sections/05-5-electrical-characteristics.md:761	62
+table-50	Table 50. Output voltage characteristics (1)(2)	Col 1 | Col 2 | Symbol Parameter Conditions Min Max Unit | Col 4 | Col 5 | Col 6	10	sections/05-5-electrical-characteristics.md:786	64
+table-51	Table 51. Non-FT_c I/O output timing characteristics (1)(2)	Col 1 | Col 2 | Col 3 | Speed Symbol Parameter Conditions Min Max Unit | Col 5 | Col 7	34	sections/05-5-electrical-characteristics.md:809	64-65
+table-52	Table 52. FT_c I/O output timing characteristics (1)(2)	Col 2 | Col 3 | Col 4 | Speed Symbol Parameter Conditions Min Max Unit | Col 6 | Col 8	8	sections/05-5-electrical-characteristics.md:850	65-66
+table-53	Table 53. NRST pin characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 6 | Col 7	6	sections/05-5-electrical-characteristics.md:878	66-67
+table-55	Table 55. Analog switch booster characteristics (1)	Col 4 | Col 5 | Symbol Parameter Min Typ Max Unit | Col 7	4	sections/05-5-electrical-characteristics.md:910	67-68
+table-56	Table 56. ADC characteristics (1)	Col 1 | Symbol Parameter Conditions | (2) | Col 4 | Col 5 | Min Typ Max Unit | Col 7 | Col 8	37	sections/05-5-electrical-characteristics.md:927	68-69
+table-57	Table 57. Maximum ADC R AIN.	Col 1 | Resolution Sampling cycle at 35 MHz | Sampling time at 35 MHz [ns] | Max. R AIN (1)(2) ( Ω)	32	sections/05-5-electrical-characteristics.md:971	70
+table-58	Table 58. ADC accuracy (1)(2)(3)	Col 1 | Symbol Parameter Conditions | (4) | Min Typ Max Unit | Min Typ Max Unit	9	sections/05-5-electrical-characteristics.md:1010	71
+table-59	Table 59. TS characteristics	Col 1 | Symbol Parameter Min Typ Max Unit | Col 4 | Col 5	7	sections/05-5-electrical-characteristics.md:1042	73
+table-60	Table 60. V BAT monitoring characteristics	Col 1 | Symbol Parameter Min Typ Max Unit | Col 4 | Col 5 | Col 6	4	sections/05-5-electrical-characteristics.md:1058	73
+table-61	Table 61. V BAT charging characteristics	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 7	2	sections/05-5-electrical-characteristics.md:1069	73
+table-62	Table 62. TIMx (1) characteristics	Col 1 | Col 2 | Symbol Parameter Conditions Min Max Unit | Col 4 | Col 5 | Col 6	9	sections/05-5-electrical-characteristics.md:1080	74
+table-63	Table 63. IWDG min/max timeout period at 32 kHz LSI clock (1)	Prescaler divider PR[2:0] bits Min timeout RL | Col 3 | [11:0]= 0x000 Max timeout RL[11:0]= 0xFFF Unit | Col 5	7	sections/05-5-electrical-characteristics.md:1096	74
+table-64	Table 64. Minimum I2CCLK frequency	Col 1 | Col 2 | Symbol Parameter Condition Typ Unit | Col 4 | Col 5 | Col 6	9	sections/05-5-electrical-characteristics.md:1124	75
+table-65	Table 65. I2C analog filter characteristics (1)	Col 2 | Col 3 | Symbol Parameter Min Max Unit | Col 5 | Col 6 | Col 7	2	sections/05-5-electrical-characteristics.md:1142	75
+table-66	Table 66. SPI characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 5 | Col 6 | Col 7	20	sections/05-5-electrical-characteristics.md:1149	76
+table-66	Table 66. SPI characteristics (1)	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4	2	sections/05-5-electrical-characteristics.md:1174	77
+table-67	Table 67. I2S characteristics (1)	Col 1 | Symbol Parameter Con | Col 3 | ditions Min Max Unit | Col 5 | Col 6	14	sections/05-5-electrical-characteristics.md:1192	78
+table-67	Table 67. I2S characteristics (1)	Col 2 | Col 3 | Col 4 | Symbol Parameter Con | Col 6 | Col 7 | Col 8 | Col 10 | Col 11 | Col 12 | ditions Min Max Unit | Col 15 | Col 16 | Col 17	7	sections/05-5-electrical-characteristics.md:1211	79
+table-68	Table 68. USART characteristics in SPI mode	Col 1 | Col 2 | Symbol Parameter Conditions Min Typ Max Unit | Col 4 | Col 6 | Col 8	14	sections/05-5-electrical-characteristics.md:1244	80-81
+table-69	Table 69. SO8N -Mechanical data	Symbol | millimeters inches | Col 8 | (1)	16	sections/06-6-package-information.md:31	83-84
+table-70	Table 70. TSSOP20 – Mechanical data	Symbol | millimeters inches | Col 5 | (1)	14	sections/06-6-package-information.md:70	86
+table-71	Table 71. LQFP32 - Mechanical data	Symbol | millimeters inches | Col 8 | (14)	27	sections/06-6-package-information.md:105	89
+table-72	Table 72. LQFP48 - Mechanical data	Symbol | millimeters inches | Col 8 | (14)	27	sections/06-6-package-information.md:155	93
+table-73	Table 73. Package thermal characteristics	Col 1 | Col 2 | Symbol Parameter Package Value Unit | Col 5	12	sections/06-6-package-information.md:212	95
+table-74	Table 74. Document revision history	Col 1 | Col 2 | Date Revision Changes	2	sections/09-9-revision-history.md:12	98
+table-19	Table 19: Current characteristics: Note 2 removed;	20-Jan-2022 4 | Footnote of Table 12: Pin assignment and description updated; V ESD(HBM) updated in Table 45: ESD absolute maximum ratings; Packages in Section 6: Package information re-ordered from lowest to highest pin count. | Col 4	1	sections/09-9-revision-history.md:23	98
